@@ -6,7 +6,7 @@ Client::Client(boost::asio::io_context& context)
 	: socket(context), resolver(context) {
 }
 
-void Client::Connect(std::string_view address, std::string_view port) {
+void Client::connect(std::string_view address, std::string_view port) {
 	boost::asio::ip::tcp::resolver::query query(address.data(), port.data());
 	boost::asio::ip::tcp::resolver::iterator iterator = this->resolver.resolve(query);
 
@@ -16,10 +16,10 @@ void Client::Connect(std::string_view address, std::string_view port) {
 		// TODO: exception logic
 	}
 
-	this->CreateSession();
+	this->createSession();
 }
 
-void Client::CreateSession() {
+void Client::createSession() {
 	std::cout << "connected";
 	Sleep(-1);
 }
