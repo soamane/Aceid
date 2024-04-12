@@ -1,12 +1,12 @@
-#include "../acceptor/acceptor.h"
+#include "../server/server.h"
 
 int main() {
 	
 	try {
 		boost::asio::io_context context;
-		Acceptor acceptor(context, 23);
+		Server server(context, 23);
 		{
-			acceptor.Start();
+			server.Start();
 			context.run();
 		}
 	} catch(const std::exception& exception) {

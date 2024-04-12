@@ -1,12 +1,12 @@
-#include "connector.h"
+#include "client.h"
 
 #include <iostream>
 
-Connector::Connector(boost::asio::io_context& context)
+Client::Client(boost::asio::io_context& context)
 	: socket(context), resolver(context) {
 }
 
-void Connector::Connect(std::string_view address, std::string_view port) {
+void Client::Connect(std::string_view address, std::string_view port) {
 	boost::asio::ip::tcp::resolver::query query(address.data(), port.data());
 	boost::asio::ip::tcp::resolver::iterator iterator = this->resolver.resolve(query);
 
@@ -19,7 +19,7 @@ void Connector::Connect(std::string_view address, std::string_view port) {
 	this->CreateSession();
 }
 
-void Connector::CreateSession() {
+void Client::CreateSession() {
 	std::cout << "connected";
 	Sleep(-1);
 }
