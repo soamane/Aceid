@@ -21,9 +21,15 @@
     <ClCompile Include="client\client.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="session\session.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\client.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="session\session.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
