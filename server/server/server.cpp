@@ -1,7 +1,5 @@
 #include "server.h"
 
-#include <iostream>
-
 Server::Server(boost::asio::io_context& context, short port)
 	: acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
@@ -16,5 +14,5 @@ void Server::start() {
 }
 
 void Server::createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket) {
-	std::cout << "connected";
+
 }
