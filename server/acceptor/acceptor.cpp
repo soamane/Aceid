@@ -8,8 +8,8 @@ void Acceptor::Start() {
 		if (errorCode) {
 			// TODO: exception logic
 		}
-		CreateSession();
-		Start();
+		this->CreateSession();
+		this->Start();
 	});
 }
 
