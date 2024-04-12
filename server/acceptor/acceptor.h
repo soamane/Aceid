@@ -6,7 +6,16 @@
 
 class Acceptor
 {
+public:
+	Acceptor(boost::asio::io_service& ioService, short port);
+	void Start();
 
+private:
+	void CreateSession();
+
+private:
+	boost::asio::ip::tcp::acceptor acceptor;
+	boost::asio::ip::tcp::socket socket;
 };
 
 #endif // !ACCEPTOR_H
