@@ -12,10 +12,9 @@ public:
 	void connect(std::string_view address, std::string_view port);
 
 private:
-	void createSession();
+	void createSession(boost::asio::ip::tcp::socket& socket);
 
 private:
-	boost::asio::ip::tcp::socket socket;
 	boost::asio::ip::tcp::resolver resolver;
 };
 
