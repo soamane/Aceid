@@ -1,7 +1,5 @@
 #include "client.h"
 
-#include <iostream>
-
 Client::Client(boost::asio::io_context& context)
 	: socket(context), resolver(context) {
 }
