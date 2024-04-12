@@ -20,6 +20,5 @@ void Client::connect(std::string_view address, std::string_view port) {
 }
 
 void Client::createSession() {
-	std::cout << "connected";
-	Sleep(-1);
+
 }
