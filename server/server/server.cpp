@@ -1,6 +1,6 @@
 #include "server.h"
 
-#include <iostream>
+#include "../session/session.h"
 
 Server::Server(boost::asio::io_context& context, short port)
 	: connectionManager(new ConnectionManager), acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
@@ -22,5 +22,5 @@ void Server::stop() {
 }
 
 void Server::createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket) {
-
+    std::make_shared<Session>(*socket)->run();
 }
