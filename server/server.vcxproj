@@ -151,7 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="acceptor\acceptor.cpp" />
     <ClCompile Include="main\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="acceptor\acceptor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
