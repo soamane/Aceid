@@ -8,7 +8,7 @@
 class Connector
 {
 public:
-	Connector(boost::asio::io_service& ioService);
+	Connector(boost::asio::io_context& context);
 	void Connect(std::string_view address, std::string_view port);
 
 private:
