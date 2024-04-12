@@ -21,9 +21,15 @@
     <ClCompile Include="server\server.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="connectionmanager\connectionmanager.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server\server.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="connectionmanager\connectionmanager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

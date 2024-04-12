@@ -4,16 +4,21 @@
 
 #include <boost/asio.hpp>
 
+#include "../connectionmanager/connectionmanager.h"
+
 class Server
 {
 public:
 	Server(boost::asio::io_context& context, short port);
+
 	void start();
+	void stop();
 
 private:
 	void createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket);
 
 private:
+	ConnectionManager connectionManager;
 	boost::asio::ip::tcp::acceptor acceptor;
 };
 
