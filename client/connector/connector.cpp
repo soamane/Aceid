@@ -1,7 +1,9 @@
 #include "connector.h"
 
-Connector::Connector(boost::asio::io_service& ioService)
-	: socket(ioService), resolver(ioService) {
+#include <iostream>
+
+Connector::Connector(boost::asio::io_context& context)
+	: socket(context), resolver(context) {
 }
 
 void Connector::Connect(std::string_view address, std::string_view port) {
@@ -18,4 +20,6 @@ void Connector::Connect(std::string_view address, std::string_view port) {
 }
 
 void Connector::CreateSession() {
+	std::cout << "connected";
+	Sleep(-1);
 }

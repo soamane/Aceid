@@ -7,15 +7,14 @@
 class Acceptor
 {
 public:
-	Acceptor(boost::asio::io_service& ioService, short port);
+	Acceptor(boost::asio::io_context& context, short port);
 	void Start();
 
 private:
-	void CreateSession();
+	void CreateSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket);
 
 private:
 	boost::asio::ip::tcp::acceptor acceptor;
-	boost::asio::ip::tcp::socket socket;
 };
 
 #endif // !ACCEPTOR_H
