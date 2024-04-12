@@ -9,10 +9,10 @@ class Client
 {
 public:
 	Client(boost::asio::io_context& context);
-	void Connect(std::string_view address, std::string_view port);
+	void connect(std::string_view address, std::string_view port);
 
 private:
-	void CreateSession();
+	void createSession();
 
 private:
 	boost::asio::ip::tcp::socket socket;

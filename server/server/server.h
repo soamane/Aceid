@@ -8,10 +8,10 @@ class Server
 {
 public:
 	Server(boost::asio::io_context& context, short port);
-	void Start();
+	void start();
 
 private:
-	void CreateSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket);
+	void createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket);
 
 private:
 	boost::asio::ip::tcp::acceptor acceptor;

@@ -6,7 +6,7 @@ int main() {
 		boost::asio::io_context context;
 		Server server(context, 23);
 		{
-			server.Start();
+			server.start();
 			context.run();
 		}
 	} catch(const std::exception& exception) {
