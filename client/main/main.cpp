@@ -1,12 +1,12 @@
-#include "../connector/connector.h"
+#include "../client/client.h"
 
 int main() {
 
 	try {
 		boost::asio::io_context context;
-		Connector acceptor(context);
+		Client client(context);
 		{
-			acceptor.Connect("127.0.0.1", "23");
+			client.Connect("127.0.0.1", "23");
 		}
 	}
 	catch (const std::exception& exception) {

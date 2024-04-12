@@ -5,10 +5,10 @@
 #include <string_view>
 #include <boost/asio.hpp>
 
-class Connector
+class Client
 {
 public:
-	Connector(boost::asio::io_context& context);
+	Client(boost::asio::io_context& context);
 	void Connect(std::string_view address, std::string_view port);
 
 private:

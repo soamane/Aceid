@@ -18,12 +18,12 @@
     <ClCompile Include="main\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="acceptor\acceptor.cpp">
+    <ClCompile Include="server\server.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="acceptor\acceptor.h">
+    <ClInclude Include="server\server.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

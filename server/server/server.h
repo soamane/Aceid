@@ -4,10 +4,10 @@
 
 #include <boost/asio.hpp>
 
-class Acceptor
+class Server
 {
 public:
-	Acceptor(boost::asio::io_context& context, short port);
+	Server(boost::asio::io_context& context, short port);
 	void Start();
 
 private:
