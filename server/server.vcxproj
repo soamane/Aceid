@@ -151,12 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="communicationhandler\communicationhandler.cpp" />
     <ClCompile Include="connectionmanager\connectionmanager.cpp" />
     <ClCompile Include="server\server.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="communicationhandler\communicationhandler.h" />
     <ClInclude Include="connectionmanager\connectionmanager.h" />
     <ClInclude Include="server\server.h" />
     <ClInclude Include="session\session.h" />

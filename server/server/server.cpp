@@ -13,7 +13,7 @@ void Server::start() {
             this->createSession(socket);
         }
         this->start();
-        });
+    });
 }
 
 void Server::stop() {
@@ -21,6 +21,9 @@ void Server::stop() {
     this->connectionManager->closeAllConnections();
 }
 
-void Server::createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket) {
-    std::make_shared<Session>(*socket)->run();
+void Server::createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {
+    std::shared_ptr<Session> session = std::make_shared<Session>(*socket);
+    {
+        session->run();
+    }
 }
