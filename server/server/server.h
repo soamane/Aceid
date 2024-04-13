@@ -15,11 +15,11 @@ public:
 	void stop();
 
 private:
-	void createSession(const std::shared_ptr<boost::asio::ip::tcp::socket>& socket);
+	void createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
 
 private:
-	std::unique_ptr<ConnectionManager> connectionManager;
 	boost::asio::ip::tcp::acceptor acceptor;
+	std::unique_ptr<ConnectionManager> connectionManager;
 };
 
 #endif // !ACCEPTOR_H
