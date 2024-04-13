@@ -152,11 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client\client.cpp" />
+    <ClCompile Include="communicationhandler\communicationhandler.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\client.h" />
+    <ClInclude Include="communicationhandler\communicationhandler.h" />
     <ClInclude Include="session\session.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
