@@ -10,8 +10,6 @@ class CommunicationHandler : public std::enable_shared_from_this<CommunicationHa
 public:
 	CommunicationHandler(boost::asio::ip::tcp::socket& socket);
 
-	void SendPacket(const std::string& packet);
-
 private:
 	boost::asio::ip::tcp::socket socket;
 };
