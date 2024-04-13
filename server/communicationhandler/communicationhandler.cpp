@@ -5,6 +5,3 @@ CommunicationHandler::CommunicationHandler(boost::asio::ip::tcp::socket& socket)
 
 }
 
-void CommunicationHandler::SendPacket(const std::string& packet) {
-
-}

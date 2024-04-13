@@ -5,5 +5,5 @@ Session::Session(boost::asio::ip::tcp::socket& socket)
 }
 
 void Session::run() {
-	this->communicationHandler->SendPacket("hi!");
+
 }
