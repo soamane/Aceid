@@ -4,8 +4,6 @@
 
 #include <boost/asio.hpp>
 
-#include "../connectionmanager/connectionmanager.h"
-
 class Server
 {
 public:
@@ -19,7 +17,6 @@ private:
 
 private:
 	boost::asio::ip::tcp::acceptor acceptor;
-	std::unique_ptr<ConnectionManager> connectionManager;
 };
 
 #endif // !ACCEPTOR_H
