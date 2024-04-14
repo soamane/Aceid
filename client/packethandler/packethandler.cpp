@@ -7,24 +7,69 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 
 }
 
-void PacketHandler::recvMessage() {
-	std::size_t size;
-	boost::asio::read(this->socket, boost::asio::buffer(&size, sizeof(size)), boost::asio::transfer_all());
+const std::string PacketHandler::recvMessage() {
+	std::vector<char> msgBuffer = this->recvPacket();
+	if (msgBuffer.empty()) {
+		return std::string();
+	}
 
-	std::vector<char> buffer(size);
-	boost::asio::read(this->socket, boost::asio::buffer(buffer), boost::asio::transfer_all());
-
-	std::cout << std::string(buffer.begin(), buffer.end());
+	return std::string(msgBuffer.begin(), msgBuffer.end());
 }
 
-void PacketHandler::recvBuffer() {
-	std::size_t size;
-	boost::asio::read(this->socket, boost::asio::buffer(&size, sizeof(size)), boost::asio::transfer_all());
-
-	std::vector<char> buffer(size);
-	boost::asio::read(this->socket, boost::asio::buffer(buffer), boost::asio::transfer_all());
-
-	for (auto i : buffer) {
-		std::cout << i << ' ';
+const std::vector<char> PacketHandler::recvBuffer() {
+	std::vector<char> buffer = this->recvPacket();
+	if (buffer.empty()) {
+		return std::vector<char>();
 	}
+
+	return buffer;
+}
+
+bool PacketHandler::sendMessage(const std::string& message) {
+	Packet packet;
+	{
+		packet.size = message.size();
+		packet.data = std::vector<char>(message.begin(), message.end());
+	}
+
+	if (!this->sendPacket(packet)) {
+		return false;
+	}
+
+	return true;
+}
+
+bool PacketHandler::sendPacket(const Packet& packet) {
+	boost::system::error_code errorCode;
+	this->socket.write_some(boost::asio::buffer(&packet.size, sizeof(packet.size)), errorCode);
+	if (errorCode) {
+		return false;
+	}
+
+	const std::vector<char> buffer = std::vector<char>(packet.data.begin(), packet.data.end());
+	this->socket.write_some(boost::asio::buffer(buffer), errorCode);
+	if (errorCode) {
+		return false;
+	}
+
+	return true;
+}
+
+std::vector<char> PacketHandler::recvPacket() {
+	Packet packet;
+	{
+		boost::system::error_code errorCode;
+		boost::asio::read(this->socket, boost::asio::buffer(&packet.size, sizeof(packet.size)), boost::asio::transfer_all(), errorCode);
+		if (errorCode) {
+			return std::vector<char>();
+		}
+
+		packet.data.resize(packet.size);
+		boost::asio::read(this->socket, boost::asio::buffer(packet.data), boost::asio::transfer_all(), errorCode);
+		if (errorCode) {
+			return std::vector<char>();
+		}
+	}
+
+	return packet.data;
 }
