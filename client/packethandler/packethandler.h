@@ -9,6 +9,9 @@ class PacketHandler
 public:
 	PacketHandler(boost::asio::ip::tcp::socket& socket);
 
+	void recvMessage();
+	void recvBuffer();
+
 private:
 	boost::asio::ip::tcp::socket socket;
 };
