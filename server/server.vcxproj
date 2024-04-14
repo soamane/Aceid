@@ -152,14 +152,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="packethandler\packethandler.cpp" />
-    <ClCompile Include="connectionmanager\connectionmanager.cpp" />
     <ClCompile Include="server\server.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="packethandler\packethandler.h" />
-    <ClInclude Include="connectionmanager\connectionmanager.h" />
     <ClInclude Include="server\server.h" />
     <ClInclude Include="session\session.h" />
   </ItemGroup>
