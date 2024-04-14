@@ -5,13 +5,12 @@ Session::Session(boost::asio::ip::tcp::socket& socket)
 }
 
 void Session::run() {
+	auto self(shared_from_this());
+	this->packetHandler->sendMessage("hello, client! take my message: ", [self](bool status) {
+		if (status) {
+			self->packetHandler->sendBuffer({'1', '3', 'g', 'c'}, [self](bool status) {
 
-	std::string str = "hello, client!";
-	Packet packet;
-	{
-		packet.size = str.size();
-		packet.data = std::vector<char>(str.begin(), str.end());
-	}
-
-	this->packetHandler->sendPacket(packet);
+			});
+		}
+	});
 }
