@@ -1,7 +1,7 @@
 #include "session.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket)
-	: socket(std::move(socket)), communicationHandler(std::make_shared<CommunicationHandler>(this->socket)) {
+	: socket(std::move(socket)), packetHandler(std::make_shared<PacketHandler>(this->socket)) {
 }
 
 void Session::run() {
@@ -13,5 +13,5 @@ void Session::run() {
 		packet.data = std::vector<char>(str.begin(), str.end());
 	}
 
-	this->communicationHandler->sendPacket(packet);
+	this->packetHandler->sendPacket(packet);
 }

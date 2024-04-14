@@ -1,13 +1,11 @@
-#include "communicationhandler.h"
+#include "packethandler.h"
 
-#include <iostream>
-
-CommunicationHandler::CommunicationHandler(boost::asio::ip::tcp::socket& socket)
+PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
     : socket(std::move(socket)) {
 
 }
 
-void CommunicationHandler::sendPacket(const Packet& packet) {
+void PacketHandler::sendPacket(const Packet& packet) {
     std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
 
     auto self(shared_from_this());

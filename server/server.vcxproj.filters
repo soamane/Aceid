@@ -27,7 +27,7 @@
     <ClCompile Include="session\session.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="communicationhandler\communicationhandler.cpp">
+    <ClCompile Include="packethandler\packethandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,7 +41,7 @@
     <ClInclude Include="session\session.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="communicationhandler\communicationhandler.h">
+    <ClInclude Include="packethandler\packethandler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
