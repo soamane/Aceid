@@ -3,6 +3,7 @@
 #define PACKET_HANDLER_H
 
 #include <memory>
+#include <optional>
 #include <boost/asio.hpp>
 
 struct Packet
@@ -19,8 +20,10 @@ public:
     void sendMessage(const std::string& message, std::function<void(bool)> callback);
     void sendBuffer(const std::vector<char>& buffer, std::function<void(bool)> callback);
 
+    void recvMessage(std::function<void(const std::string&)> callback);
 private:
     void sendPacket(const Packet& packet, std::function<void(bool)> callback);
+    void recvPacket(const Packet& packet, std::function<void(const std::string&)> callback);
 
 private:
     boost::asio::ip::tcp::socket socket;
