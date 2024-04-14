@@ -1,7 +1,7 @@
 #include "session.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket) 
-	: socket(std::move(socket)), communicationHandler(std::make_unique<CommunicationHandler>(this->socket)) { }
+	: socket(std::move(socket)), packetHandler(std::make_unique<PacketHandler>(this->socket)) { }
 
 void Session::run() {
 

@@ -4,7 +4,7 @@
 
 #include <boost/asio.hpp>
 
-#include "../communicationhandler/communicationhandler.h"
+#include "../packethandler/packethandler.h"
 
 class Session
 {
@@ -15,7 +15,7 @@ public:
 
 private:
 	boost::asio::ip::tcp::socket socket;
-	std::unique_ptr<CommunicationHandler> communicationHandler;
+	std::unique_ptr<PacketHandler> packetHandler;
 };
 
 #endif // !SESSION_H
