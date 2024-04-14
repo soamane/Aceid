@@ -11,7 +11,7 @@ void PacketHandler::sendPacket(const Packet& packet) {
     auto self(shared_from_this());
     boost::asio::async_write(self->socket, boost::asio::buffer(&packet.size, sizeof(packet.size)), [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
-            boost::asio::async_write(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer](boost::system::error_code errorCode, std::size_t bytes) {
+            boost::asio::async_write(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
                 if (!errorCode) {
                     // TODO: the log of successful sending
                 }
