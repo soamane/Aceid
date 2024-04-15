@@ -151,12 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="jsonhandler\jsonhandler.cpp" />
     <ClCompile Include="packethandler\packethandler.cpp" />
     <ClCompile Include="server\server.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="jsonhandler\jsonhandler.h" />
     <ClInclude Include="packethandler\packethandler.h" />
     <ClInclude Include="server\server.h" />
     <ClInclude Include="session\session.h" />
