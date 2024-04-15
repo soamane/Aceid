@@ -4,12 +4,7 @@
 
 #include <string>
 
-struct AuthData
-{
-	std::string username;
-	std::string password;
-	std::string hwid;
-};
+#include "../jsonparser/jsonparser.h"
 
 class Api 
 {
