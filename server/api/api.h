@@ -18,7 +18,7 @@ public:
 
 private:
 	AuthData authData;
-
+	const std::string source = "https://aceid.cc/server_api/api.php";
 };
 
 #endif // !API_H
