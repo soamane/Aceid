@@ -10,7 +10,7 @@ void Session::run() {
 	auto self(shared_from_this());
 
 	self->packetHandler->recvMessage([self](const std::string& message) {
-		std::cout << message.c_str();
+		std::cout << "recv message: " << message.c_str();
 	});
 
 }
