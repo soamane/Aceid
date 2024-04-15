@@ -10,6 +10,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 const std::string PacketHandler::recvMessage() {
 	std::vector<char> msgBuffer = this->recvPacket();
 	if (msgBuffer.empty()) {
+		// TODO: error log
 		return std::string();
 	}
 
@@ -19,6 +20,7 @@ const std::string PacketHandler::recvMessage() {
 const std::vector<char> PacketHandler::recvBuffer() {
 	std::vector<char> buffer = this->recvPacket();
 	if (buffer.empty()) {
+		// TODO: error log
 		return std::vector<char>();
 	}
 
@@ -33,6 +35,7 @@ bool PacketHandler::sendMessage(const std::string& message) {
 	}
 
 	if (!this->sendPacket(packet)) {
+		// TODO: error log
 		return false;
 	}
 
@@ -43,12 +46,14 @@ bool PacketHandler::sendPacket(const Packet& packet) {
 	boost::system::error_code errorCode;
 	this->socket.write_some(boost::asio::buffer(&packet.size, sizeof(packet.size)), errorCode);
 	if (errorCode) {
+		// TODO: error log
 		return false;
 	}
 
 	const std::vector<char> buffer = std::vector<char>(packet.data.begin(), packet.data.end());
 	this->socket.write_some(boost::asio::buffer(buffer), errorCode);
 	if (errorCode) {
+		// TODO: error log
 		return false;
 	}
 
@@ -61,12 +66,14 @@ std::vector<char> PacketHandler::recvPacket() {
 		boost::system::error_code errorCode;
 		boost::asio::read(this->socket, boost::asio::buffer(&packet.size, sizeof(packet.size)), boost::asio::transfer_all(), errorCode);
 		if (errorCode) {
+			// TODO: error log
 			return std::vector<char>();
 		}
 
 		packet.data.resize(packet.size);
 		boost::asio::read(this->socket, boost::asio::buffer(packet.data), boost::asio::transfer_all(), errorCode);
 		if (errorCode) {
+			// TODO: error log
 			return std::vector<char>();
 		}
 	}
