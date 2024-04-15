@@ -10,10 +10,6 @@ void Session::run() {
 	auto self(shared_from_this());
 
 	self->packetHandler->recvMessage([self](const std::string& message) {
-		if (!message.empty()) {
-			// TODO: error log
-			return;
-		}
 		std::cout << message.c_str();
 	});
 
