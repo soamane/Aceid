@@ -12,15 +12,15 @@ struct AuthData
 	std::string hwid;
 };
 
-class JsonParser
+class Json
 {
 public:
-	static JsonParser* getInstance();
+	static Json* getInstance();
 
 	const AuthData parseAuthData(const std::string& jsonString);
 
 private:
-	JsonParser();
+	Json();
 };
 
 #endif // !JSON_PARSER_H

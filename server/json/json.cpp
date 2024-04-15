@@ -1,11 +1,11 @@
-#include "jsonparser.h"
+#include "json.h"
 
-JsonParser* JsonParser::getInstance() {
-	static JsonParser* Instance = new JsonParser();
+Json* Json::getInstance() {
+	static Json* Instance = new Json();
 	return Instance;
 }
 
-const AuthData JsonParser::parseAuthData(const std::string& jsonString) {
+const AuthData Json::parseAuthData(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
@@ -27,5 +27,5 @@ const AuthData JsonParser::parseAuthData(const std::string& jsonString) {
 	return authData;
 }
 
-JsonParser::JsonParser() {
+Json::Json() {
 }
