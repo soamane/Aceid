@@ -43,11 +43,13 @@ void PacketHandler::sendPacket(const Packet& packet, std::function<void(bool)> c
                     callback(true);
                 }
                 else {
+                    // TODO: error log
                     callback(false);
                 }
             });
         }
         else {
+            // TODO: error log
             callback(false);
         }
     });
@@ -57,22 +59,23 @@ void PacketHandler::recvPacket(const Packet& packet, std::function<void(const st
     std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
 
     auto self(shared_from_this());
-    boost::asio::async_read(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t b) {
+    boost::asio::async_read(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
-
             packetPointer->data.resize(packetPointer->size);
-            boost::asio::async_read(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t b) {
+            boost::asio::async_read(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
                 if (!errorCode) {
+                    // TODO: success log
                     std::string result(packetPointer->data.begin(), packetPointer->data.end());
                     callback(result);
-
                 }
                 else {
+                    // TODO: error log
                     callback(std::string());
                 }
             });
         }
         else {
+            // TODO: error log
             callback(std::string());
         }
     });

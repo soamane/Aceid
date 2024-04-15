@@ -7,8 +7,9 @@ Server::Server(boost::asio::io_context& context, short port)
 
 void Server::start() {
     std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(this->acceptor.get_executor());
-    this->acceptor.async_accept(*socket, [this, socket](const boost::system::error_code& errorCode) {
+    this->acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
         if (!errorCode) {
+            // TODO: error log
             this->createSession(socket);
         }
         this->start();

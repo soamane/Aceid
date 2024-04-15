@@ -9,13 +9,13 @@ const AuthData JsonParser::parseAuthData(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
-		// TODO: exception log
+		// TODO: error log
 		return AuthData();
 	}
 
 	const rapidjson::Value& params = document["params"];
 	if (!params.IsObject()) {
-		// TODO: exception log
+		// TODO: error log
 		return AuthData();
 	}
 
