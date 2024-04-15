@@ -1,11 +1,11 @@
-#include "json.h"
+#include "jsonwrapper.h"
 
-Json* Json::getInstance() {
-	static Json* Instance = new Json();
+JsonWrapper* JsonWrapper::getInstance() {
+	static JsonWrapper* Instance = new JsonWrapper();
 	return Instance;
 }
 
-const AuthData Json::parseAuthData(const std::string& jsonString) {
+const AuthData JsonWrapper::parseAuthData(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
@@ -27,5 +27,5 @@ const AuthData Json::parseAuthData(const std::string& jsonString) {
 	return authData;
 }
 
-Json::Json() {
+JsonWrapper::JsonWrapper() {
 }
