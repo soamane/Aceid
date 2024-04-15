@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="client\client.cpp" />
+    <ClCompile Include="jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="packethandler\packethandler.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\client.h" />
+    <ClInclude Include="jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="packethandler\packethandler.h" />
     <ClInclude Include="session\session.h" />
   </ItemGroup>
