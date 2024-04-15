@@ -14,9 +14,11 @@ struct AuthData
 class Api 
 {
 public:
-	Api();
+	Api(const AuthData& authData);
 
 private:
+	AuthData authData;
+
 };
 
 #endif // !API_H
