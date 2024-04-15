@@ -30,7 +30,7 @@
     <ClCompile Include="api\api.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="json\json.cpp">
+    <ClCompile Include="jsonwrapper\jsonwrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="api\api.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="json\json.h">
+    <ClInclude Include="jsonwrapper\jsonwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

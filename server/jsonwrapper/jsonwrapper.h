@@ -1,6 +1,6 @@
 #pragma once
-#ifndef JSON_PARSER_H
-#define JSON_PARSER_H
+#ifndef JSON_WRAPPER_H
+#define JSON_WRAPPER_H
 
 #include <string>
 #include <rapidjson/document.h>
@@ -12,15 +12,15 @@ struct AuthData
 	std::string hwid;
 };
 
-class Json
+class JsonWrapper
 {
 public:
-	static Json* getInstance();
+	static JsonWrapper* getInstance();
 
 	const AuthData parseAuthData(const std::string& jsonString);
 
 private:
-	Json();
+	JsonWrapper();
 };
 
-#endif // !JSON_PARSER_H
+#endif // !JSON_WRAPPER_H
