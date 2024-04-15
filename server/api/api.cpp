@@ -1,5 +1,5 @@
 #include "api.h"
 
-Api::Api() {
+Api::Api(const AuthData& authData) : authData(authData) {
 
 }
