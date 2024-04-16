@@ -27,6 +27,23 @@ const AuthData JsonWrapper::parseAuthData(const std::string& jsonString) {
 	return authData;
 }
 
+bool JsonWrapper::isErrorField(const std::string& jsonString) {
+	rapidjson::Document document;
+	document.Parse(jsonString.c_str());
+	if (!document.IsObject()) {
+		// TODO: error log
+		return false;
+	}
+
+	const rapidjson::Value& params = document["params"];
+	if (!params.IsObject()) {
+		// TODO: error log
+		return false;
+	}
+
+	return params.HasMember("error");
+}
+
 const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> additionals, std::initializer_list<std::pair<std::string, std::string>> args) {
 	rapidjson::Document document;
 	document.SetObject();
