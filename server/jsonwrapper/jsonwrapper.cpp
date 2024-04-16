@@ -27,7 +27,7 @@ const AuthData JsonWrapper::parseAuthData(const std::string& jsonString) {
 	return authData;
 }
 
-bool JsonWrapper::isErrorField(const std::string& jsonString) {
+bool JsonWrapper::haveErrorField(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
