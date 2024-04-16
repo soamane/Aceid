@@ -4,6 +4,8 @@
 
 #include <string>
 #include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
 
 struct AuthData
 {
@@ -18,6 +20,7 @@ public:
 	static JsonWrapper* getInstance();
 
 	const AuthData parseAuthData(const std::string& jsonString);
+	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
 
 private:
 	JsonWrapper();

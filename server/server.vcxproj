@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="api\api.cpp" />
     <ClCompile Include="curlwrapper\curlwrapper.cpp" />
     <ClCompile Include="jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="packethandler\packethandler.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="api\api.h" />
     <ClInclude Include="curlwrapper\curlwrapper.h" />
     <ClInclude Include="jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="packethandler\packethandler.h" />
