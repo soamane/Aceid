@@ -15,7 +15,7 @@ class JsonWrapper
 public:
 	static JsonWrapper* getInstance();
 
-	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args);
+	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
 
 private:
 	JsonWrapper();
