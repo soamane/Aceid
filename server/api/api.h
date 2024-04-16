@@ -14,6 +14,7 @@ public:
     
     bool checkUserAuthentication();
     bool checkUserHwid();
+    bool checkUserLicense();
 
 private:
     void getClientAuthData(const std::string& jsonString);
