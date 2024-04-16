@@ -12,7 +12,8 @@ class API
 public:
     API(const std::string& jsonString);
     
-    bool isAuthorized();
+    bool checkUserAuthentication();
+    bool checkUserHwid();
 
 private:
     void getClientAuthData(const std::string& jsonString);
