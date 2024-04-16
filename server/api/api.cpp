@@ -59,6 +59,22 @@ bool API::checkUserLicense() {
 	return this->performCheckCredentials(jsonString);
 }
 
+bool API::checkUserToken() {
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+	(
+		{ { "action", "session" },
+		  { "type", "validate" }
+		},
+		{
+			{ "username", this->data.username },
+			{ "hwid", this->data.hwid },
+			{ "code", this->data.token }
+		}
+		);
+
+	return this->performCheckCredentials(jsonString);
+}
+
 bool API::performCheckCredentials(const std::string& jsonString) {
 	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
