@@ -13,6 +13,7 @@ struct AuthData
 	std::string password;
 	std::string hwid;
 
+	std::string token;
 	std::string member_id;
 };
 

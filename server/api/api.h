@@ -11,16 +11,16 @@ class API
 {
 public:
     API(const std::string& jsonString);
-    
-    bool checkUserAuthentication();
-    bool checkUserHwid();
-    bool checkUserLicense();
-
-    bool performCheckCredentials(const std::string& jsonString);
 
 private:
     void getClientAuthData(const std::string& jsonString);
 
+    bool checkUserAuthentication();
+    bool checkUserHwid();
+    bool checkUserLicense();
+    bool checkUserToken();
+
+    bool performCheckCredentials(const std::string& jsonString);
 private:
     AuthData data;
     const std::string source = "https://aceid.cc/server_api/api.php";
