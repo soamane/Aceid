@@ -73,22 +73,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="curlwrapper\curlwrapper.cpp" />
     <ClCompile Include="jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="packethandler\packethandler.cpp" />
     <ClCompile Include="server\server.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="curlwrapper\curlwrapper.h" />
     <ClInclude Include="jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="packethandler\packethandler.h" />
     <ClInclude Include="server\server.h" />
