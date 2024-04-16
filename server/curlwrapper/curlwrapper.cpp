@@ -27,9 +27,15 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
     std::string response;
     curl_easy_setopt(curl, CURLOPT_URL, source.c_str());
     if (type == RequestType::eRT_HTTPS) {
+        // TODO: HTTPS request type log
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     }
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    
+    if (headers != nullptr) {
+        // TODO: headers nullptr!
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    }
+
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
