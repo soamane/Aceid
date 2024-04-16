@@ -30,28 +30,13 @@ bool API::checkUserAuthentication() {
 			{ "username", this->data.username },
 			{ "password", this->data.password }
 		}
-	);
+		);
 
-	static CurlWrapper* curlWrapper = CurlWrapper::getInstance();
-	if (curlWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
-
-	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
-	const std::string response = curlWrapper->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
-
-	return jsonWrapper->isErrorField(response);
+	return this->performCheckCredentials(jsonString);
 }
 
 bool API::checkUserHwid() {
-	static JsonWrapper* jsonWrapper = JsonWrapper::getInstance();
-	if (jsonWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
-
-	const std::string jsonString = jsonWrapper->createJsonString
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" },
 		  { "type", "hwid" }
@@ -62,26 +47,11 @@ bool API::checkUserHwid() {
 		}
 	);
 
-	static CurlWrapper* curlWrapper = CurlWrapper::getInstance();
-	if (curlWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
-
-	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
-	const std::string response = curlWrapper->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
-
-	return jsonWrapper->isErrorField(response);
+	return this->performCheckCredentials(jsonString);
 }
 
 bool API::checkUserLicense() {
-	static JsonWrapper* jsonWrapper = JsonWrapper::getInstance();
-	if (jsonWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
-
-	const std::string jsonString = jsonWrapper->createJsonString
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "license" },
 		  { "type", "get" }
@@ -92,14 +62,12 @@ bool API::checkUserLicense() {
 		}
 	);
 
-	static CurlWrapper* curlWrapper = CurlWrapper::getInstance();
-	if (curlWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
+	return this->performCheckCredentials(jsonString);
+}
 
+bool API::performCheckCredentials(const std::string& jsonString) {
 	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
-	const std::string response = curlWrapper->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
 
-	return jsonWrapper->isErrorField(response);
+	return JsonWrapper::getInstance()->isErrorField(response);
 }
