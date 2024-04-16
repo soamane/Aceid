@@ -8,6 +8,11 @@ API::API(const std::string& jsonString) {
 	this->getClientAuthData(jsonString);
 }
 
+bool API::isAuthorized() {
+	return checkUserAuthentication() && checkUserHwid() &&
+		checkUserLicense() && checkUserToken();
+}
+
 void API::getClientAuthData(const std::string& jsonString) {
 	if (jsonString.empty()) {
 		// TODO: error log
@@ -79,5 +84,5 @@ bool API::performCheckCredentials(const std::string& jsonString) {
 	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
 
-	return JsonWrapper::getInstance()->isErrorField(response);
+	return JsonWrapper::getInstance()->haveErrorField(response);
 }
