@@ -5,11 +5,17 @@ JsonWrapper* JsonWrapper::getInstance() {
 	return Instance;
 }
 
-const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> args) {
+const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> additionals, std::initializer_list<std::pair<std::string, std::string>> args) {
 	rapidjson::Document document;
 	document.SetObject();
 
 	rapidjson::Document::AllocatorType allocator;
+
+	for (const auto& add : additionals) {
+		rapidjson::Value key(add.first.data(), allocator);
+		rapidjson::Value value(add.second.data(), allocator);
+		document.AddMember(key, value, allocator);
+	}
 
 	rapidjson::Value params(rapidjson::kObjectType);
 	for (const auto& arg : args) {
