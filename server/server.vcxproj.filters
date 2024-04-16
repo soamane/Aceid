@@ -30,6 +30,9 @@
     <ClCompile Include="jsonwrapper\jsonwrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="curlwrapper\curlwrapper.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="server\server.h">
@@ -42,6 +45,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="jsonwrapper\jsonwrapper.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="curlwrapper\curlwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
