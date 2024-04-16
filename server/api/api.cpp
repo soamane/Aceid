@@ -17,20 +17,14 @@ void API::getClientAuthData(const std::string& jsonString) {
 }
 
 bool API::checkUserAuthentication() {
-	static JsonWrapper* jsonWrapper = JsonWrapper::getInstance();
-	if (jsonWrapper == nullptr) {
-		// TODO: exception log
-		return false;
-	}
-
-	const std::string jsonString = jsonWrapper->createJsonString
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" } },
 		{
 			{ "username", this->data.username },
 			{ "password", this->data.password }
 		}
-		);
+	);
 
 	return this->performCheckCredentials(jsonString);
 }
@@ -45,7 +39,7 @@ bool API::checkUserHwid() {
 			{ "member_id", this->data.member_id },
 			{ "hwid", this->data.hwid }
 		}
-	);
+		);
 
 	return this->performCheckCredentials(jsonString);
 }
