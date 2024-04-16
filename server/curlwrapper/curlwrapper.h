@@ -16,6 +16,7 @@ class CurlWrapper
 {
 public:
 	static CurlWrapper* getInstance();
+
 	const curl_slist* addHeaders(std::initializer_list<std::string> headers);
 	const std::string performRequest(RequestType type, const std::string& source, const curl_slist* headers);
 
