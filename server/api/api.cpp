@@ -16,7 +16,7 @@ void API::getClientAuthData(const std::string& jsonString) {
 	this->data = JsonWrapper::getInstance()->parseAuthData(jsonString);
 }
 
-bool API::isAuthorized() {
+bool API::checkUserAuthentication() {
 	static JsonWrapper* jsonWrapper = JsonWrapper::getInstance();
 	if (jsonWrapper == nullptr) {
 		// TODO: exception log
@@ -25,7 +25,7 @@ bool API::isAuthorized() {
 
 	const std::string jsonString = jsonWrapper->createJsonString
 	(
-		{ {"action", "auth"} },
+		{ { "action", "auth" } },
 		{
 			{ "username", this->data.username },
 			{ "password", this->data.password }
@@ -41,5 +41,35 @@ bool API::isAuthorized() {
 	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
 	const std::string response = curlWrapper->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
 
-	return !jsonWrapper->isErrorField(response);
+	return jsonWrapper->isErrorField(response);
+}
+
+bool API::checkUserHwid() {
+	static JsonWrapper* jsonWrapper = JsonWrapper::getInstance();
+	if (jsonWrapper == nullptr) {
+		// TODO: exception log
+		return false;
+	}
+
+	const std::string jsonString = jsonWrapper->createJsonString
+	(
+		{ { "action", "auth" },
+		  { "type", "hwid" }
+		},
+		{
+			{ "member_id", this->data.member_id },
+			{ "hwid", this->data.hwid }
+		}
+	);
+
+	static CurlWrapper* curlWrapper = CurlWrapper::getInstance();
+	if (curlWrapper == nullptr) {
+		// TODO: exception log
+		return false;
+	}
+
+	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
+	const std::string response = curlWrapper->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
+
+	return jsonWrapper->isErrorField(response);
 }

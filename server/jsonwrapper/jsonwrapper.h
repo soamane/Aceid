@@ -12,6 +12,8 @@ struct AuthData
 	std::string username;
 	std::string password;
 	std::string hwid;
+
+	std::string member_id;
 };
 
 class JsonWrapper
