@@ -73,34 +73,39 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\curl\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\rapidjson;..\assets\boost_1_84_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\admin\Desktop\Aceid\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -118,19 +123,21 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -139,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -148,6 +155,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
