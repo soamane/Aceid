@@ -3,7 +3,6 @@
 #define PACKET_HANDLER_H
 
 #include <memory>
-#include <optional>
 #include <boost/asio.hpp>
 
 struct Packet

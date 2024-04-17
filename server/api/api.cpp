@@ -1,9 +1,6 @@
 #include "api.h"
 
 #include <boost/format.hpp>
-
-#include <iostream>
-
 #include "../extern/base64/base64.h"
 
 API::API(const std::string& jsonString) {

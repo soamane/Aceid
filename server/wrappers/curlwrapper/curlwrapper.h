@@ -2,9 +2,10 @@
 #ifndef CURL_WRAPPER_H
 #define CURL_WRAPPER_H
 
-#include <curl/curl.h>
 #include <string>
 #include <initializer_list>
+
+#include <curl/curl.h>
 
 enum RequestType
 {
