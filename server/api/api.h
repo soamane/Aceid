@@ -14,13 +14,14 @@ public:
 
     bool isAuthorized();
 
-private:
-    void getClientAuthData(const std::string& jsonString);
-
     bool checkUserAuthentication();
     bool checkUserHwid();
     bool checkUserLicense();
     bool checkUserToken();
+
+private:
+    void getClientAuthData(const std::string& jsonString);
+
 
     bool performCheckCredentials(const std::string& jsonString);
 private:
