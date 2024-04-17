@@ -23,8 +23,11 @@ public:
 	static JsonWrapper* getInstance();
 
 	bool haveErrorField(const std::string& jsonString);
+	bool haveMemberIdField(const std::string& jsonString);
 
-	const AuthData parseAuthData(const std::string& jsonString);
+	const std::string parseMemberId(const std::string& jsonString);
+	const AuthData parseUserData(const std::string& jsonString);
+
 	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
 private:
 	JsonWrapper();

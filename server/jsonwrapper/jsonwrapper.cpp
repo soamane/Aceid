@@ -5,7 +5,24 @@ JsonWrapper* JsonWrapper::getInstance() {
 	return Instance;
 }
 
-const AuthData JsonWrapper::parseAuthData(const std::string& jsonString) {
+const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
+	rapidjson::Document document;
+	document.Parse(jsonString.c_str());
+	if (!document.IsObject()) {
+		// TODO: error log
+		return std::string();
+	}
+
+	const rapidjson::Value& params = document["params"];
+	if (!params.IsObject()) {
+		// TODO: error log
+		return std::string();
+	}
+
+	return std::to_string(params["id"].GetInt());
+}
+
+const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
@@ -42,6 +59,23 @@ bool JsonWrapper::haveErrorField(const std::string& jsonString) {
 	}
 
 	return params.HasMember("error");
+}
+
+bool JsonWrapper::haveMemberIdField(const std::string& jsonString) {
+	rapidjson::Document document;
+	document.Parse(jsonString.c_str());
+	if (!document.IsObject()) {
+		// TODO: error log
+		return false;
+	}
+
+	const rapidjson::Value& params = document["params"];
+	if (!params.IsObject()) {
+		// TODO: error log
+		return false;
+	}
+
+	return params.HasMember("id");
 }
 
 const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> additionals, std::initializer_list<std::pair<std::string, std::string>> args) {
