@@ -4,20 +4,23 @@
 
 #include <iostream>
 
+#include "../base64/base64.h"
+
 API::API(const std::string& jsonString) {
-	this->getClientAuthData(jsonString);
+	this->getUserData(jsonString);
 }
 
 bool API::isAuthorized() {
 	return checkUserAuthentication() && checkUserHwid() && checkUserLicense() && checkUserToken();
 }
 
-void API::getClientAuthData(const std::string& jsonString) {
+void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
 		// TODO: error log
 		return;
 	}
-	this->data = JsonWrapper::getInstance()->parseAuthData(jsonString);
+
+	this->data = JsonWrapper::getInstance()->parseUserData(jsonString);
 }
 
 bool API::checkUserAuthentication() {
@@ -36,14 +39,14 @@ bool API::checkUserAuthentication() {
 bool API::checkUserHwid() {
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
-		{ { "action", "auth" },
-		  { "type", "hwid" }
+		{ { "action", "hwid" },
+		  { "type", "update" }
 		},
 		{
 			{ "member_id", this->data.member_id },
 			{ "hwid", this->data.hwid }
 		}
-		);
+	);
 
 	return this->performCheckCredentials(jsonString);
 }
@@ -72,16 +75,27 @@ bool API::checkUserToken() {
 		{
 			{ "username", this->data.username },
 			{ "hwid", this->data.hwid },
-			{ "code", this->data.token }
+			{ "token", this->data.token }
 		}
-		);
+	);
 
 	return this->performCheckCredentials(jsonString);
 }
 
 bool API::performCheckCredentials(const std::string& jsonString) {
-	boost::format formatString = boost::format("%1%data=%2%") % this->source % jsonString;
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, formatString.str(), nullptr);
+	std::string encryptedJson = base64::to_base64(jsonString);
+	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
 
-	return JsonWrapper::getInstance()->haveErrorField(response);
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
+	std::string decryptedResponse = base64::from_base64(response);
+
+	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
+		this->data.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
+	}
+
+	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
+		return false;
+	}
+
+	return true;
 }

@@ -56,5 +56,8 @@
     <ClInclude Include="api\api.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="base64\base64.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
