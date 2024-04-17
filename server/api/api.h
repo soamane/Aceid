@@ -4,8 +4,8 @@
 
 #include <string>
 
-#include "../jsonwrapper/jsonwrapper.h"
-#include "../curlwrapper/curlwrapper.h"
+#include "../wrappers/jsonwrapper/jsonwrapper.h"
+#include "../wrappers/curlwrapper/curlwrapper.h"
 
 class API
 {
