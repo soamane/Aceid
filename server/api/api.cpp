@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "../base64/base64.h"
+#include "../extern/base64/base64.h"
 
 API::API(const std::string& jsonString) {
 	this->getUserData(jsonString);
