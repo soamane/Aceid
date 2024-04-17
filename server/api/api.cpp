@@ -9,8 +9,7 @@ API::API(const std::string& jsonString) {
 }
 
 bool API::isAuthorized() {
-	return checkUserAuthentication() && checkUserHwid() &&
-		checkUserLicense() && checkUserToken();
+	return checkUserAuthentication() && checkUserHwid() && checkUserLicense() && checkUserToken();
 }
 
 void API::getClientAuthData(const std::string& jsonString) {
