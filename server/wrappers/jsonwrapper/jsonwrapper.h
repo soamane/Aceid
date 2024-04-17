@@ -23,6 +23,8 @@ public:
 	bool haveErrorField(const std::string& jsonString);
 	bool haveMemberIdField(const std::string& jsonString);
 
+	bool paramsFieldExist(const std::string& jsonString, const std::string& fieldName);
+
 	const std::string parseMemberId(const std::string& jsonString);
 	const AuthData parseUserData(const std::string& jsonString);
 
@@ -32,3 +34,4 @@ private:
 };
 
 #endif // !JSON_WRAPPER_H
+
