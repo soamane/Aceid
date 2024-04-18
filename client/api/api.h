@@ -14,7 +14,6 @@ struct AuthData
 	std::string hwid;
 
 	std::string token;
-	std::string member_id;
 };
 
 class API
