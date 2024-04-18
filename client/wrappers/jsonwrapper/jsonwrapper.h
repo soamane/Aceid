@@ -20,7 +20,7 @@ public:
 	bool paramsFieldExist(const std::string& jsonString, const std::string& fieldName);
 
 	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
-
+	const std::string parseSessionToken(const std::string& jsonString);
 private:
 	JsonWrapper();
 };
