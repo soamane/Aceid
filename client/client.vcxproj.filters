@@ -27,10 +27,10 @@
     <ClCompile Include="packethandler\packethandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="jsonwrapper\jsonwrapper.cpp">
+    <ClCompile Include="wrappers\jsonwrapper\jsonwrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="curlwrapper\curlwrapper.cpp">
+    <ClCompile Include="wrappers\curlwrapper\curlwrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +44,10 @@
     <ClInclude Include="packethandler\packethandler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="jsonwrapper\jsonwrapper.h">
+    <ClInclude Include="wrappers\jsonwrapper\jsonwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="curlwrapper\curlwrapper.h">
+    <ClInclude Include="wrappers\curlwrapper\curlwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
