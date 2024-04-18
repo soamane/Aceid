@@ -57,6 +57,28 @@ const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<
 	return buffer.GetString();
 }
 
+const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) {
+	rapidjson::Document document;
+	document.Parse(jsonString.c_str());
+	if (!document.IsObject()) {
+		// TODO: error log
+		return std::string();
+	}
+
+	const rapidjson::Value& params = document["params"];
+	if (!params.IsObject()) {
+		// TODO: error log
+		return std::string();
+	}
+
+	if (!params.HasMember("token")) {
+		// TODO: error log
+		return std::string();
+	}
+
+	return params["token"].GetString();
+}
+
 JsonWrapper::JsonWrapper() {
 
 }
