@@ -164,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\client.h" />
+    <ClInclude Include="extern\base64\base64.h" />
     <ClInclude Include="wrappers\curlwrapper\curlwrapper.h" />
     <ClInclude Include="wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="packethandler\packethandler.h" />

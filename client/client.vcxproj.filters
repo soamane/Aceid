@@ -50,5 +50,8 @@
     <ClInclude Include="wrappers\curlwrapper\curlwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="extern\base64\base64.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
