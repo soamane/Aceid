@@ -74,27 +74,31 @@
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
+    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
+    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
+    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
+    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -110,7 +114,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -126,7 +130,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -142,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
