@@ -1,7 +1,5 @@
 #include "packethandler.h"
 
-#include <iostream>
-
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 	: socket(std::move(socket)) {
 
