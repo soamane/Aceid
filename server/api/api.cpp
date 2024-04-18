@@ -30,7 +30,7 @@ bool API::checkUserAuthentication() {
 		}
 	);
 
-	return this->performCheckCredentials(jsonString);
+	return this->performApiRequest(jsonString);
 }
 
 bool API::checkUserHwid() {
@@ -45,7 +45,7 @@ bool API::checkUserHwid() {
 		}
 	);
 
-	return this->performCheckCredentials(jsonString);
+	return this->performApiRequest(jsonString);
 }
 
 bool API::checkUserLicense() {
@@ -60,7 +60,7 @@ bool API::checkUserLicense() {
 		}
 	);
 
-	return this->performCheckCredentials(jsonString);
+	return this->performApiRequest(jsonString);
 }
 
 bool API::checkUserToken() {
@@ -76,10 +76,10 @@ bool API::checkUserToken() {
 		}
 	);
 
-	return this->performCheckCredentials(jsonString);
+	return this->performApiRequest(jsonString);
 }
 
-bool API::performCheckCredentials(const std::string& jsonString) {
+bool API::performApiRequest(const std::string& jsonString) {
 	std::string encryptedJson = base64::to_base64(jsonString);
 	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
 

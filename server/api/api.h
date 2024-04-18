@@ -22,7 +22,7 @@ private:
     bool checkUserLicense();
     bool checkUserToken();
 
-    bool performCheckCredentials(const std::string& jsonString);
+    bool performApiRequest(const std::string& jsonString);
 private:
     AuthData data;
     const std::string url = "https://aceid.cc/server_api/api.php";
