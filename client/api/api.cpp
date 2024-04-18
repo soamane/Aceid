@@ -3,7 +3,7 @@
 #include "../extern/base64/base64.h"
 #include <boost/format.hpp>
 
-API::API(const AuthData& data) : data(data) {
+API::API(AuthData* data) : data(data) {
 }
 
 const std::string API::convertAuthDataToJson() {
@@ -13,10 +13,10 @@ const std::string API::convertAuthDataToJson() {
 		  { "type", "login" }
 		},
 		{
-			{ "username", this->data.username },
-			{ "password", this->data.password },
-			{ "hwid", this->data.hwid },
-			{ "token", this->data.token }
+			{ "username", this->data->username },
+			{ "password", this->data->password },
+			{ "hwid", this->data->hwid },
+			{ "token", this->data->token }
 		}
 	);
 
@@ -30,11 +30,11 @@ const std::string API::getSessionToken() {
 		  { "type", "create" }
 		},
 		{
-			{ "username", this->data.username },
-			{ "hwid", this->data.hwid }
+			{ "username", this->data->username },
+			{ "hwid", this->data->hwid }
 		}
 	);
-	return std::string();
+	return this->performGetSessionToken(jsonString);
 }
 
 const std::string API::performGetSessionToken(const std::string& jsonString) {
@@ -48,5 +48,5 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 		return std::string();
 	}
 
-	return decryptedResponse;
+	return JsonWrapper::getInstance()->parseSessionToken(decryptedResponse);
 }

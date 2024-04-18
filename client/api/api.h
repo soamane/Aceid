@@ -2,6 +2,7 @@
 #ifndef API_H
 #define API_H
 
+#include <memory>
 #include <string>
 
 #include "../wrappers/jsonwrapper/jsonwrapper.h"
@@ -19,15 +20,16 @@ struct AuthData
 class API
 {
 public:
-	API(const AuthData& data);
+	API(AuthData* data);
 
 	const std::string convertAuthDataToJson();
 	const std::string getSessionToken();
+
 private:
 	const std::string performGetSessionToken(const std::string& jsonString);
 
 private:
-	AuthData data;
+	AuthData* data;
 	const std::string url = "https://aceid.cc/server_api/api.php";
 };
 
