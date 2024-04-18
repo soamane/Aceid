@@ -43,6 +43,7 @@ const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 	authData.username = params["username"].GetString();
 	authData.password = params["password"].GetString();
 	authData.hwid = params["hwid"].GetString();
+	authData.token = params["token"].GetString();
 
 	return authData;
 }
