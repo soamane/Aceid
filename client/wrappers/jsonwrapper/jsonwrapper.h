@@ -15,6 +15,9 @@ class JsonWrapper
 public:
 	static JsonWrapper* getInstance();
 
+	bool haveErrorField(const std::string& jsonString);
+	bool paramsFieldExist(const std::string& jsonString, const std::string& fieldName);
+
 	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
 
 private:
