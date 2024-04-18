@@ -9,6 +9,10 @@ bool JsonWrapper::haveErrorField(const std::string& jsonString) {
 	return this->paramsFieldExist(jsonString, "error");
 }
 
+bool JsonWrapper::haveTokenField(const std::string& jsonString) {
+	return this->paramsFieldExist(jsonString, "token");
+}
+
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
