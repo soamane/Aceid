@@ -3,6 +3,8 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 
+#include <stdexcept>
+
 JsonWrapper* JsonWrapper::getInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();
 	return Instance;
@@ -12,14 +14,12 @@ const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
-		// TODO: error log
-		return std::string();
+		throw std::runtime_error("failed parse json document");
 	}
 
 	const rapidjson::Value& params = document["params"];
 	if (!params.IsObject()) {
-		// TODO: error log
-		return std::string();
+		throw std::runtime_error("document params is not of object");
 	}
 
 	return std::to_string(params["id"].GetInt());
@@ -29,14 +29,12 @@ const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
-		// TODO: error log
-		return AuthData();
+		throw std::runtime_error("failed parse json document");
 	}
 
 	const rapidjson::Value& params = document["params"];
 	if (!params.IsObject()) {
-		// TODO: error log
-		return AuthData();
+		throw std::runtime_error("document params is not of object");
 	}
 
 	AuthData authData;
@@ -60,14 +58,12 @@ bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::str
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
 	if (!document.IsObject()) {
-		// TODO: error log
-		return false;
+		throw std::runtime_error("failed parse json document");
 	}
 
 	const rapidjson::Value& params = document["params"];
 	if (!params.IsObject()) {
-		// TODO: error log
-		return false;
+		throw std::runtime_error("document params is not of object");
 	}
 
 	return params.HasMember(fieldName.c_str());
