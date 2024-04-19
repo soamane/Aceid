@@ -21,10 +21,10 @@
     <ClCompile Include="server\server.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="session\session.cpp">
+    <ClCompile Include="server\session\session.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="packethandler\packethandler.cpp">
+    <ClCompile Include="server\packethandler\packethandler.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="wrappers\jsonwrapper\jsonwrapper.cpp">
@@ -33,7 +33,7 @@
     <ClCompile Include="wrappers\curlwrapper\curlwrapper.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="api\api.cpp">
+    <ClCompile Include="server\api\api.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +41,10 @@
     <ClInclude Include="server\server.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="session\session.h">
+    <ClInclude Include="server\session\session.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="packethandler\packethandler.h">
+    <ClInclude Include="server\packethandler\packethandler.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="wrappers\jsonwrapper\jsonwrapper.h">
@@ -53,7 +53,7 @@
     <ClInclude Include="wrappers\curlwrapper\curlwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="api\api.h">
+    <ClInclude Include="server\api\api.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="extern\base64\base64.h">

@@ -1,6 +1,6 @@
 #include "api.h"
 
-#include "../extern/base64/base64.h"
+#include "../../extern/base64/base64.h"
 #include <boost/format.hpp>
 
 API::API(AuthData* data) : data(data) {

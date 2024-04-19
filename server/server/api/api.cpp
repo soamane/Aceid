@@ -1,7 +1,7 @@
 #include "api.h"
 
 #include <boost/format.hpp>
-#include "../extern/base64/base64.h"
+#include "../../extern/base64/base64.h"
 
 API::API(const std::string& jsonString) {
 	this->getUserData(jsonString);
