@@ -13,8 +13,7 @@ bool API::isAuthorized() {
 
 void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		// TODO: error log
-		return;
+		throw std::runtime_error("failed to get user data (empty argument)");
 	}
 
 	this->data = JsonWrapper::getInstance()->parseUserData(jsonString);
@@ -28,7 +27,7 @@ bool API::checkUserAuthentication() {
 			{ "username", this->data.username },
 			{ "password", this->data.password }
 		}
-	);
+		);
 
 	return this->performApiRequest(jsonString);
 }
@@ -43,7 +42,7 @@ bool API::checkUserHwid() {
 			{ "member_id", this->data.member_id },
 			{ "hwid", this->data.hwid }
 		}
-	);
+		);
 
 	return this->performApiRequest(jsonString);
 }
@@ -58,7 +57,7 @@ bool API::checkUserLicense() {
 			{ "username", this->data.username },
 			{ "password", this->data.password }
 		}
-	);
+		);
 
 	return this->performApiRequest(jsonString);
 }
@@ -74,7 +73,7 @@ bool API::checkUserToken() {
 			{ "hwid", this->data.hwid },
 			{ "token", this->data.token }
 		}
-	);
+		);
 
 	return this->performApiRequest(jsonString);
 }
