@@ -70,13 +70,13 @@ bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::str
 }
 
 
-const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> additionals, std::initializer_list<std::pair<std::string, std::string>> args) {
+const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> fields, std::initializer_list<std::pair<std::string, std::string>> args) {
 	rapidjson::Document document;
 	document.SetObject();
 
 	rapidjson::Document::AllocatorType allocator;
 
-	for (const auto& add : additionals) {
+	for (const auto& add : fields) {
 		rapidjson::Value key(add.first.data(), allocator);
 		rapidjson::Value value(add.second.data(), allocator);
 		document.AddMember(key, value, allocator);
