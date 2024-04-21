@@ -10,32 +10,37 @@ JsonWrapper* JsonWrapper::getInstance() {
 	return Instance;
 }
 
-const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
+const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonString) {
 	rapidjson::Document document;
 	document.Parse(jsonString.c_str());
+
 	if (!document.IsObject()) {
 		throw std::runtime_error("failed parse json document");
 	}
 
+	return document;
+}
+
+const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& document) {
 	const rapidjson::Value& params = document["params"];
+
 	if (!params.IsObject()) {
 		throw std::runtime_error("document params is not of object");
 	}
+
+	return params;
+}
+
+const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
+	auto document = this->parseJsonString(jsonString);
+	auto& params = this->parseDocumentParams(document);
 
 	return std::to_string(params["id"].GetInt());
 }
 
 const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
-	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
-	if (!document.IsObject()) {
-		throw std::runtime_error("failed parse json document");
-	}
-
-	const rapidjson::Value& params = document["params"];
-	if (!params.IsObject()) {
-		throw std::runtime_error("document params is not of object");
-	}
+	auto document = this->parseJsonString(jsonString);
+	auto& params = this->parseDocumentParams(document);
 
 	AuthData authData;
 	authData.username = params["username"].GetString();
@@ -55,20 +60,11 @@ bool JsonWrapper::haveMemberIdField(const std::string& jsonString) {
 }
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
-	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
-	if (!document.IsObject()) {
-		throw std::runtime_error("failed parse json document");
-	}
-
-	const rapidjson::Value& params = document["params"];
-	if (!params.IsObject()) {
-		throw std::runtime_error("document params is not of object");
-	}
+	auto document = this->parseJsonString(jsonString);
+	auto& params = this->parseDocumentParams(document);
 
 	return params.HasMember(fieldName.c_str());
 }
-
 
 const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<std::string, std::string>> fields, std::initializer_list<std::pair<std::string, std::string>> args) {
 	rapidjson::Document document;
