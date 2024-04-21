@@ -5,6 +5,27 @@ JsonWrapper* JsonWrapper::getInstance() {
 	return Instance;
 }
 
+const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonString) {
+	rapidjson::Document document;
+	document.Parse(jsonString.c_str());
+
+	if (!document.IsObject()) {
+		// TODO: exception
+	}
+
+	return document;
+}
+
+const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& document) {
+	const rapidjson::Value& params = document["params"];
+
+	if (!params.IsObject()) {
+		// TODO: exception
+	}
+
+	return params;
+}
+
 bool JsonWrapper::haveErrorField(const std::string& jsonString) {
 	return this->paramsFieldExist(jsonString, "error");
 }
@@ -14,18 +35,8 @@ bool JsonWrapper::haveTokenField(const std::string& jsonString) {
 }
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
-	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
-	if (!document.IsObject()) {
-		// TODO: error log
-		return false;
-	}
-
-	const rapidjson::Value& params = document["params"];
-	if (!params.IsObject()) {
-		// TODO: error log
-		return false;
-	}
+	auto document = this->parseJsonString(jsonString);
+	auto& params = this->parseDocumentParams(document);
 
 	return params.HasMember(fieldName.c_str());
 }
@@ -58,18 +69,8 @@ const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<
 }
 
 const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) {
-	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
-	if (!document.IsObject()) {
-		// TODO: error log
-		return std::string();
-	}
-
-	const rapidjson::Value& params = document["params"];
-	if (!params.IsObject()) {
-		// TODO: error log
-		return std::string();
-	}
+	auto document = this->parseJsonString(jsonString);
+	auto& params = this->parseDocumentParams(document);
 
 	if (!params.HasMember("token")) {
 		// TODO: error log
