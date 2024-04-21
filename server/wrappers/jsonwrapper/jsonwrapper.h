@@ -20,6 +20,9 @@ class JsonWrapper
 public:
 	static JsonWrapper* getInstance();
 
+	const rapidjson::Document parseJsonString(const std::string& jsonString);
+	const rapidjson::Value& parseDocumentParams(rapidjson::Document& document);
+
 	bool haveErrorField(const std::string& jsonString);
 	bool haveMemberIdField(const std::string& jsonString);
 
