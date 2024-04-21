@@ -10,7 +10,7 @@ int main() {
 		}
 	}
 	catch (const std::exception& exception) {
-		// TODO: exception logic
+		MessageBoxA(GetForegroundWindow(), exception.what(), nullptr, MB_OK | MB_ICONERROR);
 	}
 
 	return 0;

@@ -1,5 +1,7 @@
 #include "curlwrapper.h"
 
+#include <stdexcept>
+
 CurlWrapper* CurlWrapper::getInstance() {
     static CurlWrapper* Instance = new CurlWrapper();
     return Instance;
@@ -10,8 +12,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
     for (const auto& header : headers) {
         headerList = curl_slist_append(headerList, header.c_str());
         if (!headerList) {
-            // TODO: error log
-            return nullptr;
+            throw std::runtime_error("failed add headers");
         }
     }
     return headerList;
@@ -20,19 +21,16 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
 const std::string CurlWrapper::performRequest(RequestType type, const std::string& source, const curl_slist* headers) {
     CURL* curl = curl_easy_init();
     if (!curl) {
-        // TODO: error log
-        return std::string();
+        throw std::runtime_error("failed init curl");
     }
 
     std::string response;
     curl_easy_setopt(curl, CURLOPT_URL, source.c_str());
     if (type == RequestType::eRT_HTTPS) {
-        // TODO: HTTPS request type log
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     }
 
     if (headers != nullptr) {
-        // TODO: headers nullptr!
         curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     }
 
@@ -43,8 +41,7 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK) {
-        // TODO: error log
-        return std::string();
+        throw std::runtime_error("failed to send request");
     }
 
     return response;

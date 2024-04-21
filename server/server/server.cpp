@@ -1,5 +1,7 @@
 #include "server.h"
 
+#include <iostream>
+
 #include "session/session.h"
 
 Server::Server(boost::asio::io_context& context, short port)
@@ -12,7 +14,7 @@ void Server::start() {
             this->createSession(socket);
         }
         else {
-            throw std::runtime_error("accept failed, boost message: " + errorCode.message());
+            // TODO: Create error log
         }
         this->start();
     });

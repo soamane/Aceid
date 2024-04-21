@@ -41,8 +41,7 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK) {
-        // TODO: error log
-        return std::string();
+        throw std::runtime_error("failed to send request");
     }
 
     return response;
