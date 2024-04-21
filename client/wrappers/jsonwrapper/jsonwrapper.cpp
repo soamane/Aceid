@@ -1,5 +1,7 @@
 #include "jsonwrapper.h"
 
+#include <stdexcept>
+
 JsonWrapper* JsonWrapper::getInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();
 	return Instance;
@@ -10,7 +12,7 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 	document.Parse(jsonString.c_str());
 
 	if (!document.IsObject()) {
-		// TODO: exception
+		throw std::runtime_error("failed to parse json document");
 	}
 
 	return document;
@@ -20,7 +22,7 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 	const rapidjson::Value& params = document["params"];
 
 	if (!params.IsObject()) {
-		// TODO: exception
+		throw std::runtime_error("'params' field is not of object");
 	}
 
 	return params;
@@ -73,8 +75,7 @@ const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) 
 	auto& params = this->parseDocumentParams(document);
 
 	if (!params.HasMember("token")) {
-		// TODO: error log
-		return std::string();
+		throw std::runtime_error("failed to parse token field");
 	}
 
 	return params["token"].GetString();

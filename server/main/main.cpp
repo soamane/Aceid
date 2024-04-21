@@ -13,7 +13,7 @@ int main() {
 		}
 	}
 	catch (const std::exception& exception) {
-		std::cerr << exception.what() << std::endl;
+		MessageBoxA(GetForegroundWindow(), exception.what(), nullptr, MB_OK | MB_ICONERROR);
 	}
 
 	return 0;

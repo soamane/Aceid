@@ -1,7 +1,10 @@
 #include "api.h"
 
+#include <iostream>
 #include <boost/format.hpp>
+
 #include "../../extern/base64/base64.h"
+
 
 API::API(const std::string& jsonString) {
 	this->getUserData(jsonString);
@@ -13,7 +16,8 @@ bool API::isAuthorized() {
 
 void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("failed to get user data (empty argument)");
+		// TODO: Create error log
+		return;
 	}
 
 	this->data = JsonWrapper::getInstance()->parseUserData(jsonString);
@@ -90,8 +94,11 @@ bool API::performApiRequest(const std::string& jsonString) {
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
+		// TODO: Create info log
 		return false;
 	}
+
+	// TODO: Create info log
 
 	return true;
 }

@@ -1,6 +1,8 @@
 #include "api.h"
 
 #include "../../extern/base64/base64.h"
+
+#include <stdexcept>
 #include <boost/format.hpp>
 
 API::API(AuthData* data) : data(data) {
@@ -45,7 +47,7 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 	std::string decryptedResponse = base64::from_base64(response);
 
 	if (!JsonWrapper::getInstance()->haveTokenField(decryptedResponse)) {
-		return std::string();
+		throw std::runtime_error("failed to get session token");
 	}
 
 	return JsonWrapper::getInstance()->parseSessionToken(decryptedResponse);
