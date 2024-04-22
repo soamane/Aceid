@@ -1,6 +1,6 @@
 #include "../server/server.h"
 
-#include <iostream>
+#include "../logsystem/logmanager/logmanager.h"
 
 int main() {
 
@@ -13,7 +13,8 @@ int main() {
 		}
 	}
 	catch (const std::exception& exception) {
-		MessageBoxA(GetForegroundWindow(), exception.what(), nullptr, MB_OK | MB_ICONERROR);
+		MessageBoxA(GetForegroundWindow(), "Exception detected, more information check in server.log file", nullptr, MB_OK | MB_ICONERROR);
+		CREATE_SERVER_LOG(exception.what())
 	}
 
 	return 0;

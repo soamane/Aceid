@@ -4,9 +4,10 @@
 #include <boost/format.hpp>
 
 #include "../../extern/base64/base64.h"
-
+#include "../../logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
+	CREATE_EVENT_LOG("API Interface created\n")
 	this->getUserData(jsonString);
 }
 
@@ -16,7 +17,7 @@ bool API::isAuthorized() {
 
 void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		// TODO: Create error log
+		CREATE_EVENT_LOG("Failed to get user data (empty argument)")
 		return;
 	}
 
@@ -33,6 +34,7 @@ bool API::checkUserAuthentication() {
 		}
 		);
 
+	CREATE_EVENT_LOG("Request to verify account availability")
 	return this->performApiRequest(jsonString);
 }
 
@@ -48,6 +50,7 @@ bool API::checkUserHwid() {
 		}
 		);
 
+	CREATE_EVENT_LOG("Request to verify HWID")
 	return this->performApiRequest(jsonString);
 }
 
@@ -63,6 +66,7 @@ bool API::checkUserLicense() {
 		}
 		);
 
+	CREATE_EVENT_LOG("Request to verify the availability license")
 	return this->performApiRequest(jsonString);
 }
 
@@ -79,6 +83,7 @@ bool API::checkUserToken() {
 		}
 		);
 
+	CREATE_EVENT_LOG("Request to verify session token")
 	return this->performApiRequest(jsonString);
 }
 
@@ -94,11 +99,11 @@ bool API::performApiRequest(const std::string& jsonString) {
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		// TODO: Create info log
+		CREATE_EVENT_LOG("Request status: failed\n")
 		return false;
 	}
 
-	// TODO: Create info log
+	CREATE_EVENT_LOG("Request status: success\n")
 
 	return true;
 }

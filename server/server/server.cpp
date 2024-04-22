@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "session/session.h"
+#include "../logsystem/logmanager/logmanager.h"
 
 Server::Server(boost::asio::io_context& context, short port)
     : acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
@@ -14,7 +15,7 @@ void Server::start() {
             this->createSession(socket);
         }
         else {
-            // TODO: Create error log
+           // TODO: server log
         }
         this->start();
     });
