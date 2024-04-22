@@ -1,6 +1,6 @@
 #include "packethandler.h"
 
-#include <iostream>
+#include "../../logsystem/logmanager/logmanager.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
     : socket(std::move(socket)) {
@@ -40,19 +40,19 @@ void PacketHandler::sendPacket(const Packet& packet, std::function<void(bool)> c
     auto self(shared_from_this());
     boost::asio::async_write(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
-            boost::asio::async_write(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
+            boost::asio::async_write(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
                 if (!errorCode) {
-                    // TODO: Create info log
+                    CREATE_EVENT_LOG("Packet sended without errors: " + std::to_string(bytes) + " bytes sended")
                     callback(true);
                 }
                 else {
-                    // TODO: Create error log
+                    CREATE_EVENT_LOG("Failed to send packet body")
                     callback(false);
                 }
             });
         }
         else {
-            // TODO: Create error log
+            CREATE_EVENT_LOG("Failed to send packet size")
             callback(false);
         }
     });
@@ -65,20 +65,21 @@ void PacketHandler::recvPacket(const Packet& packet, std::function<void(const st
     boost::asio::async_read(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
             packetPointer->data.resize(packetPointer->size);
-            boost::asio::async_read(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
+            boost::asio::async_read(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
                 if (!errorCode) {
-                    // TODO: Create info log
+                    CREATE_EVENT_LOG("Packet received without errors: " + std::to_string(bytes) + " bytes received")
+
                     std::string result(packetPointer->data.begin(), packetPointer->data.end());
                     callback(result);
                 }
                 else {
-                    // TODO: Create error log
+                    CREATE_EVENT_LOG("Failed to recv packet body")
                     callback(std::string());
                 }
             });
         }
         else {
-            // TODO: Create error log
+            CREATE_EVENT_LOG("Failed to send packet size")
             callback(std::string());
         }
     });
