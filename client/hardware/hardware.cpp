@@ -6,6 +6,8 @@
 #include <d3d9.h>
 #pragma comment(lib, "d3d9.lib")
 
+#include "../secure/crypt/crypt.h"
+
 std::string Hardware::getHardwareId() {
     std::string cpuInfo = getCPUInfo();
     if (cpuInfo.empty()) {
@@ -17,7 +19,7 @@ std::string Hardware::getHardwareId() {
         return std::string();
     }
 
-    return cpuInfo + videoCard;
+    return Crypt::encryptBase64(cpuInfo + videoCard);
 }
 
 std::string Hardware::getCPUInfo() {

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 
-#include "../../extern/base64/base64.h"
+#include "../../secure/crypt/crypt.h"
 #include "../../logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
@@ -88,11 +88,11 @@ bool API::checkUserToken() {
 }
 
 bool API::performApiRequest(const std::string& jsonString) {
-	std::string encryptedJson = base64::to_base64(jsonString);
+	std::string encryptedJson = Crypt::encryptBase64(jsonString);
 	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
-	std::string decryptedResponse = base64::from_base64(response);
+	std::string decryptedResponse = Crypt::decryptBase64(response);
 
 	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
 		this->data.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);

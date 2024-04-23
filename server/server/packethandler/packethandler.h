@@ -16,12 +16,12 @@ class PacketHandler : public std::enable_shared_from_this<PacketHandler>
 public:
     PacketHandler(boost::asio::ip::tcp::socket& socket);
 
-    void sendMessage(const std::string& message, std::function<void(bool)> callback);
-    void sendBuffer(const std::vector<char>& buffer, std::function<void(bool)> callback);
+    void sendMessage(const std::string& message);
+    void sendBuffer(const std::vector<char>& buffer);
 
     void recvMessage(std::function<void(const std::string&)> callback);
 private:
-    void sendPacket(const Packet& packet, std::function<void(bool)> callback);
+    void sendPacket(const Packet& packet);
     void recvPacket(const Packet& packet, std::function<void(const std::string&)> callback);
 
 private:

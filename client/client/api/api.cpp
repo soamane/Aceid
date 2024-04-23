@@ -44,7 +44,7 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
-	std::string decryptedResponse = Crypt::encryptBase64(response);
+	std::string decryptedResponse = Crypt::decryptBase64(response);
 
 	if (!JsonWrapper::getInstance()->haveTokenField(decryptedResponse)) {
 		throw std::runtime_error("failed to get session token");
