@@ -25,12 +25,14 @@ void Session::run() {
 	this->packetHandler->recvMessage([self](const std::string& message) {
 		std::unique_ptr<API> api = std::make_unique<API>(message);
 		if (api->isAuthorized()) {
-			CREATE_EVENT_LOG("Authorization conclusion: authorized")
+			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
+
 			self->packetHandler->sendMessage("success_auth");
+			CREATE_EVENT_LOG("Authorization conclusion: authorized")
 		}
 		else {
-			CREATE_EVENT_LOG("Authorization conclusion: not authorized")
 			self->packetHandler->sendMessage("failed_auth");
+			CREATE_EVENT_LOG("Authorization conclusion: not authorized")
 		}
 	});
 }
