@@ -15,7 +15,7 @@ void Server::start() {
             this->createSession(socket);
         }
         else {
-           // TODO: server log
+           CREATE_SERVER_LOG("The socket failed to connect to the server")
         }
         this->start();
     });

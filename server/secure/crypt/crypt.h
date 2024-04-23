@@ -4,10 +4,19 @@
 
 #include <string>
 
+/*
+
+	Class for working with encryption and so on
+
+*/
+
 class Crypt
 {
 public:
+	// Encodes a string using base64
 	static std::string encryptBase64(const std::string& str);
+
+	// Decodes a string using base64
 	static std::string decryptBase64(const std::string& str);
 
 private:
