@@ -107,3 +107,7 @@ bool API::performApiRequest(const std::string& jsonString) {
 
 	return true;
 }
+
+const std::string API::getUsername() {
+	return this->data.username;
+}

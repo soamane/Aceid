@@ -13,6 +13,7 @@ public:
     API(const std::string& jsonString);
 
     bool isAuthorized();
+    const std::string getUsername();
 
 private:
     void getUserData(const std::string& jsonString);
@@ -23,6 +24,7 @@ private:
     bool checkUserToken();
 
     bool performApiRequest(const std::string& jsonString);
+
 private:
     AuthData data;
     const std::string url = "https://aceid.cc/server_api/api.php";
