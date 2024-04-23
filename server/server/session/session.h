@@ -7,16 +7,27 @@
 
 #include "../packethandler/packethandler.h"
 
+/*
+
+	Class for the session of the connected socket
+
+*/
+
 class Session : public std::enable_shared_from_this<Session>
 {
 public:
+
+	// Constructor for socket initialization, packet handler, and event logging
 	Session(boost::asio::ip::tcp::socket& socket);
+
+	// Class destructor to close the socket upon Session object deletion
 	~Session();
 
+	// Main session handling function
 	void run();
 
 private:
-	boost::asio::ip::tcp::socket socket;
+	boost::asio::ip::tcp::socket socket; // current remote socket
 	std::shared_ptr<PacketHandler> packetHandler;
 };
 
