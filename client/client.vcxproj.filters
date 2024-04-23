@@ -36,6 +36,9 @@
     <ClCompile Include="client\api\api.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="hardware\hardware.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\client.h">
@@ -53,10 +56,13 @@
     <ClInclude Include="wrappers\curlwrapper\curlwrapper.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="extern\base64\base64.h">
+    <ClInclude Include="client\api\api.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="client\api\api.h">
+    <ClInclude Include="hardware\hardware.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="extern\base64\base64.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
