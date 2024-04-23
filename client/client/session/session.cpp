@@ -14,7 +14,7 @@ void Session::run() {
 	authData->hwid = "MjIxOTcwMTY5MTU5MTgxODU4ODI3MDEyMzEzODQxNjlOVklESUEgR2VGb3JjZSBHVFggMTY2MCBUaTM2MTkxMDIyNzAyNTI4MjQ1NTk=";
 	authData->token = api->getSessionToken();
 
-	const std::string convertedData = api->convertAuthDataToJson();
+	std::string convertedData = api->convertAuthDataToJson();
 
 	this->packetHandler->sendMessage(convertedData);
 }
