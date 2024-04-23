@@ -1,5 +1,7 @@
 #include "packethandler.h"
 
+#include "../../secure/crypt/crypt.h"
+
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 	: socket(std::move(socket)) {
 
@@ -11,7 +13,10 @@ const std::string PacketHandler::recvMessage() {
 		throw std::runtime_error("failed to recv message packet");
 	}
 
-	return std::string(msgBuffer.begin(), msgBuffer.end());
+	std::string receivedMessage = std::string(msgBuffer.begin(), msgBuffer.end());
+	receivedMessage = Crypt::decryptBase64(receivedMessage);
+
+	return receivedMessage;
 }
 
 const std::vector<char> PacketHandler::recvBuffer() {
@@ -23,7 +28,8 @@ const std::vector<char> PacketHandler::recvBuffer() {
 	return buffer;
 }
 
-void PacketHandler::sendMessage(const std::string& message) {
+void PacketHandler::sendMessage(std::string& message) {
+	message = Crypt::encryptBase64(message);
 	Packet packet;
 	{
 		packet.size = message.size();
