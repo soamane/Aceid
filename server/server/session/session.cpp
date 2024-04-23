@@ -3,6 +3,8 @@
 
 #include "../../logsystem/logmanager/logmanager.h"
 
+#include <iostream>
+
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: socket(std::move(socket)), packetHandler(std::make_shared<PacketHandler>(this->socket)) {
 	LogManager::getInstance()->initEventLog();
@@ -21,12 +23,14 @@ Session::~Session() {
 void Session::run() {
 	auto self(shared_from_this());
 	this->packetHandler->recvMessage([self](const std::string& message) {
-		API api = API(message);
-		if (api.isAuthorized()) {
-			CREATE_EVENT_LOG("Success auth")
+		std::unique_ptr<API> api = std::make_unique<API>(message);
+		if (api->isAuthorized()) {
+			CREATE_EVENT_LOG("Authorization conclusion: authorized")
+			self->packetHandler->sendMessage("success_auth");
 		}
 		else {
-			CREATE_EVENT_LOG("Authorization error")
+			CREATE_EVENT_LOG("Authorization conclusion: not authorized")
+			self->packetHandler->sendMessage("failed_auth");
 		}
 	});
 }
