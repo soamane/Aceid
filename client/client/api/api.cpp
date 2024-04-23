@@ -1,6 +1,6 @@
 #include "api.h"
 
-#include "../../extern/base64/base64.h"
+#include "../../secure/crypt/base64/base64.h"
 
 #include <stdexcept>
 #include <boost/format.hpp>
