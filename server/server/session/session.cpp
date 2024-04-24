@@ -14,10 +14,7 @@ Session::Session(boost::asio::ip::tcp::socket& socket)
 Session::~Session() {
 	if (socket.is_open()) {
 		socket.close();
-		CREATE_EVENT_LOG("Socket closed")
 	}
-
-	CREATE_EVENT_LOG("Session closed")
 }
 
 void Session::run() {
@@ -28,11 +25,9 @@ void Session::run() {
 			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
 
 			self->packetHandler->sendMessage("success_auth");
-			CREATE_EVENT_LOG("Authorization conclusion: authorized")
 		}
 		else {
 			self->packetHandler->sendMessage("failed_auth");
-			CREATE_EVENT_LOG("Authorization conclusion: not authorized")
 		}
 	});
 }
