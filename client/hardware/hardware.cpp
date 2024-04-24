@@ -14,12 +14,12 @@ std::string Hardware::getHardwareId() {
         return std::string();
     }
 
-    std::string videoCard = getGPUInfo();
-    if (videoCard.empty()) {
+    std::string gpuInfo = getGPUInfo();
+    if (gpuInfo.empty()) {
         return std::string();
     }
 
-    return Crypt::encryptBase64(cpuInfo + videoCard);
+    return Crypt::encryptBase64(cpuInfo + gpuInfo);
 }
 
 std::string Hardware::getCPUInfo() {
