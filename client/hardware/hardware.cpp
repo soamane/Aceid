@@ -27,7 +27,10 @@ std::string Hardware::getCPUInfo() {
     __cpuid(reinterpret_cast<int*>(regs), 0);
 
     std::ostringstream oss;
-    oss << regs[0] << regs[1] << regs[2] << regs[3];
+    oss << regs[0] 
+        << regs[1] 
+        << regs[2] 
+        << regs[3];
 
     return oss.str();
 }
