@@ -8,7 +8,7 @@
 
 API::API(const std::string& jsonString) {
 	CREATE_EVENT_LOG("API Interface created\n")
-	this->getUserData(jsonString);
+	getUserData(jsonString);
 }
 
 bool API::isAuthorized() {
@@ -21,7 +21,7 @@ void API::getUserData(const std::string& jsonString) {
 		return;
 	}
 
-	this->data = JsonWrapper::getInstance()->parseUserData(jsonString);
+	data = JsonWrapper::getInstance()->parseUserData(jsonString);
 }
 
 bool API::checkUserAuthentication() {
@@ -29,13 +29,13 @@ bool API::checkUserAuthentication() {
 	(
 		{ { "action", "auth" } },
 		{
-			{ "username", this->data.username },
-			{ "password", this->data.password }
+			{ "username", data.username },
+			{ "password", data.password }
 		}
 		);
 
 	CREATE_EVENT_LOG("Request to verify account availability")
-	return this->performApiRequest(jsonString);
+	return performApiRequest(jsonString);
 }
 
 bool API::checkUserHwid() {
@@ -45,13 +45,13 @@ bool API::checkUserHwid() {
 		  { "type", "update" }
 		},
 		{
-			{ "member_id", this->data.member_id },
-			{ "hwid", this->data.hwid }
+			{ "member_id", data.member_id },
+			{ "hwid", data.hwid }
 		}
 		);
 
 	CREATE_EVENT_LOG("Request to verify HWID")
-	return this->performApiRequest(jsonString);
+	return performApiRequest(jsonString);
 }
 
 bool API::checkUserLicense() {
@@ -61,13 +61,13 @@ bool API::checkUserLicense() {
 		  { "type", "get" }
 		},
 		{
-			{ "username", this->data.username },
-			{ "password", this->data.password }
+			{ "username", data.username },
+			{ "password", data.password }
 		}
 		);
 
 	CREATE_EVENT_LOG("Request to verify the availability license")
-	return this->performApiRequest(jsonString);
+	return performApiRequest(jsonString);
 }
 
 bool API::checkUserToken() {
@@ -77,25 +77,25 @@ bool API::checkUserToken() {
 		  { "type", "validate" }
 		},
 		{
-			{ "username", this->data.username },
-			{ "hwid", this->data.hwid },
-			{ "token", this->data.token }
+			{ "username", data.username },
+			{ "hwid", data.hwid },
+			{ "token", data.token }
 		}
 		);
 
 	CREATE_EVENT_LOG("Request to verify session token")
-	return this->performApiRequest(jsonString);
+	return performApiRequest(jsonString);
 }
 
 bool API::performApiRequest(const std::string& jsonString) {
 	std::string encryptedJson = Crypt::encryptBase64(jsonString);
-	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
+	boost::format source = boost::format("%1%?data=%2%") % url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
 	std::string decryptedResponse = Crypt::decryptBase64(response);
 
 	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
-		this->data.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
+		data.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
@@ -109,5 +109,5 @@ bool API::performApiRequest(const std::string& jsonString) {
 }
 
 const std::string API::getUsername() {
-	return this->data.username;
+	return data.username;
 }

@@ -19,7 +19,7 @@ Session::~Session() {
 
 void Session::run() {
 	auto self(shared_from_this());
-	this->packetHandler->recvMessage([self](const std::string& message) {
+	packetHandler->recvMessage([self](const std::string& message) {
 		std::unique_ptr<API> api = std::make_unique<API>(message);
 		if (api->isAuthorized()) {
 			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());

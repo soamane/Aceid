@@ -32,15 +32,15 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 }
 
 const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
-	auto document = this->parseJsonString(jsonString);
-	auto& params = this->parseDocumentParams(document);
+	auto document = parseJsonString(jsonString);
+	auto& params = parseDocumentParams(document);
 
 	return std::to_string(params["id"].GetInt());
 }
 
 const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
-	auto document = this->parseJsonString(jsonString);
-	auto& params = this->parseDocumentParams(document);
+	auto document = parseJsonString(jsonString);
+	auto& params = parseDocumentParams(document);
 
 	AuthData authData;
 	authData.username = params["username"].GetString();
@@ -52,16 +52,16 @@ const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 }
 
 bool JsonWrapper::haveErrorField(const std::string& jsonString) {
-	return this->paramsFieldExist(jsonString, "error");
+	return paramsFieldExist(jsonString, "error");
 }
 
 bool JsonWrapper::haveMemberIdField(const std::string& jsonString) {
-	return this->paramsFieldExist(jsonString, "id");
+	return paramsFieldExist(jsonString, "id");
 }
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
-	auto document = this->parseJsonString(jsonString);
-	auto& params = this->parseDocumentParams(document);
+	auto document = parseJsonString(jsonString);
+	auto& params = parseDocumentParams(document);
 
 	return params.HasMember(fieldName.c_str());
 }

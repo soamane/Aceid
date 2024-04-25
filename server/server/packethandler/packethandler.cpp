@@ -16,7 +16,7 @@ void PacketHandler::sendMessage(const std::string& message) {
         packet.data = std::vector<char>(encryptedMessage.begin(), encryptedMessage.end());
     }
 
-    this->sendPacket(packet);
+    sendPacket(packet);
 }
 
 void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
@@ -26,13 +26,13 @@ void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
         packet.data = buffer;
     }
 
-    this->sendPacket(packet);
+    sendPacket(packet);
 }
 
 void PacketHandler::recvMessage(std::function<void(const std::string&)> callback) {
     Packet packet;
     {
-        this->recvPacket(packet, callback);
+        recvPacket(packet, callback);
     }
 }
 

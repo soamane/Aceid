@@ -15,10 +15,10 @@ const std::string API::convertAuthDataToJson() {
 		  { "type", "login" }
 		},
 		{
-			{ "username", this->data->username },
-			{ "password", this->data->password },
-			{ "hwid", this->data->hwid },
-			{ "token", this->data->token }
+			{ "username", data->username },
+			{ "password", data->password },
+			{ "hwid", data->hwid },
+			{ "token", data->token }
 		}
 	);
 
@@ -32,16 +32,16 @@ const std::string API::getSessionToken() {
 		  { "type", "create" }
 		},
 		{
-			{ "username", this->data->username },
-			{ "hwid", this->data->hwid }
+			{ "username", data->username },
+			{ "hwid", data->hwid }
 		}
 	);
-	return this->performGetSessionToken(jsonString);
+	return performGetSessionToken(jsonString);
 }
 
 const std::string API::performGetSessionToken(const std::string& jsonString) {
 	std::string encryptedJson = Crypt::encryptBase64(jsonString);
-	boost::format source = boost::format("%1%?data=%2%") % this->url % encryptedJson;
+	boost::format source = boost::format("%1%?data=%2%") % url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
 	std::string decryptedResponse = Crypt::decryptBase64(response);

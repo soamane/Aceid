@@ -9,20 +9,20 @@ Server::Server(boost::asio::io_context& context, short port)
     : acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
 void Server::start() {
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(this->acceptor.get_executor());
-    this->acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
+    std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(acceptor.get_executor());
+    acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
         if (!errorCode) {
-            this->createSession(socket);
+            createSession(socket);
         }
         else {
            CREATE_SERVER_LOG("The socket failed to connect to the server")
         }
-        this->start();
+        start();
     });
 }
 
 void Server::stop() {
-    this->acceptor.close();
+    acceptor.close();
 }
 
 void Server::createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {
