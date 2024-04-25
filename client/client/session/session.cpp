@@ -20,8 +20,8 @@ void Session::run() {
 
 	std::string convertedAuthData = api->convertAuthDataToJson();
 
-	this->packetHandler->sendMessage(convertedAuthData);
-	std::cout << this->packetHandler->recvMessage();
+	packetHandler->sendMessage(convertedAuthData);
+	std::cout << packetHandler->recvMessage();
 
 	Sleep(-1);
 }

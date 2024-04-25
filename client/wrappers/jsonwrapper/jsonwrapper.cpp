@@ -29,16 +29,16 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 }
 
 bool JsonWrapper::haveErrorField(const std::string& jsonString) {
-	return this->paramsFieldExist(jsonString, "error");
+	return paramsFieldExist(jsonString, "error");
 }
 
 bool JsonWrapper::haveTokenField(const std::string& jsonString) {
-	return this->paramsFieldExist(jsonString, "token");
+	return paramsFieldExist(jsonString, "token");
 }
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
-	auto document = this->parseJsonString(jsonString);
-	auto& params = this->parseDocumentParams(document);
+	auto document = parseJsonString(jsonString);
+	auto& params = parseDocumentParams(document);
 
 	return params.HasMember(fieldName.c_str());
 }
@@ -71,8 +71,8 @@ const std::string JsonWrapper::createJsonString(std::initializer_list<std::pair<
 }
 
 const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) {
-	auto document = this->parseJsonString(jsonString);
-	auto& params = this->parseDocumentParams(document);
+	auto document = parseJsonString(jsonString);
+	auto& params = parseDocumentParams(document);
 
 	if (!params.HasMember("token")) {
 		throw std::runtime_error("failed to parse token field");

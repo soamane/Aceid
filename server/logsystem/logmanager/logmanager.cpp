@@ -24,7 +24,7 @@ std::shared_ptr<ServerLog> LogManager::getServerLog() {
 }
 
 void LogManager::initEventLog() {
-	this->eventLog = std::make_shared<EventLog>();
+	eventLog = std::make_shared<EventLog>();
 }
 
 void LogManager::createLog(std::shared_ptr<Log> object, const std::string& log) {
