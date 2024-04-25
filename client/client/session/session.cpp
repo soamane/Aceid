@@ -18,9 +18,9 @@ void Session::run() {
 	authData->hwid = Hardware::getHardwareId();
 	authData->token = api->getSessionToken();
 
-	std::string convertedData = api->convertAuthDataToJson();
+	std::string convertedAuthData = api->convertAuthDataToJson();
 
-	this->packetHandler->sendMessage(convertedData);
+	this->packetHandler->sendMessage(convertedAuthData);
 	std::cout << this->packetHandler->recvMessage();
 
 	Sleep(-1);
