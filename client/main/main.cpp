@@ -1,7 +1,6 @@
 #include "../client/client.h"
 
 int main() {
-
 	try {
 		boost::asio::io_context context;
 		Client client(context);
