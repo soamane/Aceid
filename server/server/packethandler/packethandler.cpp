@@ -1,6 +1,6 @@
 #include "packethandler.h"
 
-#include "../../secure/crypt/crypt.h"
+#include "../../protect/dataencryption/dataencryption.h"
 #include "../../logsystem/logmanager/logmanager.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
