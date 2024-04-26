@@ -12,8 +12,8 @@ void Session::run() {
 	std::unique_ptr<AuthData> authData = std::make_unique<AuthData>();
 	std::unique_ptr<API> api = std::make_unique<API>(authData.get());
 
-	authData->username = "username";
-	authData->password = "password";
+	authData->username = "admin";
+	authData->password = "aceid";
 
 	authData->hwid = Hardware::getHardwareId();
 	authData->token = api->getSessionToken();

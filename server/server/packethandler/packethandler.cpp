@@ -9,7 +9,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 }
 
 void PacketHandler::sendMessage(const std::string& message) {
-    const std::string encryptedMessage = DataEncryption::encryptBase64(message);
+    const std::string encryptedMessage = DataEncryption::encryptMultiBase64(message);
     Packet packet;
     {
         packet.size = encryptedMessage.size();
@@ -69,7 +69,7 @@ void PacketHandler::recvPacket(const Packet& packet, std::function<void(const st
                     CREATE_EVENT_LOG("Packet received without errors: " + std::to_string(bytes) + " bytes received")
 
                     const std::string result(packetPointer->data.begin(), packetPointer->data.end());
-                    const std::string decryptedMessage = DataEncryption::decryptBase64(result);
+                    const std::string decryptedMessage = DataEncryption::decryptMultiBase64(result);
 
                     callback(decryptedMessage);
                 }
