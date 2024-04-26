@@ -14,7 +14,7 @@ const std::string PacketHandler::recvMessage() {
 	}
 
 	std::string receivedMessage = std::string(msgBuffer.begin(), msgBuffer.end());
-	receivedMessage = DataEncryption::decryptMultiBase64(receivedMessage);
+	receivedMessage = DataEncryption::decryptCustomMethod(receivedMessage);
 
 	return receivedMessage;
 }
@@ -29,7 +29,7 @@ const std::vector<char> PacketHandler::recvBuffer() {
 }
 
 void PacketHandler::sendMessage(std::string& message) {
-	message = DataEncryption::encryptMultiBase64(message);
+	message = DataEncryption::encryptCustomMethod(message);
 	Packet packet;
 	{
 		packet.size = message.size();

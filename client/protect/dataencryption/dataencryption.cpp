@@ -45,3 +45,54 @@ std::string DataEncryption::decryptMultiBase64(const std::string& str) {
 	return result;
 }
 
+std::string DataEncryption::encryptCustomMethod(const std::string& str) {
+	std::vector<int> strData(str.begin(), str.end());
+	std::vector<int> keyData(salt.begin(), salt.end());
+
+	int keycode = generateKeyCode(keyData);
+	for (auto& c : strData) {
+		c -= keycode;
+	}
+
+	return std::string(strData.begin(), strData.end());
+}
+
+std::string DataEncryption::decryptCustomMethod(const std::string& str) {
+	std::vector<int> strData(str.begin(), str.end());
+	std::vector<int> keyData(salt.begin(), salt.end());
+
+	int keycode = generateKeyCode(keyData);
+	for (auto& c : strData) {
+		c += keycode;
+	}
+
+	return std::string(strData.begin(), strData.end());
+}
+
+int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
+	int keycode = 0;
+	int halfSize = keyData.size() / 2;
+
+	for (std::size_t i = 0; i < keyData.size(); ++i) {
+		if (keyData.size() % 2 == 0) {
+			if (i >= halfSize) {
+				keycode -= keyData[i];
+			}
+			else {
+				keycode += keyData[i];
+			}
+		}
+		else {
+			if (i == keyData.size() - 1) {
+				keycode -= keyData[i];
+			}
+			else {
+				keycode += keyData[i];
+			}
+		}
+	}
+
+	keycode *= -1 * static_cast<int>(keyData.size());
+	return keycode;
+}
+
