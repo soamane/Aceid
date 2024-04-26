@@ -19,7 +19,7 @@ std::string DataEncryption::encryptMultiBase64(const std::string& str) {
 
 	size_t pos = result.find('=');
 	while (pos != std::string::npos) {
-		result.replace(pos, 1, salt);
+		result.replace(pos, 1, key);
 		pos = result.find('=', pos + 1);
 	}
 
@@ -31,10 +31,10 @@ std::string DataEncryption::decryptMultiBase64(const std::string& str) {
 	std::string result;
 	std::string decryptedStr = decryptBase64(str);
 
-	size_t pos = decryptedStr.find(salt);
+	size_t pos = decryptedStr.find(key);
 	while (pos != std::string::npos) {
-		decryptedStr.replace(pos, salt.size(), "=");
-		pos = decryptedStr.find(salt, pos + 1);
+		decryptedStr.replace(pos, key.size(), "=");
+		pos = decryptedStr.find(key, pos + 1);
 	}
 
 	for (size_t i = 0; i < decryptedStr.length(); i += 4) {
@@ -47,7 +47,7 @@ std::string DataEncryption::decryptMultiBase64(const std::string& str) {
 
 std::string DataEncryption::encryptCustomMethod(const std::string& str) {
 	std::vector<int> strData(str.begin(), str.end());
-	std::vector<int> keyData(salt.begin(), salt.end());
+	std::vector<int> keyData(key.begin(), key.end());
 
 	int keycode = generateKeyCode(keyData);
 	for (auto& c : strData) {
@@ -59,7 +59,7 @@ std::string DataEncryption::encryptCustomMethod(const std::string& str) {
 
 std::string DataEncryption::decryptCustomMethod(const std::string& str) {
 	std::vector<int> strData(str.begin(), str.end());
-	std::vector<int> keyData(salt.begin(), salt.end());
+	std::vector<int> keyData(key.begin(), key.end());
 
 	int keycode = generateKeyCode(keyData);
 	for (auto& c : strData) {

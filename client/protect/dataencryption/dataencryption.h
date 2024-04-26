@@ -21,7 +21,7 @@ private:
 	static int generateKeyCode(const std::vector<int>& keyData);
 
 private:
-	static inline const std::string salt = "wtfdude?";
+	static inline const std::string key = "aceidnetwork";
 };
 
 #endif // !DATA_ENCRYPTION_H
