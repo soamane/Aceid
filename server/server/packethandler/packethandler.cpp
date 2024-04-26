@@ -4,12 +4,12 @@
 #include "../../logsystem/logmanager/logmanager.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
-    : socket(std::move(socket)) {
+    : m_socket(std::move(socket)) {
 
 }
 
 void PacketHandler::sendMessage(const std::string& message) {
-    const std::string encryptedMessage = Crypt::encryptBase64(message);
+    const std::string encryptedMessage = DataEncryption::encryptBase64(message);
     Packet packet;
     {
         packet.size = encryptedMessage.size();
@@ -40,9 +40,9 @@ void PacketHandler::sendPacket(const Packet& packet) {
     std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
 
     auto self(shared_from_this());
-    boost::asio::async_write(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
+    boost::asio::async_write(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
-            boost::asio::async_write(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer](boost::system::error_code errorCode, std::size_t bytes) {
+            boost::asio::async_write(self->m_socket, boost::asio::buffer(packetPointer->data), [self, packetPointer](boost::system::error_code errorCode, std::size_t bytes) {
                 if (!errorCode) {
                     CREATE_EVENT_LOG("Packet sended without errors: " + std::to_string(bytes) + " bytes sended")
                 }
@@ -61,15 +61,15 @@ void PacketHandler::recvPacket(const Packet& packet, std::function<void(const st
     std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
 
     auto self(shared_from_this());
-    boost::asio::async_read(self->socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
+    boost::asio::async_read(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (!errorCode) {
             packetPointer->data.resize(packetPointer->size);
-            boost::asio::async_read(self->socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
+            boost::asio::async_read(self->m_socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
                 if (!errorCode) {
                     CREATE_EVENT_LOG("Packet received without errors: " + std::to_string(bytes) + " bytes received")
 
                     const std::string result(packetPointer->data.begin(), packetPointer->data.end());
-                    const std::string decryptedMessage = Crypt::decryptBase64(result);
+                    const std::string decryptedMessage = DataEncryption::decryptBase64(result);
 
                     callback(decryptedMessage);
                 }

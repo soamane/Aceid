@@ -1,10 +1,10 @@
 #pragma once
-#ifndef CRYPT_H
-#define CRYPT_H
+#ifndef DATA_ENCRYPTION_H
+#define DATA_ENCRYPTION_H
 
 #include <string>
 
-class Crypt
+class DataEncryption
 {
 public:
 	static std::string encryptBase64(const std::string& str);
@@ -14,4 +14,4 @@ private:
 
 };
 
-#endif // !CRYPT_H
+#endif // !DATA_ENCRYPTION_H

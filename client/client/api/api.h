@@ -29,8 +29,8 @@ private:
 	const std::string performGetSessionToken(const std::string& jsonString);
 
 private:
-	AuthData* data;
-	const std::string url = "https://aceid.cc/server_api/api.php";
+	AuthData* m_authData;
+	const std::string m_url = "https://aceid.cc/server_api/api.php";
 };
 
 #endif // !API_H

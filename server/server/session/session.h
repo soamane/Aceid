@@ -27,8 +27,8 @@ public:
 	void run();
 
 private:
-	boost::asio::ip::tcp::socket socket; // current remote socket
-	std::shared_ptr<PacketHandler> packetHandler;
+	boost::asio::ip::tcp::socket m_socket; // current remote socket
+	std::shared_ptr<PacketHandler> m_packetHandler;
 };
 
 #endif // !SESSION_H

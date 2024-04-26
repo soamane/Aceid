@@ -6,7 +6,7 @@ std::shared_ptr<LogManager> LogManager::getInstance() {
 }
 
 std::shared_ptr<EventLog> LogManager::getEventLog() {
-	std::shared_ptr<EventLog> object = getInstance()->eventLog;
+	std::shared_ptr<EventLog> object = getInstance()->m_event;
 	if (object == nullptr) {
 		throw std::runtime_error("event log is not initialized");
 	}
@@ -24,7 +24,7 @@ std::shared_ptr<ServerLog> LogManager::getServerLog() {
 }
 
 void LogManager::initEventLog() {
-	eventLog = std::make_shared<EventLog>();
+	m_event = std::make_shared<EventLog>();
 }
 
 void LogManager::createLog(std::shared_ptr<Log> object, const std::string& log) {

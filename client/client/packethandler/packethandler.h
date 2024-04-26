@@ -25,7 +25,7 @@ private:
 	std::vector<char> recvPacket();
 
 private:
-	boost::asio::ip::tcp::socket socket;
+	boost::asio::ip::tcp::socket m_socket;
 };
 
 #endif // !PACKET_HANDLER_H
