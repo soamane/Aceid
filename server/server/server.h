@@ -28,7 +28,7 @@ private:
 	void createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
 
 private:
-	boost::asio::ip::tcp::acceptor acceptor;
+	boost::asio::ip::tcp::acceptor m_acceptor;
 };
 
 #endif // !ACCEPTOR_H

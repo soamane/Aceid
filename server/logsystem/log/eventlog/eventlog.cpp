@@ -5,34 +5,34 @@
 #include <boost/format.hpp>
 
 EventLog::EventLog() {
-    filePath = tempFilePath + getRandomFileName();
+    m_path = m_tempPath + getRandomFileName();
 }
 
 void EventLog::write(const std::string& log) {
-    file.open(filePath, std::ios::app);
-    if (!file.is_open()) {
+    m_file.open(m_path, std::ios::app);
+    if (!m_file.is_open()) {
         throw std::runtime_error("failed to open event log file");
     }
 
-    file << getCurrentTime() << ' ' << log << std::endl;
-    file.close();
+    m_file << getCurrentTime() << ' ' << log << std::endl;
+    m_file.close();
 }
 
 void EventLog::renameAndMove(const std::string& newFileName) {
-    if (file.is_open()) {
-        file.close();
+    if (m_file.is_open()) {
+        m_file.close();
     }
 
-    boost::format source = boost::format("%1%%2%.log") % defaultFilePath % newFileName;
+    boost::format source = boost::format("%1%%2%.log") % m_defaultPath % newFileName;
     const std::string newPath = source.str();
 
-    std::rename(filePath.c_str(), newPath.c_str());
-    filePath = newPath;
+    std::rename(m_path.c_str(), newPath.c_str());
+    m_path = newPath;
 }
 
 EventLog::~EventLog() {
-    if (file.is_open()) {
-        file.close();
+    if (m_file.is_open()) {
+        m_file.close();
     }
 }
 

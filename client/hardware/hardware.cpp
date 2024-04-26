@@ -6,7 +6,7 @@
 #include <d3d9.h>
 #pragma comment(lib, "d3d9.lib")
 
-#include "../secure/crypt/crypt.h"
+#include "../protect/dataencryption/dataencryption.h"
 
 std::string Hardware::getHardwareId() {
     std::string cpuInfo = getCPUInfo();
@@ -19,7 +19,7 @@ std::string Hardware::getHardwareId() {
         return std::string();
     }
 
-    return Crypt::encryptBase64(cpuInfo + gpuInfo);
+    return DataEncryption::encryptBase64(cpuInfo + gpuInfo);
 }
 
 std::string Hardware::getCPUInfo() {

@@ -33,11 +33,11 @@ private:
 	std::string getRandomFileName();
 
 private:
-	std::ofstream file;
-	std::string filePath;
+	std::ofstream m_file;
+	std::string m_path;
 
-	const std::string defaultFilePath = "logs\\"; // main log directory
-	const std::string tempFilePath = defaultFilePath + "temp\\"; // temp log directory
+	const std::string m_defaultPath = "logs\\"; // main log directory
+	const std::string m_tempPath = m_defaultPath + "temp\\"; // temp log directory
 };
 
 #endif // !EVENT_LOG_H

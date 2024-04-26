@@ -15,7 +15,7 @@ private:
 	void createSession(boost::asio::ip::tcp::socket& socket);
 
 private:
-	boost::asio::ip::tcp::resolver resolver;
+	boost::asio::ip::tcp::resolver m_resolver;
 };
 
 #endif // !CONNECTOR_H

@@ -61,8 +61,8 @@ private:
     bool performApiRequest(const std::string& jsonString);
 
 private:
-    AuthData data; // object of the client data structure
-    const std::string url = "https://aceid.cc/server_api/api.php"; // URL of the web server
+    AuthData m_authData; // object of the client data structure
+    const std::string m_url = "https://aceid.cc/server_api/api.php"; // URL of the web server
 };
 
 #endif // !API_H

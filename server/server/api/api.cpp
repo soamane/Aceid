@@ -21,7 +21,7 @@ void API::getUserData(const std::string& jsonString) {
 		return;
 	}
 
-	data = JsonWrapper::getInstance()->parseUserData(jsonString);
+	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
 }
 
 bool API::checkUserAuthentication() {
@@ -29,8 +29,8 @@ bool API::checkUserAuthentication() {
 	(
 		{ { "action", "auth" } },
 		{
-			{ "username", data.username },
-			{ "password", data.password }
+			{ "username", m_authData.username },
+			{ "password", m_authData.password }
 		}
 		);
 
@@ -45,8 +45,8 @@ bool API::checkUserHwid() {
 		  { "type", "update" }
 		},
 		{
-			{ "member_id", data.member_id },
-			{ "hwid", data.hwid }
+			{ "member_id", m_authData.member_id },
+			{ "hwid", m_authData.hwid }
 		}
 		);
 
@@ -61,8 +61,8 @@ bool API::checkUserLicense() {
 		  { "type", "get" }
 		},
 		{
-			{ "username", data.username },
-			{ "password", data.password }
+			{ "username", m_authData.username },
+			{ "password", m_authData.password }
 		}
 		);
 
@@ -77,9 +77,9 @@ bool API::checkUserToken() {
 		  { "type", "validate" }
 		},
 		{
-			{ "username", data.username },
-			{ "hwid", data.hwid },
-			{ "token", data.token }
+			{ "username", m_authData.username },
+			{ "hwid", m_authData.hwid },
+			{ "token", m_authData.token }
 		}
 		);
 
@@ -88,14 +88,14 @@ bool API::checkUserToken() {
 }
 
 bool API::performApiRequest(const std::string& jsonString) {
-	std::string encryptedJson = Crypt::encryptBase64(jsonString);
-	boost::format source = boost::format("%1%?data=%2%") % url % encryptedJson;
+	std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
+	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
-	std::string decryptedResponse = Crypt::decryptBase64(response);
+	std::string decryptedResponse = DataEncryption::decryptBase64(response);
 
 	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
-		data.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
+		m_authData.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
@@ -109,5 +109,5 @@ bool API::performApiRequest(const std::string& jsonString) {
 }
 
 const std::string API::getUsername() {
-	return data.username;
+	return m_authData.username;
 }

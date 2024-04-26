@@ -50,7 +50,7 @@ private:
     void recvPacket(const Packet& packet, std::function<void(const std::string&)> callback);
 
 private:
-    boost::asio::ip::tcp::socket socket; // current remote socket
+    boost::asio::ip::tcp::socket m_socket; // current remote socket
 };
 
 #endif // !PACKET_HANDLER_H

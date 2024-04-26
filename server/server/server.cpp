@@ -6,11 +6,11 @@
 #include "../logsystem/logmanager/logmanager.h"
 
 Server::Server(boost::asio::io_context& context, short port)
-    : acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
+    : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
 void Server::start() {
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(acceptor.get_executor());
-    acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
+    std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(m_acceptor.get_executor());
+    m_acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
         if (!errorCode) {
             createSession(socket);
         }
@@ -22,7 +22,7 @@ void Server::start() {
 }
 
 void Server::stop() {
-    acceptor.close();
+    m_acceptor.close();
 }
 
 void Server::createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {

@@ -6,7 +6,7 @@
 #include <iostream>
 
 Session::Session(boost::asio::ip::tcp::socket& socket) 
-	: socket(std::move(socket)), packetHandler(std::make_unique<PacketHandler>(this->socket)) { }
+	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
 
 void Session::run() {
 	std::unique_ptr<AuthData> authData = std::make_unique<AuthData>();
@@ -20,8 +20,8 @@ void Session::run() {
 
 	std::string convertedAuthData = api->convertAuthDataToJson();
 
-	packetHandler->sendMessage(convertedAuthData);
-	std::cout << packetHandler->recvMessage();
+	m_packetHandler->sendMessage(convertedAuthData);
+	std::cout << m_packetHandler->recvMessage();
 
 	Sleep(-1);
 }

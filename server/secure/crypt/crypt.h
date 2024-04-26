@@ -10,7 +10,7 @@
 
 */
 
-class Crypt
+class DataEncryption
 {
 public:
 	// Encodes a string using base64

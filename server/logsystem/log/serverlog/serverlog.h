@@ -20,8 +20,8 @@ public:
     void write(const std::string& log) override;
 
 public:
-    std::ofstream file;
-    std::string fileName = "server.log";
+    std::ofstream m_file;
+    std::string m_fileName = "server.log";
 };
 
 #endif // !SERVER_LOG_H

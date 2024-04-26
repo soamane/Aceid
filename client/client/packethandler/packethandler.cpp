@@ -1,9 +1,9 @@
 #include "packethandler.h"
 
-#include "../../secure/crypt/crypt.h"
+#include "../../protect/dataencryption/dataencryption.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
-	: socket(std::move(socket)) {
+	: m_socket(std::move(socket)) {
 
 }
 
@@ -14,7 +14,7 @@ const std::string PacketHandler::recvMessage() {
 	}
 
 	std::string receivedMessage = std::string(msgBuffer.begin(), msgBuffer.end());
-	receivedMessage = Crypt::decryptBase64(receivedMessage);
+	receivedMessage = DataEncryption::decryptBase64(receivedMessage);
 
 	return receivedMessage;
 }
@@ -29,7 +29,7 @@ const std::vector<char> PacketHandler::recvBuffer() {
 }
 
 void PacketHandler::sendMessage(std::string& message) {
-	message = Crypt::encryptBase64(message);
+	message = DataEncryption::encryptBase64(message);
 	Packet packet;
 	{
 		packet.size = message.size();
@@ -41,13 +41,13 @@ void PacketHandler::sendMessage(std::string& message) {
 
 void PacketHandler::sendPacket(const Packet& packet) {
 	boost::system::error_code errorCode;
-	socket.write_some(boost::asio::buffer(&packet.size, sizeof(packet.size)), errorCode);
+	m_socket.write_some(boost::asio::buffer(&packet.size, sizeof(packet.size)), errorCode);
 	if (errorCode) {
 		throw std::runtime_error("failed to send packet size");
 	}
 
 	const std::vector<char> buffer = std::vector<char>(packet.data.begin(), packet.data.end());
-	socket.write_some(boost::asio::buffer(buffer), errorCode);
+	m_socket.write_some(boost::asio::buffer(buffer), errorCode);
 	if (errorCode) {
 		throw std::runtime_error("failed to send packet body");
 	}
@@ -57,13 +57,13 @@ std::vector<char> PacketHandler::recvPacket() {
 	Packet packet;
 	{
 		boost::system::error_code errorCode;
-		boost::asio::read(socket, boost::asio::buffer(&packet.size, sizeof(packet.size)), boost::asio::transfer_all(), errorCode);
+		boost::asio::read(m_socket, boost::asio::buffer(&packet.size, sizeof(packet.size)), boost::asio::transfer_all(), errorCode);
 		if (errorCode) {
 			throw std::runtime_error("failed to recv packet size");
 		}
 
 		packet.data.resize(packet.size);
-		boost::asio::read(socket, boost::asio::buffer(packet.data), boost::asio::transfer_all(), errorCode);
+		boost::asio::read(m_socket, boost::asio::buffer(packet.data), boost::asio::transfer_all(), errorCode);
 		if (errorCode) {
 			throw std::runtime_error("failed to recv packet body");
 		}

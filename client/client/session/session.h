@@ -14,8 +14,8 @@ public:
 	void run();
 
 private:
-	boost::asio::ip::tcp::socket socket;
-	std::unique_ptr<PacketHandler> packetHandler;
+	boost::asio::ip::tcp::socket m_socket;
+	std::unique_ptr<PacketHandler> m_packetHandler;
 };
 
 #endif // !SESSION_H
