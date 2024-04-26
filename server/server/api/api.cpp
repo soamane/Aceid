@@ -3,7 +3,7 @@
 #include <iostream>
 #include <boost/format.hpp>
 
-#include "../../secure/crypt/crypt.h"
+#include "../../protect/dataencryption/dataencryption.h"
 #include "../../logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
