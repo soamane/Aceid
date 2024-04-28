@@ -2,6 +2,8 @@
 
 #include "base64/base64.h"
 
+#include <iostream>
+
 std::string DataEncryption::encryptBase64(const std::string& str) {
 	return base64::to_base64(str);
 }
@@ -28,7 +30,6 @@ std::string DataEncryption::encryptMultiBase64(const std::string& str) {
 }
 
 std::string DataEncryption::decryptMultiBase64(const std::string& str) {
-	std::string result;
 	std::string decryptedStr = decryptBase64(str);
 
 	size_t pos = decryptedStr.find(key);
@@ -37,6 +38,7 @@ std::string DataEncryption::decryptMultiBase64(const std::string& str) {
 		pos = decryptedStr.find(key, pos + 1);
 	}
 
+	std::string result;
 	for (size_t i = 0; i < decryptedStr.length(); i += 4) {
 		std::string chunk = decryptedStr.substr(i, 4);
 		result += base64::from_base64(chunk);
@@ -54,11 +56,16 @@ std::string DataEncryption::encryptCustomMethod(const std::string& str) {
 		c -= keycode;
 	}
 
-	return std::string(strData.begin(), strData.end());
+	std::string result = std::string(strData.begin(), strData.end());
+	result = encryptMultiBase64(result);
+
+	return result;
 }
 
 std::string DataEncryption::decryptCustomMethod(const std::string& str) {
-	std::vector<int> strData(str.begin(), str.end());
+	const std::string decoded = decryptMultiBase64(str);
+
+	std::vector<int> strData(decoded.begin(), decoded.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
 	int keycode = generateKeyCode(keyData);
@@ -66,7 +73,8 @@ std::string DataEncryption::decryptCustomMethod(const std::string& str) {
 		c += keycode;
 	}
 
-	return std::string(strData.begin(), strData.end());
+	std::string result = std::string(strData.begin(), strData.end());
+	return result;
 }
 
 int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
