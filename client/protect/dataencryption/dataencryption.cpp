@@ -54,11 +54,14 @@ std::string DataEncryption::encryptCustomMethod(const std::string& str) {
 		c -= keycode;
 	}
 
-	return std::string(strData.begin(), strData.end());
+	std::string result = std::string(strData.begin(), strData.end());
+	return encryptMultiBase64(result);
 }
 
 std::string DataEncryption::decryptCustomMethod(const std::string& str) {
-	std::vector<int> strData(str.begin(), str.end());
+	const std::string decoded = decryptMultiBase64(str);
+
+	std::vector<int> strData(decoded.begin(), decoded.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
 	int keycode = generateKeyCode(keyData);
