@@ -7,7 +7,7 @@
 
 /*
 
-	Class for working with encryption and so on
+	Class for working with encryption
 
 */
 
@@ -33,6 +33,8 @@ public:
 	static std::string decryptCustomMethod(const std::string& str);
 
 private:
+
+	// Get keycode via key word
 	static int generateKeyCode(const std::vector<int>& keyData);
 
 private:

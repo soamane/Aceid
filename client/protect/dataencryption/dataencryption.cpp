@@ -92,7 +92,7 @@ int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
 		}
 	}
 
-	keycode *= -1 * static_cast<int>(keyData.size());
+	keycode *= static_cast<int>(keyData.size());
 	return keycode;
 }
 
