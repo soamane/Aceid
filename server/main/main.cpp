@@ -1,6 +1,6 @@
 #include "../server/server.h"
 
-#include "../logsystem/logmanager/logmanager.h"
+#include "../app/logsystem/logmanager/logmanager.h"
 
 int main() {
 

@@ -1,7 +1,7 @@
 #include "packethandler.h"
 
-#include "../../protect/dataencryption/dataencryption.h"
-#include "../../logsystem/logmanager/logmanager.h"
+#include "../../app/protect/dataencryption/dataencryption.h"
+#include "../../app/logsystem/logmanager/logmanager.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
     : m_socket(std::move(socket)) {

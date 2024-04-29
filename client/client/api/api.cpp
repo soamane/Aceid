@@ -1,6 +1,6 @@
 #include "api.h"
 
-#include "../../protect/dataencryption/dataencryption.h"
+#include "../../app/protect/dataencryption/dataencryption.h"
 
 #include <stdexcept>
 #include <boost/format.hpp>

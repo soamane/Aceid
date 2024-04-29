@@ -4,8 +4,8 @@
 
 #include <string>
 
-#include "../../wrappers/jsonwrapper/jsonwrapper.h"
-#include "../../wrappers/curlwrapper/curlwrapper.h"
+#include "../../app/wrappers/jsonwrapper/jsonwrapper.h"
+#include "../../app/wrappers/curlwrapper/curlwrapper.h"
 
 /*
 

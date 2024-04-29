@@ -1,7 +1,7 @@
 #include "session.h"
 #include "../api/api.h"
 
-#include "../../logsystem/logmanager/logmanager.h"
+#include "../../app/logsystem/logmanager/logmanager.h"
 
 #include <iostream>
 
