@@ -15,27 +15,27 @@ class DataEncryption
 {
 public:
 	// Encodes a string using base64
-	static std::string encryptBase64(const std::string& str);
+	static const std::string encryptBase64(const std::string& source);
 
 	// Decodes a string using base64
-	static std::string decryptBase64(const std::string& str);
+	static const std::string decryptBase64(const std::string& source);
 
 	// Encodes a string using custom method based on base64
-	static std::string encryptMultiBase64(const std::string& str);
+	static const std::string encryptMultiBase64(const std::string& source);
 
 	// Decodes a string using custom method based on base64
-	static std::string decryptMultiBase64(const std::string& str);
+	static const std::string decryptMultiBase64(const std::string& source);
 
 	// Encodes a string using custom method
-	static std::string encryptCustomMethod(const std::string& str);
+	static const std::string encryptCustomMethod(const std::string& source);
 
 	// Decodes a string using custom method
-	static std::string decryptCustomMethod(const std::string& str);
+	static const std::string decryptCustomMethod(const std::string& source);
 
 private:
 
 	// Get keycode via key word
-	static int generateKeyCode(const std::vector<int>& keyData);
+	static const int generateKeyCode(const std::vector<int>& keyData);
 
 private:
 	static inline const std::string key = "aceid"; // encode salt

@@ -2,22 +2,23 @@
 
 #include "base64/base64.h"
 
-std::string DataEncryption::encryptBase64(const std::string& str) {
-	return base64::to_base64(str);
+#include <iostream>
+
+const std::string DataEncryption::encryptBase64(const std::string& source) {
+	return base64::to_base64(source);
 }
 
-std::string DataEncryption::decryptBase64(const std::string& str) {
-	return base64::from_base64(str);
+const std::string DataEncryption::decryptBase64(const std::string& source) {
+	return base64::from_base64(source);
 }
 
-std::string DataEncryption::encryptMultiBase64(const std::string& str) {
+const std::string DataEncryption::encryptMultiBase64(const std::string& source) {
 	std::string result;
-	for (auto& c : str) {
-		std::string encryptedChar = encryptBase64(std::string(1, c));
-		result += encryptedChar;
+	for (auto& c : source) {
+		result += encryptBase64(std::string(1, c));
 	}
 
-	size_t pos = result.find('=');
+	std::size_t pos = result.find('=');
 	while (pos != std::string::npos) {
 		result.replace(pos, 1, key);
 		pos = result.find('=', pos + 1);
@@ -27,75 +28,78 @@ std::string DataEncryption::encryptMultiBase64(const std::string& str) {
 	return result;
 }
 
-std::string DataEncryption::decryptMultiBase64(const std::string& str) {
-	std::string result;
-	std::string decryptedStr = decryptBase64(str);
+const std::string DataEncryption::decryptMultiBase64(const std::string& source) {
+	std::string decrypted = decryptBase64(source);
 
-	size_t pos = decryptedStr.find(key);
+	std::size_t pos = decrypted.find(key);
 	while (pos != std::string::npos) {
-		decryptedStr.replace(pos, key.size(), "=");
-		pos = decryptedStr.find(key, pos + 1);
+		decrypted.replace(pos, key.size(), "=");
+		pos = decrypted.find(key, pos + 1);
 	}
 
-	for (size_t i = 0; i < decryptedStr.length(); i += 4) {
-		std::string chunk = decryptedStr.substr(i, 4);
-		result += base64::from_base64(chunk);
+	std::string result;
+	const std::size_t offset = 4;
+	for (std::size_t pad = 0; pad < decrypted.length(); pad += offset) {
+		std::string chunk = decrypted.substr(pad, offset);
+		result += decryptBase64(chunk);
 	}
 
 	return result;
 }
 
-std::string DataEncryption::encryptCustomMethod(const std::string& str) {
-	std::vector<int> strData(str.begin(), str.end());
+const std::string DataEncryption::encryptCustomMethod(const std::string& source) {
+	std::vector<int> sourceData(source.begin(), source.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
-	int keycode = generateKeyCode(keyData);
-	for (auto& c : strData) {
-		c -= keycode;
+	const int keyCode = generateKeyCode(keyData);
+	for (auto& it : sourceData) {
+		it -= keyCode;
 	}
 
-	std::string result = std::string(strData.begin(), strData.end());
-	return encryptMultiBase64(result);
+	std::string result = std::string(sourceData.begin(), sourceData.end());
+	result = encryptMultiBase64(result);
+
+	return result;
 }
 
-std::string DataEncryption::decryptCustomMethod(const std::string& str) {
-	const std::string decoded = decryptMultiBase64(str);
+const std::string DataEncryption::decryptCustomMethod(const std::string& source) {
+	const std::string decrypted = decryptMultiBase64(source);
 
-	std::vector<int> strData(decoded.begin(), decoded.end());
+	std::vector<int> sourceData(decrypted.begin(), decrypted.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
-	int keycode = generateKeyCode(keyData);
-	for (auto& c : strData) {
-		c += keycode;
+	const int keyCode = generateKeyCode(keyData);
+	for (auto& it : sourceData) {
+		it += keyCode;
 	}
 
-	return std::string(strData.begin(), strData.end());
+	const std::string result = std::string(sourceData.begin(), sourceData.end());
+	return result;
 }
 
-int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
-	int keycode = 0;
-	int halfSize = keyData.size() / 2;
+const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
+	int keyCode = 0;
+	const std::size_t halfSize = keyData.size() / 2;
 
 	for (std::size_t i = 0; i < keyData.size(); ++i) {
 		if (keyData.size() % 2 == 0) {
 			if (i >= halfSize) {
-				keycode -= keyData[i];
+				keyCode -= keyData[i];
 			}
 			else {
-				keycode += keyData[i];
+				keyCode += keyData[i];
 			}
 		}
 		else {
 			if (i == keyData.size() - 1) {
-				keycode -= keyData[i];
+				keyCode -= keyData[i];
 			}
 			else {
-				keycode += keyData[i];
+				keyCode += keyData[i];
 			}
 		}
 	}
 
-	keycode *= static_cast<int>(keyData.size());
-	return keycode;
+	keyCode *= static_cast<int>(keyData.size());
+	return keyCode;
 }
-
