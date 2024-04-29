@@ -5,6 +5,8 @@
 
 #include <stdexcept>
 
+#include "../../../app/logsystem/logmanager/logmanager.h"
+
 JsonWrapper* JsonWrapper::getInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();
 	return Instance;
@@ -15,7 +17,8 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 	document.Parse(jsonString.c_str());
 
 	if (!document.IsObject()) {
-		throw std::runtime_error("failed parse json document");
+		CREATE_EVENT_LOG("failed parse json document");
+		return nullptr;
 	}
 
 	return document;
@@ -23,7 +26,6 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 
 const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& document) {
 	const rapidjson::Value& params = document["params"];
-
 	if (!params.IsObject()) {
 		throw std::runtime_error("document params is not of object");
 	}
@@ -33,14 +35,28 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 
 const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
 	auto document = parseJsonString(jsonString);
+	if (!document.IsObject()) {
+		return std::string();
+	}
+
 	auto& params = parseDocumentParams(document);
+	if (!params.IsObject()) {
+		return std::string();
+	}
 
 	return std::to_string(params["id"].GetInt());
 }
 
 const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 	auto document = parseJsonString(jsonString);
+	if (!document.IsObject()) {
+		return AuthData();
+	}
+
 	auto& params = parseDocumentParams(document);
+	if (!params.IsObject()) {
+		return AuthData();
+	}
 
 	AuthData authData;
 	authData.username = params["username"].GetString();
@@ -61,7 +77,14 @@ bool JsonWrapper::haveMemberIdField(const std::string& jsonString) {
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
 	auto document = parseJsonString(jsonString);
+	if (!document.IsObject()) {
+		return false;
+	}
+
 	auto& params = parseDocumentParams(document);
+	if (!params.IsObject()) {
+		return false;
+	}
 
 	return params.HasMember(fieldName.c_str());
 }
