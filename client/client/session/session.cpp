@@ -1,7 +1,7 @@
 #include "session.h"
 
 #include "../api/api.h"
-#include "../../hardware/hardware.h"
+#include "../../app/hardware/hardware.h"
 
 #include <iostream>
 
