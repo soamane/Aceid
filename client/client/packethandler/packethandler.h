@@ -15,7 +15,7 @@ class PacketHandler
 public:
 	PacketHandler(boost::asio::ip::tcp::socket& socket);
 
-	void sendMessage(std::string& message);
+	void sendMessage(const std::string& message);
 
 	const std::string recvMessage();
 	const std::vector<char> recvBuffer();

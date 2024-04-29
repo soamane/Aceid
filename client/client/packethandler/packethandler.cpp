@@ -28,12 +28,12 @@ const std::vector<char> PacketHandler::recvBuffer() {
 	return buffer;
 }
 
-void PacketHandler::sendMessage(std::string& message) {
-	message = DataEncryption::encryptCustomMethod(message);
+void PacketHandler::sendMessage(const std::string& message) {
+	const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);
 	Packet packet;
 	{
-		packet.size = message.size();
-		packet.data = std::vector<char>(message.begin(), message.end());
+		packet.size = encryptedMessage.size();
+		packet.data = std::vector<char>(encryptedMessage.begin(), encryptedMessage.end());
 	}
 
 	sendPacket(packet);
