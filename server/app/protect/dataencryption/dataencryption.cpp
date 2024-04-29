@@ -1,8 +1,10 @@
 #include "dataencryption.h"
 
-#include "base64/base64.h"
-
+#include <iomanip>
+#include <sstream>
 #include <iostream>
+
+#include "base64/base64.h"
 
 const std::string DataEncryption::encryptBase64(const std::string& source) {
 	return base64::to_base64(source);
@@ -77,6 +79,14 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 	return result;
 }
 
+const int DataEncryption::generateTimeStamp() {
+	std::time_t currentTime = std::time(nullptr); 
+	std::tm* now = std::localtime(&currentTime); 
+
+	const int result = now->tm_hour + now->tm_min + now->tm_sec; 
+	return result;
+}
+
 const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
 	int keyCode = 0;
 	const std::size_t halfSize = keyData.size() / 2;
@@ -100,6 +110,8 @@ const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
 		}
 	}
 
-	keyCode *= static_cast<int>(keyData.size());
+	const int timeStamp = generateTimeStamp();
+	keyCode *= static_cast<int>(keyData.size()) + timeStamp;
+
 	return keyCode;
 }

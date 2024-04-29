@@ -33,6 +33,8 @@ public:
 	static const std::string decryptCustomMethod(const std::string& source);
 
 private:
+	// Get unique build time stamp;
+	static const int generateTimeStamp();
 
 	// Get keycode via key word
 	static const int generateKeyCode(const std::vector<int>& keyData);

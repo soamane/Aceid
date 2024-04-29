@@ -18,6 +18,7 @@ public:
 	static const std::string decryptCustomMethod(const std::string& str);
 
 private:
+	static const int generateTimeStamp();
 	static const int generateKeyCode(const std::vector<int>& keyData);
 
 private:

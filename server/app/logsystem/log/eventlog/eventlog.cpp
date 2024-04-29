@@ -11,7 +11,7 @@ EventLog::EventLog() {
 void EventLog::write(const std::string& log) {
     m_file.open(m_path, std::ios::app);
     if (!m_file.is_open()) {
-        throw std::runtime_error("failed to open event log file");
+        throw std::runtime_error("failed to open event log file, file path: " + m_path);
     }
 
     m_file << getCurrentTime() << ' ' << log << std::endl;
