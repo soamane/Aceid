@@ -3,8 +3,8 @@
 #include <iostream>
 #include <boost/format.hpp>
 
-#include "../../protect/dataencryption/dataencryption.h"
-#include "../../logsystem/logmanager/logmanager.h"
+#include "../../app/protect/dataencryption/dataencryption.h"
+#include "../../app/logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
 	CREATE_EVENT_LOG("API Interface created\n")
