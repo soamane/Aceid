@@ -8,6 +8,7 @@ class Console
 {
 public:
 	static const std::string getUserCredentials();
+	static void showConsoleMessage(const std::string& message);
 };
 
 #endif // !CONSOLE_H
