@@ -6,7 +6,7 @@
 #include <d3d9.h>
 #pragma comment(lib, "d3d9.lib")
 
-#include "../../app/protect/dataencryption/dataencryption.h"
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 std::string Hardware::getHardwareId() {
     std::string cpuInfo = getCPUInfo();

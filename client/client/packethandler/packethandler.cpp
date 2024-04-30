@@ -1,6 +1,6 @@
 #include "packethandler.h"
 
-#include "../../app/protect/dataencryption/dataencryption.h"
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)) {
