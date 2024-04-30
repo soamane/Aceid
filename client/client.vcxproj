@@ -167,6 +167,7 @@
     <ClCompile Include="general\wrappers\jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="client\session\session.cpp" />
+    <ClCompile Include="user\console\console.cpp" />
     <ClCompile Include="user\hardware\hardware.cpp" />
     <ClCompile Include="general\utils\utils.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="general\protect\dataencryption\dataencryption.h" />
     <ClInclude Include="general\wrappers\curlwrapper\curlwrapper.h" />
     <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
+    <ClInclude Include="user\console\console.h" />
     <ClInclude Include="user\hardware\hardware.h" />
     <ClInclude Include="general\utils\utils.h" />
   </ItemGroup>
