@@ -24,10 +24,10 @@ void Session::run() {
 		if (api->isAuthorized()) {
 			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
 
-			self->m_packetHandler->sendMessage("success_auth");
+			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_SUCCESS);
 		}
 		else {
-			self->m_packetHandler->sendMessage("failed_auth");
+			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_ERROR);
 		}
 	});
 }

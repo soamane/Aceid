@@ -15,5 +15,14 @@ void Session::run() {
 	const std::string credentials = Console::getUserCredentials();
 	m_packetHandler->sendMessage(credentials);
 
-	const std::string serverResponse = m_packetHandler->recvMessage();
+	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
+	if (serverResponse == EServerResponse::eSR_SUCCESS) {
+		Console::showConsoleMessage("success auth");
+		// TODO: exec file
+	}
+	else {
+		Console::showConsoleMessage("failed auth");
+	}
+
+	Sleep(-1);
 }
