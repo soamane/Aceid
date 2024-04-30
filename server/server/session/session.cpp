@@ -29,7 +29,7 @@ void Session::run() {
 
 			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_SUCCESS);
 
-			std::vector<char> fileBytes = Utils::convertFileToBytes("test.jpeg");
+			const std::vector<char> fileBytes = Utils::convertFileToBytes("test.jpeg");
 			self->m_packetHandler->sendBuffer(fileBytes);
 		}
 		else {
