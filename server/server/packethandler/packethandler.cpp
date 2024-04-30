@@ -20,10 +20,11 @@ void PacketHandler::sendMessage(const std::string& message) {
 }
 
 void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
+    const std::vector<char> encryptedBuffer = DataEncryption::encryptBuffer(buffer);
     Packet packet;
     {
-        packet.size = buffer.size();
-        packet.data = buffer;
+        packet.size = encryptedBuffer.size();
+        packet.data = encryptedBuffer;
     }
 
     sendPacket(packet);

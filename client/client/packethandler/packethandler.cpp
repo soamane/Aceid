@@ -25,6 +25,7 @@ const std::vector<char> PacketHandler::recvBuffer() {
 		throw std::runtime_error("failed to recv buffer packet");
 	}
 
+	buffer = DataEncryption::decryptBuffer(buffer);
 	return buffer;
 }
 
