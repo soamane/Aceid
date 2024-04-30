@@ -168,7 +168,7 @@
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="client\session\session.cpp" />
     <ClCompile Include="user\hardware\hardware.cpp" />
-    <ClCompile Include="user\utils\utils.cpp" />
+    <ClCompile Include="general\utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\api\api.h" />
@@ -180,7 +180,7 @@
     <ClInclude Include="general\wrappers\curlwrapper\curlwrapper.h" />
     <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="user\hardware\hardware.h" />
-    <ClInclude Include="user\utils\utils.h" />
+    <ClInclude Include="general\utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
