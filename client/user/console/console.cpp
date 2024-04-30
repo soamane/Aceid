@@ -21,3 +21,7 @@ const std::string Console::getUserCredentials() {
 	const std::string convertedAuthData = api->convertAuthDataToJson();
 	return convertedAuthData;
 }
+
+void Console::showConsoleMessage(const std::string& message) {
+	std::cout << message << std::endl;
+}
