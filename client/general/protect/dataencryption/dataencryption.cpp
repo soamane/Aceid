@@ -79,6 +79,30 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 	return result;
 }
 
+const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& source) {
+	std::vector<char> encryptedData(source);
+	std::vector<int> keyData(key.begin(), key.end());
+
+	const int keyCode = generateKeyCode(keyData);
+	for (char& ch : encryptedData) {
+		ch -= static_cast<char>(keyCode);
+	}
+
+	return encryptedData;
+}
+
+const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& source) {
+	std::vector<char> encryptedData(source);
+	std::vector<int> keyData(key.begin(), key.end());
+
+	const int keyCode = generateKeyCode(keyData);
+	for (char& ch : encryptedData) {
+		ch += static_cast<char>(keyCode);
+	}
+
+	return encryptedData;
+}
+
 const int DataEncryption::generateTimeStamp() {
 	std::time_t currentTime = std::time(nullptr);
 	std::tm* now = std::localtime(&currentTime);

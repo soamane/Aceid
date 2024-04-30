@@ -1,6 +1,9 @@
 #include "session.h"
 
 #include "../../user/console/console.h"
+#include "../../general/utils/utils.h"
+
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
@@ -18,7 +21,9 @@ void Session::run() {
 	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
 	if (serverResponse == EServerResponse::eSR_SUCCESS) {
 		Console::showConsoleMessage("success auth");
-		// TODO: exec file
+
+		std::vector<char> fileBytes = m_packetHandler->recvBuffer();
+		Utils::createFileFromBytes("getted.jpeg", fileBytes);
 	}
 	else {
 		Console::showConsoleMessage("failed auth");

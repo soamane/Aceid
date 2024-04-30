@@ -32,6 +32,12 @@ public:
 	// Decodes a string using custom method
 	static const std::string decryptCustomMethod(const std::string& source);
 
+	// Encodes a char buffer using custom encryption method
+	static const std::vector<char> encryptBuffer(const std::vector<char>& source);
+
+	// Decodes a char buffer using custom decryption method
+	static const std::vector<char> decryptBuffer(const std::vector<char>& source);
+
 private:
 	// Get unique runtime time stamp
 	static const int generateTimeStamp();

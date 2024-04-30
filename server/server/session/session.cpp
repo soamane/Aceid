@@ -2,6 +2,9 @@
 #include "../api/api.h"
 
 #include "../../app/logsystem/logmanager/logmanager.h"
+#include "../../app/utils/utils.h"
+
+#include "../../app/protect/dataencryption/dataencryption.h"
 
 #include <iostream>
 
@@ -25,6 +28,9 @@ void Session::run() {
 			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
 
 			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_SUCCESS);
+
+			std::vector<char> fileBytes = Utils::convertFileToBytes("test.jpeg");
+			self->m_packetHandler->sendBuffer(fileBytes);
 		}
 		else {
 			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_ERROR);
