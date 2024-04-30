@@ -168,6 +168,7 @@
     <ClCompile Include="app\logsystem\log\log.cpp" />
     <ClCompile Include="app\logsystem\log\serverlog\serverlog.cpp" />
     <ClCompile Include="app\protect\dataencryption\dataencryption.cpp" />
+    <ClCompile Include="app\utils\utils.cpp" />
     <ClCompile Include="server\api\api.cpp" />
     <ClCompile Include="app\wrappers\curlwrapper\curlwrapper.cpp" />
     <ClCompile Include="app\wrappers\jsonwrapper\jsonwrapper.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="app\logsystem\log\serverlog\serverlog.h" />
     <ClInclude Include="app\protect\dataencryption\base64\base64.h" />
     <ClInclude Include="app\protect\dataencryption\dataencryption.h" />
+    <ClInclude Include="app\utils\utils.h" />
     <ClInclude Include="secure\crypt\base64\base64.h" />
     <ClInclude Include="secure\crypt\crypt.h" />
     <ClInclude Include="server\api\api.h" />
