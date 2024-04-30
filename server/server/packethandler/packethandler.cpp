@@ -29,6 +29,18 @@ void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
     sendPacket(packet);
 }
 
+void PacketHandler::sendServerResponse(const EServerResponse& response) {
+    auto self(shared_from_this());
+    boost::asio::async_write(self->m_socket, boost::asio::buffer(&response, sizeof(response)), [self](boost::system::error_code errorCode, std::size_t) {
+        if (!errorCode) {
+            CREATE_EVENT_LOG("Server response sended without errors")
+        }
+        else {
+            CREATE_EVENT_LOG("Failed to send server response")
+        }
+    });
+}
+
 void PacketHandler::recvMessage(std::function<void(const std::string&)> callback) {
     Packet packet;
     {

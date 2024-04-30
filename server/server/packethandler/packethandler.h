@@ -16,6 +16,12 @@ struct Packet
     std::vector<char> data;
 };
 
+enum EServerResponse
+{
+    eSR_SUCCESS = 0,
+    eSR_ERROR
+};
+
 /*
 
     TCP/IP communication handler class
@@ -32,6 +38,8 @@ public:
 
     // Sends a packet of type std::vector<char>
     void sendBuffer(const std::vector<char>& buffer);
+
+    void sendServerResponse(const EServerResponse& response);
 
     /*
         Reads the received packet from the client

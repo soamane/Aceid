@@ -10,6 +10,12 @@ struct Packet
 	std::vector<char> data;
 };
 
+enum EServerResponse 
+{
+	eSR_SUCCESS = 0,
+	eSR_ERROR
+};
+
 class PacketHandler
 {
 public:
@@ -19,6 +25,7 @@ public:
 
 	const std::string recvMessage();
 	const std::vector<char> recvBuffer();
+	const EServerResponse recvServerResponse();
 	
 private:
 	void sendPacket(const Packet& packet);
