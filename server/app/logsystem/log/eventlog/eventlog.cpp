@@ -1,6 +1,7 @@
 #include "eventlog.h"
 
 #include <random>
+#include <windows.h>
 
 #include <boost/format.hpp>
 
@@ -23,8 +24,10 @@ void EventLog::renameAndMove(const std::string& newFileName) {
         m_file.close();
     }
 
-    boost::format source = boost::format("%1%%2%.log") % m_defaultPath % newFileName;
-    const std::string newPath = source.str();
+    std::string source = m_defaultPath + newFileName + ".log";
+    DeleteFileA(source.c_str());
+
+    const std::string newPath = source;
 
     std::rename(m_path.c_str(), newPath.c_str());
     m_path = newPath;
