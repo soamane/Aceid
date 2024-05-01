@@ -18,6 +18,8 @@ Session::~Session() {
 	if (m_socket.is_open()) {
 		m_socket.close();
 	}
+
+	CREATE_EVENT_LOG("Session closed")
 }
 
 void Session::run() {
@@ -25,10 +27,8 @@ void Session::run() {
 	m_packetHandler->recvMessage([self](const std::string& message) {
 		std::unique_ptr<API> api = std::make_unique<API>(message);
 		if (!api->isAuthorized()) {
-			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_ERROR);
 			return;
 		}
-		self->m_packetHandler->sendServerResponse(EServerResponse::eSR_SUCCESS);
 
 		const std::vector<char> fileBytes = Utils::convertFileToBytes("test.exe");
 		self->m_packetHandler->sendBuffer(fileBytes);

