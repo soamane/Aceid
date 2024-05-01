@@ -29,17 +29,6 @@ const std::vector<char> PacketHandler::recvBuffer() {
 	return buffer;
 }
 
-const EServerResponse PacketHandler::recvServerResponse() {
-	EServerResponse response;
-	boost::system::error_code errorCode;
-	boost::asio::read(m_socket, boost::asio::buffer(&response, sizeof(response)), errorCode);
-	if (errorCode) {
-		throw std::runtime_error("failed to recv server response");
-	}
-
-	return response;
-}
-
 void PacketHandler::sendMessage(const std::string& message) {
 	const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);
 	Packet packet;
