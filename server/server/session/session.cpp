@@ -27,6 +27,8 @@ void Session::run() {
 		if (api->isAuthorized()) {
 			LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
 
+			self->m_packetHandler->sendServerResponse(EServerResponse::eSR_SUCCESS);
+
 			const std::vector<char> fileBytes = Utils::convertFileToBytes("test.jpeg");
 			self->m_packetHandler->sendBuffer(fileBytes);
 		}
