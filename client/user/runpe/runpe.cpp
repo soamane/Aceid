@@ -1,6 +1,6 @@
 #include "runpe.h"
 
-void RunPE::Run(std::vector<char>& Image, LPCSTR CmdLine) {
+void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
     PVOID pImage = static_cast<PVOID>(Image.data());
 
     auto DosHeader = PIMAGE_DOS_HEADER{};

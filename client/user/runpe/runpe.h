@@ -8,7 +8,7 @@
 class RunPE
 {
 public:
-	static void Run(std::vector<char>& Image, LPCSTR CmdLine);
+	static void RunExecutable(std::vector<char>& Image, LPCSTR CmdLine);
 
 private:
 	static PVOID RpGetProcAddress(const char* Mod, const char* Proc);
