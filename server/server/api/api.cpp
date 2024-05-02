@@ -7,7 +7,7 @@
 #include "../../general/logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
-	CREATE_EVENT_LOG("API Interface created\n")
+	CREATE_EVENT_LOG("API Interface created")
 	getUserData(jsonString);
 }
 
@@ -99,11 +99,11 @@ bool API::performApiRequest(const std::string& jsonString) {
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("Request status: failed\n")
+		CREATE_EVENT_LOG("Request status: failed")
 		return false;
 	}
 
-	CREATE_EVENT_LOG("Request status: success\n")
+	CREATE_EVENT_LOG("Request status: success")
 
 	return true;
 }
