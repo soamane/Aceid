@@ -22,8 +22,8 @@ class API
 public:
 	API(AuthData* data);
 
-	const std::string convertAuthDataToJson();
-	const std::string getSessionToken();
+	const std::string convertAuthDataToJson( );
+	const std::string getSessionToken( );
 
 private:
 	const std::string performGetSessionToken(const std::string& jsonString);
