@@ -2,7 +2,6 @@
 
 #include <iomanip>
 #include <sstream>
-#include <iostream>
 
 #include "base64/base64.h"
 

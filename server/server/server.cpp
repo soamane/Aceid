@@ -1,7 +1,5 @@
 #include "server.h"
 
-#include <iostream>
-
 #include "session/session.h"
 #include "../general/logsystem/logmanager/logmanager.h"
 
