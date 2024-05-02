@@ -5,26 +5,31 @@
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/logsystem/logmanager/logmanager.h"
 
-API::API(const std::string& jsonString) {
+API::API(const std::string& jsonString)
+{
 	CREATE_EVENT_LOG("API Interface created")
-	getUserData(jsonString);
+		getUserData(jsonString);
 }
 
-bool API::isAuthorized() {
-	return checkUserAuthentication() && checkUserHwid() && checkUserLicense() && checkUserToken();
+bool API::isAuthorized( )
+{
+	return checkUserAuthentication( ) && checkUserHwid( ) && checkUserLicense( ) && checkUserToken( );
 }
 
-void API::getUserData(const std::string& jsonString) {
-	if (jsonString.empty()) {
+void API::getUserData(const std::string& jsonString)
+{
+	if (jsonString.empty( ))
+	{
 		CREATE_EVENT_LOG("Failed to get user data (empty argument)")
-		return;
+			return;
 	}
 
-	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
+	m_authData = JsonWrapper::getInstance( )->parseUserData(jsonString);
 }
 
-bool API::checkUserAuthentication() {
-	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+bool API::checkUserAuthentication( )
+{
+	const std::string jsonString = JsonWrapper::getInstance( )->createJsonString
 	(
 		{ { "action", "auth" } },
 		{
@@ -34,11 +39,12 @@ bool API::checkUserAuthentication() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify account availability")
-	return performApiRequest(jsonString);
+		return performApiRequest(jsonString);
 }
 
-bool API::checkUserHwid() {
-	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+bool API::checkUserHwid( )
+{
+	const std::string jsonString = JsonWrapper::getInstance( )->createJsonString
 	(
 		{ { "action", "hwid" },
 		  { "type", "update" }
@@ -50,11 +56,12 @@ bool API::checkUserHwid() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify HWID")
-	return performApiRequest(jsonString);
+		return performApiRequest(jsonString);
 }
 
-bool API::checkUserLicense() {
-	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+bool API::checkUserLicense( )
+{
+	const std::string jsonString = JsonWrapper::getInstance( )->createJsonString
 	(
 		{ { "action", "license" },
 		  { "type", "get" }
@@ -66,11 +73,12 @@ bool API::checkUserLicense() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify the availability license")
-	return performApiRequest(jsonString);
+		return performApiRequest(jsonString);
 }
 
-bool API::checkUserToken() {
-	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+bool API::checkUserToken( )
+{
+	const std::string jsonString = JsonWrapper::getInstance( )->createJsonString
 	(
 		{ { "action", "session" },
 		  { "type", "validate" }
@@ -83,30 +91,34 @@ bool API::checkUserToken() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify session token")
-	return performApiRequest(jsonString);
+		return performApiRequest(jsonString);
 }
 
-bool API::performApiRequest(const std::string& jsonString) {
+bool API::performApiRequest(const std::string& jsonString)
+{
 	std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
 	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
 
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
+	const std::string response = CurlWrapper::getInstance( )->performRequest(RequestType::eRT_HTTPS, source.str( ), nullptr);
 	std::string decryptedResponse = DataEncryption::decryptBase64(response);
 
-	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
-		m_authData.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
+	if (JsonWrapper::getInstance( )->haveMemberIdField(decryptedResponse))
+	{
+		m_authData.member_id = JsonWrapper::getInstance( )->parseMemberId(decryptedResponse);
 	}
 
-	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
+	if (JsonWrapper::getInstance( )->haveErrorField(decryptedResponse))
+	{
 		CREATE_EVENT_LOG("Request status: failed")
-		return false;
+			return false;
 	}
 
 	CREATE_EVENT_LOG("Request status: success")
 
-	return true;
+		return true;
 }
 
-const std::string API::getUsername() {
+const std::string API::getUsername( )
+{
 	return m_authData.username;
 }

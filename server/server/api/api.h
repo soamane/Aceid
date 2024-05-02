@@ -20,10 +20,10 @@ public:
     API(const std::string& jsonString);
 
     // Returns the final authorization status
-    bool isAuthorized();
+    bool isAuthorized( );
 
     // Returns the 'username' field from the client's data structure.
-    const std::string getUsername();
+    const std::string getUsername( );
 
 private:
 
@@ -31,28 +31,28 @@ private:
     void getUserData(const std::string& jsonString);
 
     /*
-        Performs a request to check the presence of an account on the web server  
+        Performs a request to check the presence of an account on the web server
         Return value: True - check passed / False - check failed
     */
-    bool checkUserAuthentication();
+    bool checkUserAuthentication( );
 
     /*
         Performs a request to verify the user's Hardware ID on the web server
         Return value: True - check passed / False - check failed
     */
-    bool checkUserHwid();
+    bool checkUserHwid( );
 
     /*
         Performs a request to check for the presence of a license on the account on the web server
         Return value: True - check passed / False - check failed
     */
-    bool checkUserLicense();
+    bool checkUserLicense( );
 
     /*
         Performs a request to verify the session token on the web server
         Return value: True - check passed / False - check failed
     */
-    bool checkUserToken();
+    bool checkUserToken( );
 
     /*
         Performs a request to the web server using the specified JSON format string

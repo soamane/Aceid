@@ -7,7 +7,7 @@
 /*
 
 	Fundamental class for initializing the server
-	
+
 */
 class Server
 {
@@ -17,10 +17,10 @@ public:
 	Server(boost::asio::io_context& context, short port);
 
 	// Server startup
-	void start();
+	void start( );
 
 	// Server shutdown
-	void stop();
+	void stop( );
 
 private:
 

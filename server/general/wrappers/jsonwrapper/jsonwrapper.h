@@ -31,7 +31,7 @@ class JsonWrapper
 public:
 
 	// Obtaining a pointer to an object of a class.
-	static JsonWrapper* getInstance();
+	static JsonWrapper* getInstance( );
 
 	// Converts a string to a JSON document
 	const rapidjson::Document parseJsonString(const std::string& jsonString);
@@ -58,7 +58,7 @@ public:
 	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
 
 private:
-	JsonWrapper();
+	JsonWrapper( );
 };
 
 #endif // !JSON_WRAPPER_H
