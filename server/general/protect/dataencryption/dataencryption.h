@@ -40,7 +40,7 @@ public:
 
 private:
 	// Get unique runtime time stamp
-	static const int generateTimeStamp();
+	static const int generateTimeStamp( );
 
 	// Get keycode via key word
 	static const int generateKeyCode(const std::vector<int>& keyData);

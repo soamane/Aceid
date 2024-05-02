@@ -29,7 +29,7 @@ class CurlWrapper
 public:
 
 	// Obtaining a pointer to an object of a class
-	static CurlWrapper* getInstance();
+	static CurlWrapper* getInstance( );
 
 	// Fills the curl_slist structure with HTTP/S headers.
 	const curl_slist* addHeaders(std::initializer_list<std::string> headers);
@@ -41,7 +41,7 @@ public:
 	const std::string performRequest(RequestType type, const std::string& source, const curl_slist* headers);
 
 private:
-	CurlWrapper();
+	CurlWrapper( );
 
 	// Handler function for the request callback.
 	static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer);
