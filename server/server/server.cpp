@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "session/session.h"
-#include "../app/logsystem/logmanager/logmanager.h"
+#include "../general/logsystem/logmanager/logmanager.h"
 
 Server::Server(boost::asio::io_context& context, short port)
     : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
