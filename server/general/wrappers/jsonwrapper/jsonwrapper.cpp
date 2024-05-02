@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-#include "../../../app/logsystem/logmanager/logmanager.h"
+#include "../../../general/logsystem/logmanager/logmanager.h"
 
 JsonWrapper* JsonWrapper::getInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();

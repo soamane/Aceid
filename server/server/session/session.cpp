@@ -1,12 +1,10 @@
 #include "session.h"
 #include "../api/api.h"
 
-#include "../../app/logsystem/logmanager/logmanager.h"
-#include "../../app/utils/utils.h"
+#include "../../general/logsystem/logmanager/logmanager.h"
+#include "../../general/utils/utils.h"
 
-#include "../../app/protect/dataencryption/dataencryption.h"
-
-#include <iostream>
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)), m_packetHandler(std::make_shared<PacketHandler>(m_socket)) {

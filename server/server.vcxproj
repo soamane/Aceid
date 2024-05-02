@@ -163,33 +163,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="app\logsystem\logmanager\logmanager.cpp" />
-    <ClCompile Include="app\logsystem\log\eventlog\eventlog.cpp" />
-    <ClCompile Include="app\logsystem\log\log.cpp" />
-    <ClCompile Include="app\logsystem\log\serverlog\serverlog.cpp" />
-    <ClCompile Include="app\protect\dataencryption\dataencryption.cpp" />
-    <ClCompile Include="app\utils\utils.cpp" />
+    <ClCompile Include="general\logsystem\logmanager\logmanager.cpp" />
+    <ClCompile Include="general\logsystem\log\eventlog\eventlog.cpp" />
+    <ClCompile Include="general\logsystem\log\log.cpp" />
+    <ClCompile Include="general\logsystem\log\serverlog\serverlog.cpp" />
+    <ClCompile Include="general\protect\dataencryption\dataencryption.cpp" />
+    <ClCompile Include="general\utils\utils.cpp" />
+    <ClCompile Include="general\wrappers\curlwrapper\curlwrapper.cpp" />
+    <ClCompile Include="general\wrappers\jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="server\api\api.cpp" />
-    <ClCompile Include="app\wrappers\curlwrapper\curlwrapper.cpp" />
-    <ClCompile Include="app\wrappers\jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="server\packethandler\packethandler.cpp" />
     <ClCompile Include="server\server.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="server\session\session.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app\logsystem\logmanager\logmanager.h" />
-    <ClInclude Include="app\logsystem\log\eventlog\eventlog.h" />
-    <ClInclude Include="app\logsystem\log\log.h" />
-    <ClInclude Include="app\logsystem\log\serverlog\serverlog.h" />
-    <ClInclude Include="app\protect\dataencryption\base64\base64.h" />
-    <ClInclude Include="app\protect\dataencryption\dataencryption.h" />
-    <ClInclude Include="app\utils\utils.h" />
+    <ClInclude Include="general\logsystem\logmanager\logmanager.h" />
+    <ClInclude Include="general\logsystem\log\eventlog\eventlog.h" />
+    <ClInclude Include="general\logsystem\log\log.h" />
+    <ClInclude Include="general\logsystem\log\serverlog\serverlog.h" />
+    <ClInclude Include="general\protect\dataencryption\base64\base64.h" />
+    <ClInclude Include="general\protect\dataencryption\dataencryption.h" />
+    <ClInclude Include="general\utils\utils.h" />
+    <ClInclude Include="general\wrappers\curlwrapper\curlwrapper.h" />
+    <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="secure\crypt\base64\base64.h" />
     <ClInclude Include="secure\crypt\crypt.h" />
     <ClInclude Include="server\api\api.h" />
-    <ClInclude Include="app\wrappers\curlwrapper\curlwrapper.h" />
-    <ClInclude Include="app\wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="server\packethandler\packethandler.h" />
     <ClInclude Include="server\server.h" />
     <ClInclude Include="server\session\session.h" />
