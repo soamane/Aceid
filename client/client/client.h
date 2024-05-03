@@ -5,8 +5,7 @@
 #include <string_view>
 #include <boost/asio.hpp>
 
-class Client
-{
+class Client {
 public:
 	Client(boost::asio::io_context& context);
 	void connect(std::string_view address, std::string_view port);

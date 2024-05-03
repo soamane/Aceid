@@ -13,8 +13,7 @@
 
 */
 
-class ServerLog : public Log
-{
+class ServerLog : public Log {
 public:
     // Log writing function
     void write(const std::string& log) override;

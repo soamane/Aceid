@@ -11,8 +11,7 @@
 
 */
 
-class DataEncryption
-{
+class DataEncryption {
 public:
 	// Encodes a string using base64
 	static const std::string encryptBase64(const std::string& source);

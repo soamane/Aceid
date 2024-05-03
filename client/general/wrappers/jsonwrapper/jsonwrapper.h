@@ -10,10 +10,9 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 
-class JsonWrapper
-{
+class JsonWrapper {
 public:
-	static JsonWrapper* getInstance( );
+	static JsonWrapper* getInstance();
 
 	const rapidjson::Document parseJsonString(const std::string& jsonString);
 	const rapidjson::Value& parseDocumentParams(rapidjson::Document& document);
@@ -26,7 +25,7 @@ public:
 	const std::string parseSessionToken(const std::string& jsonString);
 
 private:
-	JsonWrapper( );
+	JsonWrapper();
 };
 
 #endif // !JSON_WRAPPER_H

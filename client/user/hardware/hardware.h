@@ -4,14 +4,13 @@
 
 #include <string>
 
-class Hardware
-{
+class Hardware {
 public:
-	static std::string getHardwareId( );
+	static std::string getHardwareId();
 
 private:
-	static std::string getCPUInfo( );
-	static std::string getGPUInfo( );
+	static std::string getCPUInfo();
+	static std::string getGPUInfo();
 };
 
 #endif // !HARDWARE_H

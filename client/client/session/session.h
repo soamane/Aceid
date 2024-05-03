@@ -6,13 +6,12 @@
 
 #include "../packethandler/packethandler.h"
 
-class Session
-{
+class Session {
 public:
 	Session(boost::asio::ip::tcp::socket& socket);
-	~Session( );
+	~Session();
 
-	void run( );
+	void run();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;

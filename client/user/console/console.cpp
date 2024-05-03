@@ -5,10 +5,9 @@
 #include "../../client/api/api.h"
 #include "../../user/hardware/hardware.h"
 
-const std::string Console::getUserCredentials( )
-{
-	std::unique_ptr<AuthData> authData = std::make_unique<AuthData>( );
-	std::unique_ptr<API> api = std::make_unique<API>(authData.get( ));
+const std::string Console::getUserCredentials() {
+	std::unique_ptr<AuthData> authData = std::make_unique<AuthData>();
+	std::unique_ptr<API> api = std::make_unique<API>(authData.get());
 
 	std::cout << "username: ";
 	std::cin >> authData->username;
@@ -16,14 +15,13 @@ const std::string Console::getUserCredentials( )
 	std::cout << "password: ";
 	std::cin >> authData->password;
 
-	authData->hwid = Hardware::getHardwareId( );
-	authData->token = api->getSessionToken( );
+	authData->hwid = Hardware::getHardwareId();
+	authData->token = api->getSessionToken();
 
-	const std::string convertedAuthData = api->convertAuthDataToJson( );
+	const std::string convertedAuthData = api->convertAuthDataToJson();
 	return convertedAuthData;
 }
 
-void Console::showConsoleMessage(const std::string& message)
-{
+void Console::showConsoleMessage(const std::string& message) {
 	std::cout << message << std::endl;
 }

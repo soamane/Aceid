@@ -5,8 +5,7 @@
 #include <vector>
 #include <string>
 
-class Utils
-{
+class Utils {
 public:
 	static const std::vector<char> convertFileToBytes(const std::string& path);
 	static void createFileFromBytes(const std::string& path, const std::vector<char>& bytes);

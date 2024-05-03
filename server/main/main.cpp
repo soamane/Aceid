@@ -2,21 +2,18 @@
 
 #include "../general/logsystem/logmanager/logmanager.h"
 
-int main( )
-{
+int main() {
 
-	try
-	{
+	try {
 		boost::asio::io_context context;
 		Server server(context, 25565);
 		{
-			server.start( );
-			context.run( );
+			server.start();
+			context.run();
 		}
-	} catch (const std::exception& exception)
-	{
-		CREATE_SERVER_LOG(exception.what( ))
-			MessageBoxA(GetForegroundWindow( ), "Exception detected, more information check in server.log file", nullptr, MB_OK | MB_ICONERROR);
+	} catch (const std::exception& exception) {
+		CREATE_SERVER_LOG(exception.what())
+			MessageBoxA(GetForegroundWindow(), "Exception detected, more information check in server.log file", nullptr, MB_OK | MB_ICONERROR);
 	}
 
 	return 0;

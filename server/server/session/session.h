@@ -13,18 +13,17 @@
 
 */
 
-class Session : public std::enable_shared_from_this<Session>
-{
+class Session : public std::enable_shared_from_this<Session> {
 public:
 
 	// Constructor for socket initialization, packet handler, and event logging
 	Session(boost::asio::ip::tcp::socket& socket);
 
 	// Class destructor to close the socket upon Session object deletion
-	~Session( );
+	~Session();
 
 	// Main session handling function
-	void run( );
+	void run();
 
 private:
 	boost::asio::ip::tcp::socket m_socket; // current remote socket

@@ -13,10 +13,9 @@
 
 */
 
-class EventLog : public Log
-{
+class EventLog : public Log {
 public:
-	EventLog( );
+	EventLog();
 
 	// Log writing function
 	void write(const std::string& log);
@@ -25,12 +24,12 @@ public:
 	// and moves it to the main directory of authorized logs
 	void renameAndMove(const std::string& newFileName);
 
-	~EventLog( );
+	~EventLog();
 
 private:
 
 	// Generates a random name for the temp log file
-	std::string getRandomFileName( );
+	std::string getRandomFileName();
 
 private:
 	std::ofstream m_file;
