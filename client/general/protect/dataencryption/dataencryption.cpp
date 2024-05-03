@@ -119,15 +119,6 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 	return encryptedData;
 }
 
-const int DataEncryption::generateTimeStamp( )
-{
-	std::time_t currentTime = std::time(nullptr);
-	std::tm* now = std::localtime(&currentTime);
-
-	const int result = now->tm_hour + now->tm_min + now->tm_sec;
-	return result;
-}
-
 const int DataEncryption::generateKeyCode(const std::vector<int>& keyData)
 {
 	int keyCode = 0;
@@ -156,8 +147,7 @@ const int DataEncryption::generateKeyCode(const std::vector<int>& keyData)
 		}
 	}
 
-	const int timeStamp = generateTimeStamp( );
-	keyCode *= static_cast<int>(keyData.size( )) + timeStamp;
+	keyCode *= static_cast<int>(keyData.size( ));
 
 	return keyCode;
 }
