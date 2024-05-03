@@ -7,7 +7,7 @@ int main( )
 		boost::asio::io_context context;
 		Client client(context);
 		{
-			client.connect("127.0.0.1", "23");
+			client.connect("31.129.43.210", "25565");
 		}
 	} catch (const std::exception& exception)
 	{
