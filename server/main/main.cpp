@@ -15,8 +15,8 @@ int main( )
 		}
 	} catch (const std::exception& exception)
 	{
-		MessageBoxA(GetForegroundWindow( ), "Exception detected, more information check in server.log file", nullptr, MB_OK | MB_ICONERROR);
 		CREATE_SERVER_LOG(exception.what( ))
+			MessageBoxA(GetForegroundWindow( ), "Exception detected, more information check in server.log file", nullptr, MB_OK | MB_ICONERROR);
 	}
 
 	return 0;
