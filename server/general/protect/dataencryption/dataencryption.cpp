@@ -118,35 +118,29 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 	return encryptedData;
 }
 
+#include <iostream>
+
 const int DataEncryption::generateKeyCode(const std::vector<int>& keyData)
 {
-	int keyCode = 0;
+	std::vector<int> encryptedKeyData = keyData;
 	const std::size_t halfSize = keyData.size( ) / 2;
 
-	for (std::size_t i = 0; i < keyData.size( ); ++i)
+	for (std::size_t i = 0; i < encryptedKeyData.size( ) / 2; ++i)
 	{
-		if (keyData.size( ) % 2 == 0)
+		std::swap(encryptedKeyData[i], encryptedKeyData[encryptedKeyData.size( ) - i - 1]);
+	}
+
+	int result = 0;
+	for (std::size_t i = 0; i < encryptedKeyData.size( ); ++i)
+	{
+		if (i % 2 == 0)
 		{
-			if (i >= halfSize)
-			{
-				keyCode -= keyData[i];
-			} else
-			{
-				keyCode += keyData[i];
-			}
+			result += encryptedKeyData[i] >> 3;
 		} else
 		{
-			if (i == keyData.size( ) - 1)
-			{
-				keyCode -= keyData[i];
-			} else
-			{
-				keyCode += keyData[i];
-			}
+			result -= encryptedKeyData[i] << 3;
 		}
 	}
 
-	keyCode *= static_cast<int>(keyData.size( ));
-
-	return keyCode;
+	return result;
 }
