@@ -21,7 +21,6 @@ public:
 	static const std::vector<char> decryptBuffer(const std::vector<char>& source);
 
 private:
-	static const int generateTimeStamp( );
 	static const int generateKeyCode(const std::vector<int>& keyData);
 
 private:
