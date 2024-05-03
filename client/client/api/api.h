@@ -8,8 +8,7 @@
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"
 
-struct AuthData
-{
+struct AuthData {
 	std::string username;
 	std::string password;
 	std::string hwid;
@@ -17,13 +16,12 @@ struct AuthData
 	std::string token;
 };
 
-class API
-{
+class API {
 public:
 	API(AuthData* data);
 
-	const std::string convertAuthDataToJson( );
-	const std::string getSessionToken( );
+	const std::string convertAuthDataToJson();
+	const std::string getSessionToken();
 
 private:
 	const std::string performGetSessionToken(const std::string& jsonString);

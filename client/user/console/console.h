@@ -4,10 +4,9 @@
 
 #include <string>
 
-class Console
-{
+class Console {
 public:
-	static const std::string getUserCredentials( );
+	static const std::string getUserCredentials();
 	static void showConsoleMessage(const std::string& message);
 };
 

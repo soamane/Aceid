@@ -5,8 +5,7 @@
 #include <string>
 #include <vector>
 
-class DataEncryption
-{
+class DataEncryption {
 public:
 	static const std::string encryptBase64(const std::string& str);
 	static const std::string decryptBase64(const std::string& str);

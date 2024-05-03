@@ -10,8 +10,7 @@
     Packet structure for network communication
 
 */
-struct Packet
-{
+struct Packet {
     std::size_t size;
     std::vector<char> data;
 };
@@ -21,8 +20,7 @@ struct Packet
     TCP/IP communication handler class
 
 */
-class PacketHandler : public std::enable_shared_from_this<PacketHandler>
-{
+class PacketHandler : public std::enable_shared_from_this<PacketHandler> {
 public:
     // Initializes the socket
     PacketHandler(boost::asio::ip::tcp::socket& socket);

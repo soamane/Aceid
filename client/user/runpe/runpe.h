@@ -5,8 +5,7 @@
 #include <vector>
 #include <windows.h>
 
-class RunPE
-{
+class RunPE {
 public:
 	static void RunExecutable(std::vector<char>& Image, LPCSTR CmdLine);
 
