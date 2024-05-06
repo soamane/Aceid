@@ -33,7 +33,7 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 	return params;
 }
 
-const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
+const std::string JsonWrapper::parseParamsField(const std::string& jsonString, const std::string& fieldName) {
 	auto document = parseJsonString(jsonString);
 	if (!document.IsObject()) {
 		return std::string();
@@ -44,7 +44,14 @@ const std::string JsonWrapper::parseMemberId(const std::string& jsonString) {
 		return std::string();
 	}
 
-	return std::to_string(params["id"].GetInt());
+	const rapidjson::Value& fieldValue = params[fieldName.c_str()];
+	switch (fieldValue.GetType()) {
+		case rapidjson::kStringType:
+			return fieldValue.GetString();
+
+		case rapidjson::kNumberType:
+			return std::to_string(fieldValue.GetInt());
+	}
 }
 
 const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
