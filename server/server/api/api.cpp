@@ -23,6 +23,53 @@ void API::getUserData(const std::string& jsonString) {
 	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
 }
 
+void API::getProfileGroup() {
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+	(
+		{ { "action", "groups" },
+		  { "type", "get" } },
+		{
+			{ "username", m_authData.username },
+			{ "password", m_authData.password },
+			{ "hwid", m_authData.hwid }
+		}
+		);
+
+	CREATE_EVENT_LOG("Request to get profile group");
+
+	std::optional<const std::string> requestResult = performApiRequest(jsonString);
+	if (!requestResult.has_value()) {
+		CREATE_EVENT_LOG("Failed to get 'groups' field value");
+		return;
+	}
+
+	const std::string response = requestResult.value();
+	m_authData.profile_group = JsonWrapper::getInstance()->parseParamsField(response, "groups");
+}
+
+void API::getMemberId() {
+	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
+	(
+		{ { "action", "auth" } },
+		{
+			{ "username", m_authData.username },
+			{ "password", m_authData.password }
+		}
+		);
+
+	CREATE_EVENT_LOG("Request to get member id");
+
+	std::optional<const std::string> requestResult = performApiRequest(jsonString);
+	if (!requestResult.has_value()) {
+		CREATE_EVENT_LOG("Failed to get 'id' field value");
+		return;
+	}
+
+	const std::string response = requestResult.value();
+	m_authData.member_id = JsonWrapper::getInstance()->parseParamsField(response, "id");
+}
+
+
 bool API::checkUserAuthentication() {
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
@@ -34,7 +81,10 @@ bool API::checkUserAuthentication() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify account availability");
-	return performApiRequest(jsonString);
+
+	getMemberId();
+
+	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserHwid() {
@@ -50,7 +100,7 @@ bool API::checkUserHwid() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify HWID");
-	return performApiRequest(jsonString);
+	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserLicense() {
@@ -66,7 +116,7 @@ bool API::checkUserLicense() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify the availability license");
-	return performApiRequest(jsonString);
+	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserToken() {
@@ -83,28 +133,24 @@ bool API::checkUserToken() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify session token");
-	return performApiRequest(jsonString);
+	return performApiRequest(jsonString).has_value();
 }
 
-bool API::performApiRequest(const std::string& jsonString) {
+std::optional<const std::string> API::performApiRequest(const std::string& jsonString) {
 	std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
 	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
 	std::string decryptedResponse = DataEncryption::decryptBase64(response);
 
-	if (JsonWrapper::getInstance()->haveMemberIdField(decryptedResponse)) {
-		m_authData.member_id = JsonWrapper::getInstance()->parseMemberId(decryptedResponse);
-	}
-
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("Request status: failed");
-		return false;
+		CREATE_EVENT_LOG("Request failed");
+		return std::nullopt;
 	}
 
-	CREATE_EVENT_LOG("Request status: success");
+	CREATE_EVENT_LOG("Request success");
 
-	return true;
+	return decryptedResponse;
 }
 
 const std::string API::getUsername() {

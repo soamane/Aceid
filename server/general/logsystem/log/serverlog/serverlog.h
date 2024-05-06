@@ -7,15 +7,8 @@
 
 #include "../log.h"
 
-/*
-
-    Class for working with server logs (errors, exceptions and more)
-
-*/
-
 class ServerLog : public Log {
 public:
-    // Log writing function
     void write(const std::string& log) override;
 
 public:
