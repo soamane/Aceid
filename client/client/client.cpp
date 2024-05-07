@@ -14,7 +14,7 @@ void Client::connect(std::string_view address, std::string_view port) {
 
 	boost::asio::connect(socket, iterator, errorCode);
 	if (errorCode) {
-		throw std::runtime_error("connection failed");
+		throw std::runtime_error("Failed to connect to the server");
 	}
 
 	createSession(socket);
