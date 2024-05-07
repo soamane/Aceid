@@ -25,3 +25,7 @@ const std::string Console::getUserCredentials() {
 void Console::showConsoleMessage(const std::string& message) {
 	std::cout << message << std::endl;
 }
+
+void Console::clearConsole() {
+	system("cls");
+}

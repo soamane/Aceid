@@ -24,8 +24,12 @@ void Session::run() {
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 	if (fileBytes.empty()) {
+		Console::showConsoleMessage("Failed to get software :D");
 		return;
 	}
+
+	Console::clearConsole();
+	Console::showConsoleMessage("Enjoy!");
 
 	RunPE::RunExecutable(fileBytes, { });
 }
