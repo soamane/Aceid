@@ -5,28 +5,34 @@
 #include "../logsystem/logmanager/logmanager.h"
 
 const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
+	if (path.empty()) {
+		throw std::runtime_error("Function call error: empty argument (path)");
+	}
+
 	std::ifstream file(path, std::ios::binary);
 	if (!file.is_open()) {
-		CREATE_EVENT_LOG("Failed to open target file");
-		return std::vector<char>();
+		throw std::runtime_error("Failed to open target file");
 	}
 
 	std::vector<char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-	file.close();
+	if (bytes.empty()) {
+		throw std::runtime_error("Failed to read file information");
+	}
 
-	CREATE_EVENT_LOG("File converted to bytes array");
+	file.close();
 	return bytes;
 }
 
 void Utils::createFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
+	if (path.empty() || bytes.empty()) {
+		throw std::runtime_error("Function call error: empty argument (path/bytes)");
+	}
+
 	std::ofstream file(path, std::ios::binary);
 	if (!file.is_open()) {
-		CREATE_EVENT_LOG("Failed to open target file");
-		return;
+		throw std::runtime_error("Failed to open target file");
 	}
 
 	file.write(bytes.data(), bytes.size());
 	file.close();
-
-	CREATE_EVENT_LOG("File converted from bytes array");
 }

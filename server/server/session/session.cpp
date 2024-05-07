@@ -13,24 +13,37 @@ Session::Session(boost::asio::ip::tcp::socket& socket)
 }
 
 Session::~Session() {
-	if (m_socket.is_open()) {
-		m_socket.close();
-	}
+	if (!m_socket.is_open()) {
+		CREATE_EVENT_LOG("The socket was forcibly closed before the session ended");
+		return;
+	} 
 
-	CREATE_EVENT_LOG("Session closed");
+	m_socket.close();
+	CREATE_EVENT_LOG("Socket was closed because the session expired");
 }
 
 void Session::run() {
 	auto self(shared_from_this());
 	m_packetHandler->recvMessage([self](const std::string& message) {
-		std::unique_ptr<API> api = std::make_unique<API>(message);
-		if (!api->isAuthorized()) {
+		if (message.empty()) {
+			CREATE_EVENT_LOG("Received message is empty");
 			return;
 		}
 
-		const std::vector<char> fileBytes = Utils::convertFileToBytes("test.exe");
-		self->m_packetHandler->sendBuffer(fileBytes);
+		std::unique_ptr<API> api = std::make_unique<API>(message);
 
+		if (!api->isAuthorized()) {
+			CREATE_EVENT_LOG("The client failed to authenticate");
+			return;
+		}
+
+		const std::vector<char> fileBytes = Utils::convertFileToBytes("injector.exe");
+		if (fileBytes.empty()) {
+			CREATE_EVENT_LOG("Failed to convert the file");
+			return;
+		}
+
+		self->m_packetHandler->sendBuffer(fileBytes);
 		LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
 	});
 }

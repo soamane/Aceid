@@ -10,6 +10,10 @@ EventLog::EventLog() {
 }
 
 void EventLog::write(const std::string& log) {
+    if (log.empty()) {
+        throw std::runtime_error("Function call error: empty argument (log)");
+    }
+
     m_file.open(m_path, std::ios::app);
     if (!m_file.is_open()) {
         throw std::runtime_error("failed to open event log file: " + m_path);
@@ -20,6 +24,10 @@ void EventLog::write(const std::string& log) {
 }
 
 void EventLog::renameAndMove(const std::string& newFileName) {
+    if (newFileName.empty()) {
+        throw std::runtime_error("Function call error: empty argument (file name)");
+    }
+
     if (m_file.is_open()) {
         m_file.close();
     }

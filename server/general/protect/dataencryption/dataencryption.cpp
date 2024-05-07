@@ -6,14 +6,26 @@
 #include "base64/base64.h"
 
 const std::string DataEncryption::encryptBase64(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	return base64::to_base64(source);
 }
 
 const std::string DataEncryption::decryptBase64(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	return base64::from_base64(source);
 }
 
 const std::string DataEncryption::encryptMultiBase64(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	std::string result;
 	for (auto& c : source) {
 		result += encryptBase64(std::string(1, c));
@@ -30,7 +42,14 @@ const std::string DataEncryption::encryptMultiBase64(const std::string& source) 
 }
 
 const std::string DataEncryption::decryptMultiBase64(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	std::string decrypted = decryptBase64(source);
+	if (decrypted.empty()) {
+		throw std::runtime_error("Failed to decrypt the source");
+	}
 
 	std::size_t pos = decrypted.find(key);
 	while (pos != std::string::npos) {
@@ -49,6 +68,10 @@ const std::string DataEncryption::decryptMultiBase64(const std::string& source) 
 }
 
 const std::string DataEncryption::encryptCustomMethod(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	std::vector<int> sourceData(source.begin(), source.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
@@ -58,13 +81,24 @@ const std::string DataEncryption::encryptCustomMethod(const std::string& source)
 	}
 
 	std::string result = std::string(sourceData.begin(), sourceData.end());
+	if (result.empty()) {
+		throw std::runtime_error("Failed to initialize result string");
+	}
+
 	result = encryptMultiBase64(result);
 
 	return result;
 }
 
 const std::string DataEncryption::decryptCustomMethod(const std::string& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source)");
+	}
+
 	const std::string decrypted = decryptMultiBase64(source);
+	if (decrypted.empty()) {
+		throw std::runtime_error("Failed to decrypt the source");
+	}
 
 	std::vector<int> sourceData(decrypted.begin(), decrypted.end());
 	std::vector<int> keyData(key.begin(), key.end());
@@ -79,6 +113,10 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 }
 
 const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source data)");
+	}
+
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
@@ -91,6 +129,10 @@ const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& s
 }
 
 const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& source) {
+	if (source.empty()) {
+		throw std::runtime_error("Function call error: empty argument (source data)");
+	}
+
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
@@ -103,6 +145,10 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 }
 
 const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
+	if (keyData.empty()) {
+		throw std::runtime_error("Function call error: empty argument (key data)");
+	}
+
 	std::vector<int> encryptedKeyData = keyData;
 	const std::size_t halfSize = keyData.size() / 2;
 

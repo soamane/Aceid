@@ -8,11 +8,13 @@ Server::Server(boost::asio::io_context& context, short port)
 
 void Server::start() {
     std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(m_acceptor.get_executor());
+    if (!socket) {
+        throw std::runtime_error("Failed to initialize socket");
+    }
+
     m_acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
         if (!errorCode) {
             createSession(socket);
-        } else {
-            CREATE_SERVER_LOG("The socket failed to connect to the server")
         }
         start();
     });
@@ -24,7 +26,8 @@ void Server::stop() {
 
 void Server::createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {
     std::shared_ptr<Session> session = std::make_shared<Session>(*socket);
-    {
-        session->run();
+    if (!session) {
+        throw std::runtime_error("Failed to initialize session");
     }
+    session->run();
 }
