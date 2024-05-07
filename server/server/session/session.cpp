@@ -31,7 +31,6 @@ void Session::run() {
 		}
 
 		std::unique_ptr<API> api = std::make_unique<API>(message);
-
 		if (!api->isAuthorized()) {
 			CREATE_EVENT_LOG("The client failed to authenticate");
 			return;
