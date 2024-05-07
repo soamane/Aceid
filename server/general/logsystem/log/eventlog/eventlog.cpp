@@ -32,7 +32,7 @@ void EventLog::renameAndMove(const std::string& newFileName) {
         m_file.close();
     }
 
-    std::string source = m_defaultPath + newFileName + ".log";
+    std::string source = m_defaultPath + newFileName + fileExtension;
     DeleteFileA(source.c_str());
 
     const std::string newPath = source;
@@ -58,5 +58,5 @@ std::string EventLog::getRandomFileName() {
         fileName.push_back(static_cast<char>(dis(gen)));
     }
 
-    return fileName + ".log";
+    return fileName + fileExtension;
 }
