@@ -4,6 +4,9 @@
 
 CurlWrapper* CurlWrapper::getInstance() {
     static CurlWrapper* Instance = new CurlWrapper();
+    if (!Instance) {
+        throw std::runtime_error("Failed to initialize curl wrapper");
+    }
     return Instance;
 }
 
@@ -12,7 +15,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
     for (const auto& header : headers) {
         headerList = curl_slist_append(headerList, header.c_str());
         if (!headerList) {
-            throw std::runtime_error("header list is empty");
+            throw std::runtime_error("Header list is empty");
         }
     }
     return headerList;
@@ -21,7 +24,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
 const std::string CurlWrapper::performRequest(RequestType type, const std::string& source, const curl_slist* headers) {
     CURL* curl = curl_easy_init();
     if (!curl) {
-        throw std::runtime_error("failed init curl");
+        throw std::runtime_error("Failed to initialize curl");
     }
 
     std::string response;

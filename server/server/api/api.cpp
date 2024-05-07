@@ -6,7 +6,11 @@
 #include "../../general/logsystem/logmanager/logmanager.h"
 
 API::API(const std::string& jsonString) {
-	CREATE_EVENT_LOG("API Interface created");
+	if (jsonString.empty()) {
+		throw std::runtime_error("Function call error: empty argument (json string)");
+	}
+
+	CREATE_EVENT_LOG("API initialized successfully");
 	getUserData(jsonString);
 }
 
@@ -16,8 +20,7 @@ bool API::isAuthorized() {
 
 void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		CREATE_EVENT_LOG("Failed to get user data (empty argument)");
-		return;
+		throw std::runtime_error("Function call error: empty argument (JSON string)");
 	}
 
 	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
@@ -44,6 +47,11 @@ void API::getProfileGroup() {
 	}
 
 	const std::string response = requestResult.value();
+	if (response.empty()) {
+		CREATE_EVENT_LOG("The response result is empty");
+		return;
+	}
+
 	m_authData.profile_group = JsonWrapper::getInstance()->parseParamsField(response, "groups");
 }
 
@@ -66,11 +74,18 @@ void API::getMemberId() {
 	}
 
 	const std::string response = requestResult.value();
+	if (response.empty()) {
+		CREATE_EVENT_LOG("The response result is empty");
+		return;
+	}
+
 	m_authData.member_id = JsonWrapper::getInstance()->parseParamsField(response, "id");
 }
 
 
 bool API::checkUserAuthentication() {
+	getMemberId();
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" } },
@@ -81,8 +96,6 @@ bool API::checkUserAuthentication() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify account availability");
-
-	getMemberId();
 
 	return performApiRequest(jsonString).has_value();
 }
@@ -99,7 +112,8 @@ bool API::checkUserHwid() {
 		}
 		);
 
-	CREATE_EVENT_LOG("Request to verify HWID");
+	CREATE_EVENT_LOG("Request to verify hardware id");
+
 	return performApiRequest(jsonString).has_value();
 }
 
@@ -116,6 +130,7 @@ bool API::checkUserLicense() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify the availability license");
+
 	return performApiRequest(jsonString).has_value();
 }
 
@@ -133,26 +148,49 @@ bool API::checkUserToken() {
 		);
 
 	CREATE_EVENT_LOG("Request to verify session token");
+
 	return performApiRequest(jsonString).has_value();
 }
 
 std::optional<const std::string> API::performApiRequest(const std::string& jsonString) {
-	std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
-	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
+	if (jsonString.empty()) {
+		throw std::runtime_error("Function call error: empty argument (JSON string)");
+	}
 
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
-	std::string decryptedResponse = DataEncryption::decryptBase64(response);
-
-	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("Request failed");
+	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
+	if (encryptedJson.empty()) {
+		CREATE_EVENT_LOG("Failed to initialize encrypted JSON");
 		return std::nullopt;
 	}
 
-	CREATE_EVENT_LOG("Request success");
+	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
+
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
+	if (response.empty()) {
+		CREATE_EVENT_LOG("Failed to receive a response from the Web API");
+		return std::nullopt;
+	}
+
+	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
+	if (decryptedResponse.empty()) {
+		CREATE_EVENT_LOG("Failed to decrypt the received response");
+		return std::nullopt;
+	}
+
+	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
+		CREATE_EVENT_LOG("The WEB API rejected the user's request");
+		return std::nullopt;
+	}
+
+	CREATE_EVENT_LOG("The WEB API granted access to this request");
 
 	return decryptedResponse;
 }
 
 const std::string API::getUsername() {
+	if (m_authData.username.empty()) {
+		CREATE_EVENT_LOG("The 'username' field is empty");
+		return std::string();
+	}
 	return m_authData.username;
 }

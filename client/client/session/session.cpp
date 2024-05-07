@@ -7,6 +7,8 @@
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 
+#include <iostream>
+
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
 
