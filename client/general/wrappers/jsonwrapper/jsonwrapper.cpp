@@ -12,7 +12,7 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 	document.Parse(jsonString.c_str());
 
 	if (!document.IsObject()) {
-		throw std::runtime_error("failed to parse json document");
+		throw std::runtime_error("Failed to parse json document");
 	}
 
 	return document;
@@ -75,7 +75,7 @@ const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) 
 	auto& params = parseDocumentParams(document);
 
 	if (!params.HasMember("token")) {
-		throw std::runtime_error("failed to parse token field");
+		throw std::runtime_error("Failed to parse token field");
 	}
 
 	return params["token"].GetString();

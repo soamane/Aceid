@@ -22,8 +22,7 @@ void Session::run() {
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 	if (fileBytes.empty()) {
-		Console::showConsoleMessage("Failed to get software :D");
-		return;
+		throw std::runtime_error("Failed to get software");
 	}
 
 	Console::clearConsole();
