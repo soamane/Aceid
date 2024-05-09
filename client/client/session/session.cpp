@@ -18,6 +18,10 @@ Session::~Session() {
 
 void Session::run() {
 	const std::string credentials = Console::getUserCredentials();
+	if (credentials.empty()) {
+		throw std::runtime_error("Failed to get user credentials");
+	}
+
 	m_packetHandler->sendMessage(credentials);
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();

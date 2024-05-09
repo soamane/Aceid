@@ -16,13 +16,28 @@ const std::string Console::getUserCredentials() {
 	std::cin >> authData->password;
 
 	authData->hwid = Hardware::getHardwareId();
+	if (authData->hwid.empty()) {
+		throw std::runtime_error("Failed to get hardware id");
+	}
+
 	authData->token = api->getSessionToken();
+	if (authData->token.empty()) {
+		throw std::runtime_error("Failed to get session token");
+	}
 
 	const std::string convertedAuthData = api->convertAuthDataToJson();
+	if (convertedAuthData.empty()) {
+		throw std::runtime_error("Failed to get auth data");
+	}
+
 	return convertedAuthData;
 }
 
 void Console::showConsoleMessage(const std::string& message) {
+	if (message.empty()) {
+		throw std::runtime_error("Function call error: empty argument (console message)");
+	}
+
 	std::cout << message << std::endl;
 }
 

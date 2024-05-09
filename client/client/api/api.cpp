@@ -21,6 +21,10 @@ const std::string API::convertAuthDataToJson() {
 		}
 		);
 
+	if (jsonString.empty()) {
+		throw std::runtime_error("Failed to convert auth data to json");
+	}
+
 	return jsonString;
 }
 
@@ -35,6 +39,11 @@ const std::string API::getSessionToken() {
 			{ "hwid", m_authData->hwid }
 		}
 		);
+
+	if (jsonString.empty()) {
+		throw std::runtime_error("Failed to convert data for token");
+	}
+
 	return performGetSessionToken(jsonString);
 }
 
@@ -50,7 +59,7 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 
 	if (!JsonWrapper::getInstance()->haveTokenField(decryptedResponse)) {
-		throw std::runtime_error("failed to get session token");
+		throw std::runtime_error("Failed to get session token");
 	}
 
 	return JsonWrapper::getInstance()->parseSessionToken(decryptedResponse);
