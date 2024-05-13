@@ -10,7 +10,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 
 void PacketHandler::sendMessage(const std::string& message) {
     if (message.empty()) {
-        throw std::runtime_error("Function call error: empty argument (message)");
+        throw std::invalid_argument("Function call error: empty argument (message)");
     }
 
     const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);
@@ -33,7 +33,7 @@ void PacketHandler::sendMessage(const std::string& message) {
 
 void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
     if (buffer.empty()) {
-        throw std::runtime_error("Function call error: empty argument (buffer)");
+        throw std::invalid_argument("Function call error: empty argument (buffer)");
     }
 
     const std::vector<char> encryptedBuffer = DataEncryption::encryptBuffer(buffer);

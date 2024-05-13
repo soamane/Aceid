@@ -49,7 +49,7 @@ const std::string API::getSessionToken() {
 
 const std::string API::performGetSessionToken(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument");
+		throw std::invalid_argument("Function call error: empty argument");
 	}
 
 	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);

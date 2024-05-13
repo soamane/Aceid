@@ -35,7 +35,7 @@ const std::vector<char> PacketHandler::recvBuffer() {
 
 void PacketHandler::sendMessage(const std::string& message) {
 	if (message.empty()) {
-		throw std::runtime_error("Function call error: empty argument");
+		throw std::invalid_argument("Function call error: empty argument");
 	}
 
 	const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);

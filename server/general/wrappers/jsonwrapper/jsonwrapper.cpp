@@ -18,7 +18,7 @@ JsonWrapper* JsonWrapper::getInstance() {
 
 const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument (JSON string)");
+		throw std::invalid_argument("Function call error: empty argument (JSON string)");
 	}
 
 	rapidjson::Document document;
@@ -33,7 +33,7 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 
 const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& document) {
 	if (!document.IsObject()) {
-		throw std::runtime_error("Function call error: empty argument (JSON document)");
+		throw std::invalid_argument("Function call error: empty argument (JSON document)");
 	}
 
 	const rapidjson::Value& params = document["params"];
@@ -46,7 +46,7 @@ const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& do
 
 const std::string JsonWrapper::parseParamsField(const std::string& jsonString, const std::string& fieldName) {
 	if (jsonString.empty() || fieldName.empty()) {
-		throw std::runtime_error("Function call error: empty argument (JSON/Name string)");
+		throw std::invalid_argument("Function call error: empty argument (JSON/Name string)");
 	}
 
 	auto document = parseJsonString(jsonString);
@@ -71,7 +71,7 @@ const std::string JsonWrapper::parseParamsField(const std::string& jsonString, c
 
 const AuthData JsonWrapper::parseUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument (JSON string)");
+		throw std::invalid_argument("Function call error: empty argument (JSON string)");
 	}
 
 	auto document = parseJsonString(jsonString);
