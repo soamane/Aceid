@@ -20,7 +20,7 @@ public:
 
 private:
 	void sendPacket(const Packet& packet);
-	std::vector<char> recvPacket();
+	const std::vector<char> recvPacket();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;
