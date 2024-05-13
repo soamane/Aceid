@@ -35,7 +35,7 @@ const std::string Console::getUserCredentials() {
 
 void Console::showConsoleMessage(const std::string& message) {
 	if (message.empty()) {
-		throw std::runtime_error("Function call error: empty argument (console message)");
+		throw std::invalid_argument("Function call error: empty argument (console message)");
 	}
 
 	std::cout << message << std::endl;

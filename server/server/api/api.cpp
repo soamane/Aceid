@@ -7,7 +7,7 @@
 
 API::API(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument (json string)");
+		throw std::invalid_argument("Function call error: empty argument (json string)");
 	}
 
 	CREATE_EVENT_LOG("API initialized successfully");
@@ -21,7 +21,7 @@ bool API::isAuthorized() {
 
 void API::getUserData(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument (JSON string)");
+		throw std::invalid_argument("Function call error: empty argument (JSON string)");
 	}
 
 	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
@@ -155,7 +155,7 @@ bool API::checkUserToken() {
 
 std::optional<const std::string> API::performApiRequest(const std::string& jsonString) {
 	if (jsonString.empty()) {
-		throw std::runtime_error("Function call error: empty argument (JSON string)");
+		throw std::invalid_argument("Function call error: empty argument (JSON string)");
 	}
 
 	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
