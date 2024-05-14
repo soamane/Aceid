@@ -36,7 +36,7 @@ void Session::run() {
 			return;
 		}
 
-		const std::vector<char> fileBytes = Utils::convertFileToBytes("injector.exe");
+		const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
 		if (fileBytes.empty()) {
 			CREATE_EVENT_LOG("Failed to convert the file");
 			return;
