@@ -1,7 +1,5 @@
 #include "api.h"
 
-#include <boost/format.hpp>
-
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/logsystem/logmanager/logmanager.h"
 
@@ -164,9 +162,9 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 		return std::nullopt;
 	}
 
-	boost::format source = boost::format("%1%?data=%2%") % m_url % encryptedJson;
+	const std::string fullUrl = m_url + "?data=" + encryptedJson;
 
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, fullUrl, nullptr);
 	if (response.empty()) {
 		CREATE_EVENT_LOG("Failed to receive a response from the Web API");
 		return std::nullopt;

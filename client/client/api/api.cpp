@@ -3,7 +3,6 @@
 #include "../../general/protect/dataencryption/dataencryption.h"
 
 #include <stdexcept>
-#include <boost/format.hpp>
 
 API::API(AuthData* data) : m_authData(data) { }
 
@@ -53,9 +52,9 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 	}
 
 	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
-	const boost::format source = boost::format(xorstr_("%1%?data=%2%")) % m_url % encryptedJson;
+	const std::string fullUrl = m_url + "?data=" + encryptedJson;
 
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, source.str(), nullptr);
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, fullUrl, nullptr);
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 
 	if (!JsonWrapper::getInstance()->haveTokenField(decryptedResponse)) {
