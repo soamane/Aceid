@@ -150,8 +150,6 @@ const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
 	}
 
 	std::vector<int> encryptedKeyData = keyData;
-	const std::size_t halfSize = keyData.size() / 2;
-
 	for (std::size_t i = 0; i < encryptedKeyData.size() / 2; ++i) {
 		std::swap(encryptedKeyData[i], encryptedKeyData[encryptedKeyData.size() - i - 1]);
 	}
