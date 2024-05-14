@@ -179,6 +179,7 @@
     <ClInclude Include="client\session\session.h" />
     <ClInclude Include="general\protect\dataencryption\base64\base64.h" />
     <ClInclude Include="general\protect\dataencryption\dataencryption.h" />
+    <ClInclude Include="general\protect\xorstring\xorstring.h" />
     <ClInclude Include="general\wrappers\curlwrapper\curlwrapper.h" />
     <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="user\console\console.h" />
