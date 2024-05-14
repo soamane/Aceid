@@ -1,11 +1,13 @@
 #include "../client/client.h"
 
+#include "../general/protect/xorstring/xorstring.h"
+
 int main() {
 	try {
 		boost::asio::io_context context;
 		Client client(context);
 		{
-			client.connect("31.129.43.210", "25565");
+			client.connect(xorstr_("31.129.43.210"), xorstr_("25565"));
 		}
 	} catch (const std::exception& exception) {
 		MessageBoxA(GetForegroundWindow(), exception.what(), nullptr, MB_OK | MB_ICONERROR);

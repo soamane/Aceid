@@ -2,6 +2,8 @@
 
 #include "session/session.h"
 
+#include "../general/protect/xorstring/xorstring.h"
+
 Client::Client(boost::asio::io_context& context)
 	: m_resolver(context) { }
 
@@ -14,7 +16,7 @@ void Client::connect(std::string_view address, std::string_view port) {
 
 	boost::asio::connect(socket, iterator, errorCode);
 	if (errorCode) {
-		throw std::runtime_error("Failed to connect to the server");
+		throw std::runtime_error(xorstr_("Failed to connect to the server"));
 	}
 
 	createSession(socket);

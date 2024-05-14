@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "../../protect/xorstring/xorstring.h"
+
 JsonWrapper* JsonWrapper::getInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();
 	return Instance;
@@ -12,28 +14,28 @@ const rapidjson::Document JsonWrapper::parseJsonString(const std::string& jsonSt
 	document.Parse(jsonString.c_str());
 
 	if (!document.IsObject()) {
-		throw std::runtime_error("Failed to parse json document");
+		throw std::runtime_error(xorstr_("Failed to parse json document"));
 	}
 
 	return document;
 }
 
 const rapidjson::Value& JsonWrapper::parseDocumentParams(rapidjson::Document& document) {
-	const rapidjson::Value& params = document["params"];
+	const rapidjson::Value& params = document[xorstr_("params")];
 
 	if (!params.IsObject()) {
-		throw std::runtime_error("'params' field is not of object");
+		throw std::runtime_error(xorstr_("'params' field is not of object"));
 	}
 
 	return params;
 }
 
 bool JsonWrapper::haveErrorField(const std::string& jsonString) {
-	return paramsFieldExist(jsonString, "error");
+	return paramsFieldExist(jsonString, xorstr_("error"));
 }
 
 bool JsonWrapper::haveTokenField(const std::string& jsonString) {
-	return paramsFieldExist(jsonString, "token");
+	return paramsFieldExist(jsonString, xorstr_("token"));
 }
 
 bool JsonWrapper::paramsFieldExist(const std::string& jsonString, const std::string& fieldName) {
@@ -74,11 +76,11 @@ const std::string JsonWrapper::parseSessionToken(const std::string& jsonString) 
 	auto document = parseJsonString(jsonString);
 	auto& params = parseDocumentParams(document);
 
-	if (!params.HasMember("token")) {
-		throw std::runtime_error("Failed to parse token field");
+	if (!params.HasMember(xorstr_("token"))) {
+		throw std::runtime_error(xorstr_("Failed to parse token field"));
 	}
 
-	return params["token"].GetString();
+	return params[xorstr_("token")].GetString();
 }
 
 JsonWrapper::JsonWrapper() {
