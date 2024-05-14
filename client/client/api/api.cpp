@@ -52,7 +52,7 @@ const std::string API::performGetSessionToken(const std::string& jsonString) {
 	}
 
 	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
-	const std::string fullUrl = m_url + "?data=" + encryptedJson;
+	const std::string fullUrl = m_url + xorstr_("?data=") + encryptedJson;
 
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, fullUrl, nullptr);
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
