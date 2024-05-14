@@ -2,6 +2,8 @@
 
 #include <stdexcept>
 
+#include "../../protect/xorstring/xorstring.h"
+
 CurlWrapper* CurlWrapper::getInstance() {
     static CurlWrapper* Instance = new CurlWrapper();
     return Instance;
@@ -12,7 +14,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
     for (const auto& header : headers) {
         headerList = curl_slist_append(headerList, header.c_str());
         if (!headerList) {
-            throw std::runtime_error("Failed add headers");
+            throw std::runtime_error(xorstr_("Failed add headers"));
         }
     }
     return headerList;
@@ -21,7 +23,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
 const std::string CurlWrapper::performRequest(RequestType type, const std::string& source, const curl_slist* headers) {
     CURL* curl = curl_easy_init();
     if (!curl) {
-        throw std::runtime_error("Failed init curl");
+        throw std::runtime_error(xorstr_("Failed init curl"));
     }
 
     std::string response;
@@ -41,7 +43,7 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK) {
-        throw std::runtime_error("failed to send request");
+        throw std::runtime_error(xorstr_("Failed to send request"));
     }
 
     return response;

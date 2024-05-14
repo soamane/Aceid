@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "../xorstring/xorstring.h"
+
 class DataEncryption {
 public:
 	static const std::string encryptBase64(const std::string& str);
@@ -23,7 +25,7 @@ private:
 	static const int generateKeyCode(const std::vector<int>& keyData);
 
 private:
-	static inline const std::string key = "aceid";
+	static inline const std::string key = xorstr_("aceid");
 };
 
 #endif // !DATA_ENCRYPTION_H

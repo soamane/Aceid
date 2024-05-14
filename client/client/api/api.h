@@ -8,6 +8,8 @@
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"
 
+#include "../../general/protect/xorstring/xorstring.h"
+
 struct AuthData {
 	std::string username;
 	std::string password;
@@ -28,7 +30,7 @@ private:
 
 private:
 	AuthData* m_authData;
-	const std::string m_url = "https://aceid.cc/server_api/api.php";
+	const std::string m_url = xorstr_("https://aceid.cc/server_api/api.php");
 };
 
 #endif // !API_H

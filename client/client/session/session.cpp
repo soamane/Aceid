@@ -6,6 +6,7 @@
 #include "../../user/runpe/runpe.h"
 
 #include "../../general/protect/dataencryption/dataencryption.h"
+#include "../../general/protect/xorstring/xorstring.h"
 
 Session::Session(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
@@ -19,18 +20,18 @@ Session::~Session() {
 void Session::run() {
 	const std::string credentials = Console::getUserCredentials();
 	if (credentials.empty()) {
-		throw std::runtime_error("Failed to get user credentials");
+		throw std::runtime_error(xorstr_("Failed to get user credentials"));
 	}
 
 	m_packetHandler->sendMessage(credentials);
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 	if (fileBytes.empty()) {
-		throw std::runtime_error("Failed to get software");
+		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
 
 	Console::clearConsole();
-	Console::showConsoleMessage("Enjoy!");
+	Console::showConsoleMessage(xorstr_("Enjoy!"));
 
 	RunPE::RunExecutable(fileBytes, { });
 }

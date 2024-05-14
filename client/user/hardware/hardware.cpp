@@ -7,16 +7,17 @@
 #pragma comment(lib, "d3d9.lib")
 
 #include "../../general/protect/dataencryption/dataencryption.h"
+#include "../../general/protect/xorstring/xorstring.h"
 
 std::string Hardware::getHardwareId() {
     std::string cpuInfo = getCPUInfo();
     if (cpuInfo.empty()) {
-        throw std::runtime_error("Failed to initalize hardware: 1");
+        throw std::runtime_error(xorstr_("Failed to initalize hardware: 1"));
     }
 
     std::string gpuInfo = getGPUInfo();
     if (gpuInfo.empty()) {
-        throw std::runtime_error("Failed to initalize hardware: 2");
+        throw std::runtime_error(xorstr_("Failed to initalize hardware: 2"));
     }
 
     return DataEncryption::encryptBase64(cpuInfo + gpuInfo);
@@ -38,12 +39,12 @@ std::string Hardware::getCPUInfo() {
 std::string Hardware::getGPUInfo() {
     IDirect3D9* directDevice = Direct3DCreate9(D3D_SDK_VERSION);
     if (directDevice == nullptr) {
-        throw std::runtime_error("Failed to initalize hardware: 3");
+        throw std::runtime_error(xorstr_("Failed to initalize hardware: 3"));
     }
 
     D3DADAPTER_IDENTIFIER9 adapterIdentifier;
     if (FAILED(directDevice->GetAdapterIdentifier(0, 0, &adapterIdentifier))) {
-        throw std::runtime_error("Failed to initalize hardware: 4");
+        throw std::runtime_error(xorstr_("Failed to initalize hardware: 4"));
     }
 
     std::ostringstream oss;

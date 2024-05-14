@@ -2,19 +2,21 @@
 
 #include <fstream>
 
+#include "../protect/xorstring/xorstring.h"
+
 const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
 	if (path.empty()) {
-		throw std::invalid_argument("Function call error: empty argument (path)");
+		throw std::invalid_argument(xorstr_("Function call error: empty argument (path)"));
 	}
 
 	std::ifstream file(path, std::ios::binary);
 	if (!file.is_open()) {
-		throw std::runtime_error("Failed to open target file");
+		throw std::runtime_error(xorstr_("Failed to open target file"));
 	}
 
 	std::vector<char> bytes((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 	if (bytes.empty()) {
-		throw std::runtime_error("Failed to read file information");
+		throw std::runtime_error(xorstr_("Failed to read file information"));
 	}
 
 	file.close();
@@ -23,12 +25,12 @@ const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
 
 void Utils::createFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
 	if (path.empty() || bytes.empty()) {
-		throw std::invalid_argument("Function call error: empty argument (path/bytes)");
+		throw std::invalid_argument(xorstr_("Function call error: empty argument (path/bytes)"));
 	}
 
 	std::ofstream file(path, std::ios::binary);
 	if (!file.is_open()) {
-		throw std::runtime_error("Failed to open target file");
+		throw std::runtime_error(xorstr_("Failed to open target file"));
 	}
 
 	file.write(bytes.data(), bytes.size());
