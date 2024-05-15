@@ -187,10 +187,6 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 	return decryptedResponse;
 }
 
-const std::string API::getUsername() {
-	if (m_authData.username.empty()) {
-		CREATE_EVENT_LOG("The 'username' field is empty");
-		return std::string();
-	}
-	return m_authData.username;
+const AuthData API::getAuthDataObject() {
+	return m_authData;
 }

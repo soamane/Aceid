@@ -14,7 +14,7 @@ public:
 
     bool isAuthorized();
 
-    const std::string getUsername();
+    const AuthData getAuthDataObject();
 
 private:
 

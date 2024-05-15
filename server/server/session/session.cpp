@@ -43,6 +43,6 @@ void Session::run() {
 		}
 
 		self->m_packetHandler->sendBuffer(fileBytes);
-		LogManager::getInstance()->getEventLog()->renameAndMove(api->getUsername());
+		LogManager::getInstance()->getEventLog()->renameAndMove(api->getAuthDataObject().username);
 	});
 }
