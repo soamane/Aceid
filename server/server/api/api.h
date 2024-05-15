@@ -20,7 +20,7 @@ private:
 
     void getUserData(const std::string& jsonString);
 
-    void getProfileGroup();
+    void getProfileGroupId();
 
     void getMemberId();
 
