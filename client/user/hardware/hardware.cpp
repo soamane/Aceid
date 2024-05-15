@@ -10,12 +10,12 @@
 #include "../../general/protect/xorstring/xorstring.h"
 
 const std::string Hardware::getHardwareId() {
-    std::string cpuInfo = getCPUInfo();
+    const std::string cpuInfo = getCPUInfo();
     if (cpuInfo.empty()) {
         throw std::runtime_error(xorstr_("Failed to initalize hardware: 1"));
     }
 
-    std::string gpuInfo = getGPUInfo();
+    const std::string gpuInfo = getGPUInfo();
     if (gpuInfo.empty()) {
         throw std::runtime_error(xorstr_("Failed to initalize hardware: 2"));
     }
