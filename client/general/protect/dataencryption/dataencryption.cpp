@@ -77,7 +77,7 @@ const std::string DataEncryption::encryptCustomMethod(const std::string& source)
 
 	const int keyCode = generateKeyCode(keyData);
 	for (auto& it : sourceData) {
-		it -= keyCode;
+		it -= keyCode ^ key.size();
 	}
 
 	std::string result = std::string(sourceData.begin(), sourceData.end());
@@ -105,7 +105,7 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 
 	const int keyCode = generateKeyCode(keyData);
 	for (auto& it : sourceData) {
-		it += keyCode;
+		it += keyCode ^ key.size();
 	}
 
 	const std::string result = std::string(sourceData.begin(), sourceData.end());
