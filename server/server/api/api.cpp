@@ -9,7 +9,10 @@ API::API(const std::string& jsonString) {
 	}
 
 	CREATE_EVENT_LOG("API initialized successfully");
-	getUserData(jsonString);
+
+	getUserData(jsonString); // get main info of user ( username, password etc. )
+	getMemberId(); // get member id for perform user hwid request after ( based on parse data by getUserData method )
+	getProfileGroupId(); // get group id for definition access to the cheats ( based on parse data by getUserData method )
 }
 
 bool API::isAuthorized() {
@@ -83,8 +86,6 @@ void API::getMemberId() {
 
 
 bool API::checkUserAuthentication() {
-	getMemberId(); // get member id for perform user hwid request after (checkUserHwid function)
-
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" } },
