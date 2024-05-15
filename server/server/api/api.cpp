@@ -187,6 +187,6 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 	return decryptedResponse;
 }
 
-const AuthData API::getAuthDataObject() {
+const AuthData& API::getAuthDataObject() {
 	return m_authData;
 }
