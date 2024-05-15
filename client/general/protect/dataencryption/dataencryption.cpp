@@ -146,7 +146,7 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 
 const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
 	if (keyData.empty()) {
-		throw std::invalid_argument("Function call error: empty argument (key data)");
+		throw std::invalid_argument(xorstr_("Function call error: empty argument (key data)"));
 	}
 
 	std::vector<int> encryptedKeyData = keyData;
