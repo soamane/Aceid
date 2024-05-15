@@ -25,7 +25,7 @@ void API::getUserData(const std::string& jsonString) {
 	m_authData = JsonWrapper::getInstance()->parseUserData(jsonString);
 }
 
-void API::getProfileGroup() {
+void API::getProfileGroupId() {
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "groups" },
