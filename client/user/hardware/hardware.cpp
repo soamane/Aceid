@@ -9,7 +9,7 @@
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
-std::string Hardware::getHardwareId() {
+const std::string Hardware::getHardwareId() {
     std::string cpuInfo = getCPUInfo();
     if (cpuInfo.empty()) {
         throw std::runtime_error(xorstr_("Failed to initalize hardware: 1"));
@@ -23,7 +23,7 @@ std::string Hardware::getHardwareId() {
     return DataEncryption::encryptBase64(cpuInfo + gpuInfo);
 }
 
-std::string Hardware::getCPUInfo() {
+const std::string Hardware::getCPUInfo() {
     std::uint32_t regs[4]{ };
     __cpuid(reinterpret_cast<int*>(regs), 0);
 
@@ -36,7 +36,7 @@ std::string Hardware::getCPUInfo() {
     return oss.str();
 }
 
-std::string Hardware::getGPUInfo() {
+const std::string Hardware::getGPUInfo() {
     IDirect3D9* directDevice = Direct3DCreate9(D3D_SDK_VERSION);
     if (directDevice == nullptr) {
         throw std::runtime_error(xorstr_("Failed to initalize hardware: 3"));

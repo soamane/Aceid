@@ -6,11 +6,11 @@
 
 class Hardware {
 public:
-	static std::string getHardwareId();
+	static const std::string getHardwareId();
 
 private:
-	static std::string getCPUInfo();
-	static std::string getGPUInfo();
+	static const std::string getCPUInfo();
+	static const std::string getGPUInfo();
 };
 
 #endif // !HARDWARE_H
