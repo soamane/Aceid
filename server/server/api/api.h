@@ -14,7 +14,7 @@ public:
 
     bool isAuthorized();
 
-    const AuthData getAuthDataObject();
+    const AuthData& getAuthDataObject();
 
 private:
 
