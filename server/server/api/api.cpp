@@ -83,7 +83,7 @@ void API::getMemberId() {
 
 
 bool API::checkUserAuthentication() {
-	getMemberId();
+	getMemberId(); // get member id for perform user hwid request after (checkUserHwid function)
 
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
@@ -151,10 +151,14 @@ bool API::checkUserToken() {
 	return performApiRequest(jsonString).has_value();
 }
 
+#include <iostream>
+
 std::optional<const std::string> API::performApiRequest(const std::string& jsonString) {
 	if (jsonString.empty()) {
 		throw std::invalid_argument("Function call error: empty argument (JSON string)");
 	}
+
+	std::cout << "Json string: " << jsonString << std::endl;
 
 	const std::string encryptedJson = DataEncryption::encryptBase64(jsonString);
 	if (encryptedJson.empty()) {
@@ -164,11 +168,15 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 
 	const std::string fullUrl = m_url + "?data=" + encryptedJson;
 
+	std::cout << "Full URL: " << fullUrl << std::endl;
+
 	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, fullUrl, nullptr);
 	if (response.empty()) {
 		CREATE_EVENT_LOG("Failed to receive a response from the Web API");
 		return std::nullopt;
 	}
+
+	std::cout << "Response: " << response << std::endl;
 
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 	if (decryptedResponse.empty()) {
