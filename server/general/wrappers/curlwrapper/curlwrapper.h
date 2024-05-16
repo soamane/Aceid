@@ -8,8 +8,8 @@
 #include <curl/curl.h>
 
 enum RequestType {
-	eRT_HTTP,
-	eRT_HTTPS
+	HTTP,
+	HTTPS
 };
 
 class CurlWrapper {

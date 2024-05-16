@@ -165,7 +165,7 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 
 	const std::string fullUrl = m_url + "?data=" + encryptedJson;
 
-	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::eRT_HTTPS, fullUrl, nullptr);
+	const std::string response = CurlWrapper::getInstance()->performRequest(RequestType::HTTPS, fullUrl, nullptr);
 	if (response.empty()) {
 		CREATE_EVENT_LOG("Failed to receive a response from the Web API");
 		return std::nullopt;
