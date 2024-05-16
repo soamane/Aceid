@@ -26,7 +26,7 @@ const AuthStatus& API::getAuthStatus() {
 		return AUTH_ERROR_INVALID_HWID;
 	}
 
-	if (!checkUserLicense() || m_authData.profile_group.empty()) {
+	if (!checkUserLicense() && m_authData.profile_group.empty()) {
 		CREATE_EVENT_LOG("No license");
 		return AUTH_ERROR_INVALID_LICENSE;
 	}
