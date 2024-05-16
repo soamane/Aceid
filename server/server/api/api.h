@@ -8,6 +8,15 @@
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"
 
+enum AuthStatus {
+    AUTH_ERROR_INVALID_CREDENTIALS,
+    AUTH_ERROR_INVALID_HWID,
+    AUTH_ERROR_INVALID_LICENSE,
+    AUTH_ERROR_INVALID_TOKEN,
+
+    AUTH_SUCCESS
+};
+
 class API {
 public:
     API(const std::string& jsonString);
