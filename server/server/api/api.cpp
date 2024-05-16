@@ -15,7 +15,7 @@ API::API(const std::string& jsonString) {
 	getProfileGroupId(); // fills group id into AuthData for definition access to the cheats ( based on parse data by getUserData method )
 }
 
-bool API::isAuthorized() {
+bool API::getAuthStatus() {
 	return checkUserAuthentication() && checkUserHwid() && 
 		checkUserLicense() && checkUserToken();
 }
