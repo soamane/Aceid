@@ -15,7 +15,7 @@ API::API(const std::string& jsonString) {
 	getProfileGroupId(); // fills group id into AuthData for definition access to the cheats ( based on parse data by getUserData method )
 }
 
-const AuthStatus& API::getAuthStatus() {
+const AuthStatus API::getAuthStatus() {
 	if (!checkUserAuthentication()) {
 		CREATE_EVENT_LOG("Invalid credentials");
 		return AUTH_ERROR_INVALID_CREDENTIALS;
@@ -189,7 +189,6 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 		CREATE_EVENT_LOG("Failed to receive a response from the Web API");
 		return std::nullopt;
 	}
-
 
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 	if (decryptedResponse.empty()) {
