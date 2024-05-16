@@ -15,9 +15,28 @@ API::API(const std::string& jsonString) {
 	getProfileGroupId(); // fills group id into AuthData for definition access to the cheats ( based on parse data by getUserData method )
 }
 
-bool API::getAuthStatus() {
-	return checkUserAuthentication() && checkUserHwid() && 
-		checkUserLicense() && checkUserToken();
+const AuthStatus& API::getAuthStatus() {
+	if (!checkUserAuthentication()) {
+		CREATE_EVENT_LOG("Invalid credentials");
+		return AUTH_ERROR_INVALID_CREDENTIALS;
+	}
+
+	if (!checkUserHwid()) {
+		CREATE_EVENT_LOG("Invalid hwid");
+		return AUTH_ERROR_INVALID_HWID;
+	}
+
+	if (!checkUserLicense()) {
+		CREATE_EVENT_LOG("No license");
+		return AUTH_ERROR_INVALID_LICENSE;
+	}
+
+	if (!checkUserToken()) {
+		CREATE_EVENT_LOG("Invalid token");
+		return AUTH_ERROR_INVALID_TOKEN;
+	}
+
+	return AUTH_SUCCESS;
 }
 
 void API::getUserData(const std::string& jsonString) {
