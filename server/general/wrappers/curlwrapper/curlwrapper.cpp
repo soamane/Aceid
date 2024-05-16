@@ -29,7 +29,7 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
 
     std::string response;
     curl_easy_setopt(curl, CURLOPT_URL, source.c_str());
-    if (type == RequestType::eRT_HTTPS) {
+    if (type == RequestType::HTTPS) {
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     }
 
