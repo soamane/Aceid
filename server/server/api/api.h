@@ -21,7 +21,7 @@ class API {
 public:
     API(const std::string& jsonString);
 
-    bool getAuthStatus();
+    const AuthStatus& getAuthStatus();
 
     const AuthData& getAuthDataObject();
 
