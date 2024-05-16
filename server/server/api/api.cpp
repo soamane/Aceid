@@ -11,8 +11,8 @@ API::API(const std::string& jsonString) {
 	CREATE_EVENT_LOG("API initialized successfully");
 
 	getUserData(jsonString); // get main info of user ( username, password etc. )
-	getMemberId(); // get member id for perform user hwid request after ( based on parse data by getUserData method )
-	getProfileGroupId(); // get group id for definition access to the cheats ( based on parse data by getUserData method )
+	getMemberId(); // fills member id into AuthData for perform user hwid request after ( based on parse data by getUserData method )
+	getProfileGroupId(); // fills group id into AuthData for definition access to the cheats ( based on parse data by getUserData method )
 }
 
 bool API::isAuthorized() {
@@ -171,6 +171,7 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 		return std::nullopt;
 	}
 
+
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 	if (decryptedResponse.empty()) {
 		CREATE_EVENT_LOG("Failed to decrypt the received response");
@@ -178,11 +179,11 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("The WEB API rejected the user's request");
+		CREATE_EVENT_LOG("Request have error field");
 		return std::nullopt;
 	}
 
-	CREATE_EVENT_LOG("The WEB API granted access to this request");
+	CREATE_EVENT_LOG("Request performed successfully");
 
 	return decryptedResponse;
 }
