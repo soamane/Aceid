@@ -192,16 +192,16 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 	if (decryptedResponse.empty()) {
-		CREATE_EVENT_LOG("Failed to decrypt the received response");
+		CREATE_EVENT_LOG("Failed to decrypt the received response\n");
 		return std::nullopt;
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("Request have error field");
+		CREATE_EVENT_LOG("Request have error field\n");
 		return std::nullopt;
 	}
 
-	CREATE_EVENT_LOG("Request performed successfully");
+	CREATE_EVENT_LOG("Request performed successfully\n");
 
 	return decryptedResponse;
 }
