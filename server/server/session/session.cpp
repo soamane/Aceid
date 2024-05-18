@@ -31,7 +31,8 @@ void Session::run() {
 		}
 
 		std::unique_ptr<API> api = std::make_unique<API>(message);
-		auto status = api->getAuthStatus();
+		AuthStatus status = api->getAuthStatus();
+
 		if (status != AUTH_SUCCESS) {
 			CREATE_EVENT_LOG("The client failed to authenticate");
 			return;
