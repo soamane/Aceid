@@ -19,14 +19,14 @@ public:
 
     void sendBuffer(const std::vector<char>& buffer);
 
-    void recvMessage(std::function<void(const Packet&)> callback);
+    void recvMessage(std::function<void(const std::string&)> callback);
 
     const std::string packetToString(const Packet& packet);
 private:
 
     void sendPacket(const Packet& packet);
 
-    void recvPacket(const Packet& packet, std::function<void(const Packet&)> callback);
+    void recvPacket(std::function<void(const Packet&)> callback);
 
 private:
     boost::asio::ip::tcp::socket m_socket;

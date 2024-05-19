@@ -24,8 +24,7 @@ Session::~Session() {
 
 void Session::run() {
 	auto self(shared_from_this());
-	m_packetHandler->recvMessage([self](const Packet& packet) {
-		const std::string message = self->m_packetHandler->packetToString(packet);
+	m_packetHandler->recvMessage([self](const std::string& message) {
 		if (message.empty()) {
 			CREATE_EVENT_LOG("Received message is empty");
 			return;
