@@ -31,7 +31,7 @@ void Client::createSession(boost::asio::ip::tcp::socket& socket) {
 }
 
 void Client::checkInternetConnection() {
-	if (!InternetCheckConnectionA("https://aceid.cc", FLAG_ICC_FORCE_CONNECTION, 0)) {
+	if (!InternetCheckConnectionA(xorstr_("https://aceid.cc"), FLAG_ICC_FORCE_CONNECTION, 0)) {
 		throw std::runtime_error(xorstr_("Internet connection failed"));
 	}
 }
