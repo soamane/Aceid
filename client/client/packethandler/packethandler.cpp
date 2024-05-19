@@ -63,7 +63,7 @@ void PacketHandler::sendPacket(const Packet& packet) {
 	}
 }
 
-const Packet PacketHandler::recvPacket() {
+const Packet& PacketHandler::recvPacket() {
 	Packet packet;
 	{
 		boost::system::error_code errorCode;
