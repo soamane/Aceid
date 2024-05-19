@@ -171,6 +171,7 @@
     <ClCompile Include="user\hardware\hardware.cpp" />
     <ClCompile Include="general\utils\utils.cpp" />
     <ClCompile Include="user\runpe\runpe.cpp" />
+    <ClCompile Include="user\user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\api\api.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="user\hardware\hardware.h" />
     <ClInclude Include="general\utils\utils.h" />
     <ClInclude Include="user\runpe\runpe.h" />
+    <ClInclude Include="user\user.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
