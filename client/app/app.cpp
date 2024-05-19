@@ -1,10 +1,10 @@
-#include "user.h"
+#include "app.h"
 
 #include <stdexcept>
 
 #include "../general/protect/xorstring/xorstring.h"
 
-void User::createApplicationMutex() {
+void Application::createApplicationMutex() {
 	appHandle = CreateMutexA(NULL, TRUE, xorstr_("Client"));
 	if (appHandle == nullptr) {
 		throw std::runtime_error(xorstr_("Failed to create application handle"));
@@ -16,7 +16,7 @@ void User::createApplicationMutex() {
 	}
 }
 
-User::~User() { 
+Application::~Application() {
 	if (appHandle != nullptr) {
 		CloseHandle(appHandle);
 	}

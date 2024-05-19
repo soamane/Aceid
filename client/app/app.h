@@ -1,15 +1,16 @@
 #pragma once
-#ifndef USER_H
-#define USER_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 #include <windows.h>
 
-class User {
+class Application {
 public:
 	void createApplicationMutex();
-	~User();
+	~Application();
+
 private:
 	HANDLE appHandle;
 };
 
-#endif // !USER_H
+#endif // !APPLICATION_H

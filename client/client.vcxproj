@@ -167,11 +167,11 @@
     <ClCompile Include="general\wrappers\jsonwrapper\jsonwrapper.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="client\session\session.cpp" />
-    <ClCompile Include="user\console\console.cpp" />
-    <ClCompile Include="user\hardware\hardware.cpp" />
+    <ClCompile Include="app\console\console.cpp" />
+    <ClCompile Include="app\hardware\hardware.cpp" />
     <ClCompile Include="general\utils\utils.cpp" />
-    <ClCompile Include="user\runpe\runpe.cpp" />
-    <ClCompile Include="user\user.cpp" />
+    <ClCompile Include="app\runpe\runpe.cpp" />
+    <ClCompile Include="app\app.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="client\api\api.h" />
@@ -183,11 +183,11 @@
     <ClInclude Include="general\protect\xorstring\xorstring.h" />
     <ClInclude Include="general\wrappers\curlwrapper\curlwrapper.h" />
     <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
-    <ClInclude Include="user\console\console.h" />
-    <ClInclude Include="user\hardware\hardware.h" />
+    <ClInclude Include="app\console\console.h" />
+    <ClInclude Include="app\hardware\hardware.h" />
     <ClInclude Include="general\utils\utils.h" />
-    <ClInclude Include="user\runpe\runpe.h" />
-    <ClInclude Include="user\user.h" />
+    <ClInclude Include="app\runpe\runpe.h" />
+    <ClInclude Include="app\app.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
