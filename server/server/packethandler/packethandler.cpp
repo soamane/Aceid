@@ -53,12 +53,18 @@ void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
     sendPacket(packet);
 }
 
-void PacketHandler::recvMessage(std::function<void(const Packet&)> callback) {
-    Packet packet;
-    {
-        recvPacket(packet, callback);
-    }
+void PacketHandler::recvMessage(std::function<void(const std::string&)> callback) {
+    recvPacket([this, callback](const Packet& packet) {
+        std::string message = packetToString(packet);
+        if (message.empty()) {
+            CREATE_EVENT_LOG("Received empty message after packet conversion");
+        }
+        callback(message);
+    });
 }
+
+
+
 
 const std::string PacketHandler::packetToString(const Packet& packet) {
     if (packet.data.empty()) {
@@ -107,8 +113,8 @@ void PacketHandler::sendPacket(const Packet& packet) {
     });
 }
 
-void PacketHandler::recvPacket(const Packet& packet, std::function<void(const Packet&)> callback) {
-    std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
+void PacketHandler::recvPacket(std::function<void(const Packet&)> callback) {
+    std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>();
     if (!packetPointer) {
         CREATE_EVENT_LOG("Failed to initialize packet pointer (recv)");
         return;
