@@ -9,7 +9,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 }
 
 const std::string PacketHandler::recvMessage() {
-	std::vector<char> msgBuffer = recvPacket();
+	const std::vector<char> msgBuffer = recvPacket();
 	if (msgBuffer.empty()) {
 		throw std::runtime_error(xorstr_("Failed to recv message packet"));
 	}
