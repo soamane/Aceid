@@ -15,7 +15,7 @@ public:
 
 	void sendMessage(const std::string& message);
 
-	const std::string recvMessage();
+	const std::string& recvMessage();
 	const std::vector<char> recvBuffer();
 
 private:
