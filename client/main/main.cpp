@@ -1,12 +1,12 @@
 #include "../client/client.h"
 
-#include "../user/user.h"
+#include "../app/app.h"
 #include "../general/protect/xorstring/xorstring.h"
 
 int main() {
 	try {
-		User user;
-		user.createApplicationMutex();
+		Application app;
+		app.createApplicationMutex();
 
 		boost::asio::io_context context;
 		Client client(context);

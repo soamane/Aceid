@@ -1,9 +1,9 @@
 #include "session.h"
 
-#include "../../user/console/console.h"
+#include "../../app/console/console.h"
 #include "../../general/utils/utils.h"
 
-#include "../../user/runpe/runpe.h"
+#include "../../app/runpe/runpe.h"
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"

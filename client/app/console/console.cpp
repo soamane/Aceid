@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "../../client/api/api.h"
-#include "../../user/hardware/hardware.h"
+#include "../../app/hardware/hardware.h"
 
 #include "../../general/protect/xorstring/xorstring.h"
 
