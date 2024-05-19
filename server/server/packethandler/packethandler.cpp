@@ -53,11 +53,33 @@ void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
     sendPacket(packet);
 }
 
-void PacketHandler::recvMessage(std::function<void(const std::string&)> callback) {
+void PacketHandler::recvMessage(std::function<void(const Packet&)> callback) {
     Packet packet;
     {
         recvPacket(packet, callback);
     }
+}
+
+const std::string PacketHandler::packetToString(const Packet& packet) {
+    if (packet.data.empty()) {
+        CREATE_EVENT_LOG("Failed to convert packet to string");
+        return std::string();
+    }
+
+    const std::string message(packet.data.begin(), packet.data.end());
+    if (message.empty()) {
+        CREATE_EVENT_LOG("Failed to convert the result string");
+        return std::string();
+
+    }
+
+    const std::string decryptedMessage = DataEncryption::decryptCustomMethod(message);
+    if (decryptedMessage.empty()) {
+        CREATE_EVENT_LOG("Failed to decrypt string");
+        return std::string();
+    }
+
+    return decryptedMessage;
 }
 
 void PacketHandler::sendPacket(const Packet& packet) {
@@ -85,7 +107,7 @@ void PacketHandler::sendPacket(const Packet& packet) {
     });
 }
 
-void PacketHandler::recvPacket(const Packet& packet, std::function<void(const std::string&)> callback) {
+void PacketHandler::recvPacket(const Packet& packet, std::function<void(const Packet&)> callback) {
     std::shared_ptr<Packet> packetPointer = std::make_shared<Packet>(packet);
     if (!packetPointer) {
         CREATE_EVENT_LOG("Failed to initialize packet pointer (recv)");
@@ -96,38 +118,25 @@ void PacketHandler::recvPacket(const Packet& packet, std::function<void(const st
     boost::asio::async_read(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
             CREATE_EVENT_LOG("Failed to send packet size");
-            callback(std::string());
+            callback(Packet());
         } 
         
         try {
             packetPointer->data.resize(packetPointer->size);
         } catch (const std::bad_alloc& e) {
             CREATE_EVENT_LOG(e.what());
-            callback(std::string());
+            callback(Packet());
         }
         
         boost::asio::async_read(self->m_socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
             if (errorCode) {
                 CREATE_EVENT_LOG("Failed to recv packet body");
-                callback(std::string());
+                callback(Packet());
             } 
-
-            const std::string result(packetPointer->data.begin(), packetPointer->data.end());
-            if (result.empty()) {
-                CREATE_EVENT_LOG("Failed to convert the result string");
-                return;
-
-            }
-
-            const std::string decryptedMessage = DataEncryption::decryptCustomMethod(result);
-            if (decryptedMessage.empty()) {
-                CREATE_EVENT_LOG("Failed to initialize encrypted string");
-                return;
-            }
 
             CREATE_EVENT_LOG("Packet received without errors: " + std::to_string(bytes) + " bytes received");
 
-            callback(decryptedMessage);
+            callback(*packetPointer);
         });
     });
 }
