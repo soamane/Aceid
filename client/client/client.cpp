@@ -4,8 +4,12 @@
 
 #include "../general/protect/xorstring/xorstring.h"
 
+#include <wininet.h>
+
 Client::Client(boost::asio::io_context& context)
-	: m_resolver(context) { }
+	: m_resolver(context) {
+	checkInternetConnection();
+}
 
 void Client::connect(std::string_view address, std::string_view port) {
 	boost::asio::ip::tcp::resolver::query query(address.data(), port.data());
@@ -24,4 +28,10 @@ void Client::connect(std::string_view address, std::string_view port) {
 
 void Client::createSession(boost::asio::ip::tcp::socket& socket) {
 	std::make_unique<Session>(socket)->run();
+}
+
+void Client::checkInternetConnection() {
+	if (!InternetCheckConnectionA("https://aceid.cc", FLAG_ICC_FORCE_CONNECTION, 0)) {
+		throw std::runtime_error(xorstr_("Internet connection failed"));
+	}
 }
