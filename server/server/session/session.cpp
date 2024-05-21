@@ -33,11 +33,11 @@ void Session::run() {
 		const AuthStatus authStatus = api.getAuthStatus();
 		if (authStatus != AUTH_SUCCESS) {
 			CREATE_EVENT_LOG("Client failed to authenticate");
-			self->m_packetHandler->sendServerResponse(EServerResponse::ERROR_RESPONSE);
+			self->m_packetHandler->sendServerResponse(FAILED_AUTH);
 			return;
 		}
 
-		self->m_packetHandler->sendServerResponse(EServerResponse::SUCCESS_RESPONSE);
+		self->m_packetHandler->sendServerResponse(SUCCESS_AUTH);
 
 		const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
 		if (fileBytes.empty()) {

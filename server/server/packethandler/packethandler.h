@@ -6,8 +6,8 @@
 #include <boost/asio.hpp>
 
 enum EServerResponse {
-    ERROR_RESPONSE,
-    SUCCESS_RESPONSE
+    FAILED_AUTH,
+    SUCCESS_AUTH
 };
 
 struct Packet {

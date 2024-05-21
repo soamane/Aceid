@@ -26,11 +26,16 @@ void Session::run() {
 	m_packetHandler->sendMessage(credentials);
 
 	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
-	if (serverResponse == EServerResponse::ERROR_RESPONSE) {
+	if (serverResponse == FAILED_AUTH) {
 		Console::showConsoleMessage(xorstr_("Failed auth :("));
-		std::this_thread::sleep_for(std::chrono::seconds(5));
 		return;
+	} else if (serverResponse == SUCCESS_AUTH) {
+		Console::showConsoleMessage(xorstr_("Success auth"));
+	} else {
+		throw std::invalid_argument(xorstr_("Unknown server response"));
 	}
+
+	std::this_thread::sleep_for(std::chrono::seconds(3));
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 	if (fileBytes.empty()) {
