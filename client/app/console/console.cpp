@@ -32,6 +32,7 @@ const std::string Console::getUserCredentials() {
 		throw std::runtime_error(xorstr_("Failed to get auth data"));
 	}
 
+	Console::clearConsole();
 	return convertedAuthData;
 }
 
@@ -40,7 +41,7 @@ void Console::showConsoleMessage(const std::string& message) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (console message)"));
 	}
 
-	std::cout << message << std::endl;
+	std::cout << message;
 }
 
 void Console::clearConsole() {

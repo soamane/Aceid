@@ -8,7 +8,19 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 
 }
 
-const std::string& PacketHandler::recvMessage() {
+const EServerResponse PacketHandler::recvServerResponse() {
+	EServerResponse response;
+	{
+		boost::system::error_code errorCode;
+		boost::asio::read(m_socket, boost::asio::buffer(&response, sizeof(response)), boost::asio::transfer_all(), errorCode);
+		if (errorCode) {
+			throw std::runtime_error(xorstr_("Failed to recv server response"));
+		}
+	}
+	return response;
+}
+
+const std::string PacketHandler::recvMessage() {
 	const std::vector<char> msgBuffer = recvPacket().data;
 	if (msgBuffer.empty()) {
 		throw std::runtime_error(xorstr_("Failed to recv message packet"));
@@ -63,7 +75,7 @@ void PacketHandler::sendPacket(const Packet& packet) {
 	}
 }
 
-const Packet& PacketHandler::recvPacket() {
+const Packet PacketHandler::recvPacket() {
 	Packet packet;
 	{
 		boost::system::error_code errorCode;

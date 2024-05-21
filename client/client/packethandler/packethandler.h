@@ -4,6 +4,11 @@
 
 #include <boost/asio.hpp>
 
+enum EServerResponse {
+	ERROR_RESPONSE,
+	SUCCESS_RESPONSE
+};
+
 struct Packet {
 	std::size_t size;
 	std::vector<char> data;
@@ -15,12 +20,13 @@ public:
 
 	void sendMessage(const std::string& message);
 
-	const std::string& recvMessage();
+	const EServerResponse recvServerResponse();
+	const std::string recvMessage();
 	const std::vector<char> recvBuffer();
 
 private:
 	void sendPacket(const Packet& packet);
-	const Packet& recvPacket();
+	const Packet recvPacket();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;

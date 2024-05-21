@@ -8,6 +8,16 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 
 }
 
+void PacketHandler::sendServerResponse(const EServerResponse& response) {
+    boost::asio::async_write(m_socket, boost::asio::buffer(&response, sizeof(response)), [](boost::system::error_code errorCode, std::size_t) {
+        if (errorCode) {
+            CREATE_EVENT_LOG("Failed to send server response");
+            return;
+        }
+        CREATE_EVENT_LOG("Server response sended successfully");
+    });
+}
+
 void PacketHandler::sendMessage(const std::string& message) {
     if (message.empty()) {
         throw std::invalid_argument("Function call error: empty argument (message)");

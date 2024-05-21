@@ -5,6 +5,11 @@
 #include <memory>
 #include <boost/asio.hpp>
 
+enum EServerResponse {
+    ERROR_RESPONSE,
+    SUCCESS_RESPONSE
+};
+
 struct Packet {
     std::size_t size;
     std::vector<char> data;
@@ -14,6 +19,8 @@ class PacketHandler : public std::enable_shared_from_this<PacketHandler> {
 public:
 
     PacketHandler(boost::asio::ip::tcp::socket& socket);
+    
+    void sendServerResponse(const EServerResponse& response);
 
     void sendMessage(const std::string& message);
 
