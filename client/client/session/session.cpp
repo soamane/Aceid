@@ -26,21 +26,26 @@ void Session::run() {
 	m_packetHandler->sendMessage(credentials);
 
 	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
-	if (serverResponse == FAILED_AUTH) {
-		Console::showConsoleMessage(xorstr_("Failed auth :("));
-		return;
-	} else if (serverResponse == SUCCESS_AUTH) {
-		Console::showConsoleMessage(xorstr_("Success auth"));
-	} else {
-		throw std::invalid_argument(xorstr_("Unknown server response"));
-	}
+	switch (serverResponse) {
+		case FAILED_AUTH:
+			Console::showConsoleMessage(xorstr_("FAILED AUTH"));
+			std::this_thread::sleep_for(std::chrono::seconds(3));
+			return;
 
-	std::this_thread::sleep_for(std::chrono::seconds(3));
+		case SUCCESS_AUTH:
+			Console::showConsoleMessage(xorstr_("SUCCESS AUTH "));
+			break;
+
+		default:
+			throw std::invalid_argument(xorstr_("Unknown server response"));
+	}
 
 	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
 	if (fileBytes.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
+
+	Console::showConsoleMessage(xorstr_("OPEN GAME FOR CHEAT INJECTION"));
 
 	RunPE::RunExecutable(fileBytes, { });
 }
