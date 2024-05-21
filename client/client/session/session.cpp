@@ -42,7 +42,5 @@ void Session::run() {
 		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
 
-	Console::showConsoleMessage(xorstr_("Enjoy!"));
-
 	RunPE::RunExecutable(fileBytes, { });
 }
