@@ -13,13 +13,11 @@ Session::Session(boost::asio::ip::tcp::socket& socket)
 }
 
 Session::~Session() {
-	if (!m_socket.is_open()) {
-		CREATE_EVENT_LOG("The socket was forcibly closed before the session ended");
+	if (m_socket.is_open()) {
+		m_socket.close();
+		CREATE_EVENT_LOG("Socket was closed because the session expired");
 		return;
 	} 
-
-	m_socket.close();
-	CREATE_EVENT_LOG("Socket was closed because the session expired");
 }
 
 void Session::run() {
@@ -30,13 +28,16 @@ void Session::run() {
 			return;
 		}
 
-		std::unique_ptr<API> api = std::make_unique<API>(message);
-		const AuthStatus authStatus = api->getAuthStatus();
+		API api(message);
 
+		const AuthStatus authStatus = api.getAuthStatus();
 		if (authStatus != AUTH_SUCCESS) {
-			CREATE_EVENT_LOG("The client failed to authenticate");
+			CREATE_EVENT_LOG("Client failed to authenticate");
+			self->m_packetHandler->sendServerResponse(EServerResponse::ERROR_RESPONSE);
 			return;
 		}
+
+		self->m_packetHandler->sendServerResponse(EServerResponse::SUCCESS_RESPONSE);
 
 		const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
 		if (fileBytes.empty()) {
@@ -45,6 +46,6 @@ void Session::run() {
 		}
 
 		self->m_packetHandler->sendBuffer(fileBytes);
-		LogManager::getInstance()->getEventLog()->renameAndMove(api->getAuthDataObject().username);
+		LogManager::getInstance()->getEventLog()->renameAndMove(api.getAuthDataObject().username);
 	});
 }
