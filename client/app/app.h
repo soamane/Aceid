@@ -3,14 +3,20 @@
 #define APPLICATION_H
 
 #include <windows.h>
+#include <string>
+
+#include "../general/protect/xorstring/xorstring.h"
 
 class Application {
 public:
-	void createApplicationMutex();
+	Application();
 	~Application();
 
+	void createApplicationMutex();
+
 private:
-	HANDLE appHandle;
+	HANDLE applicationHandle = nullptr;
+	const std::string applicationName = xorstr_("ACEID");
 };
 
 #endif // !APPLICATION_H
