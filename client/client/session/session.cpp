@@ -45,7 +45,9 @@ void Session::run() {
 		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
 
-	Console::showConsoleMessage(xorstr_("OPEN GAME FOR CHEAT INJECTION"));
+	Console::showConsoleMessage(xorstr_("OPEN GAME FOR CHEAT INJECTION\n"));
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	Console::clearConsole();
 
 	RunPE::RunExecutable(fileBytes, { });
 }
