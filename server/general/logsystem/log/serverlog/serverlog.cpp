@@ -2,7 +2,7 @@
 
 void ServerLog::write(const std::string& log) {
     if (log.empty()) {
-        throw std::invalid_argument("Function call error: empty argument (log)");
+        throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
 
     m_file.open(m_fileName, std::ios::app);

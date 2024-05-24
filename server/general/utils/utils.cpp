@@ -6,7 +6,7 @@
 
 const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
 	if (path.empty()) {
-		throw std::invalid_argument("Function call error: empty argument (path)");
+		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
 
 	std::ifstream file(path, std::ios::binary);
@@ -25,7 +25,7 @@ const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
 
 void Utils::createFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
 	if (path.empty() || bytes.empty()) {
-		throw std::invalid_argument("Function call error: empty argument (path/bytes)");
+		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
 
 	std::ofstream file(path, std::ios::binary);
