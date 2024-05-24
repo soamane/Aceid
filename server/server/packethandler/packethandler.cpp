@@ -11,7 +11,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 void PacketHandler::sendServerResponse(const EServerResponse& response) {
     boost::asio::async_write(m_socket, boost::asio::buffer(&response, sizeof(response)), [](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
-            CREATE_EVENT_LOG("Failed to send server response");
+            CREATE_EVENT_LOG("Failed to send server response: " + errorCode.message());
             return;
         }
         CREATE_EVENT_LOG("Server response sended successfully");
@@ -20,7 +20,7 @@ void PacketHandler::sendServerResponse(const EServerResponse& response) {
 
 void PacketHandler::sendMessage(const std::string& message) {
     if (message.empty()) {
-        throw std::invalid_argument("Function call error: empty argument (message)");
+        throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
 
     const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);
@@ -43,7 +43,7 @@ void PacketHandler::sendMessage(const std::string& message) {
 
 void PacketHandler::sendBuffer(const std::vector<char>& buffer) {
     if (buffer.empty()) {
-        throw std::invalid_argument("Function call error: empty argument (buffer)");
+        throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
 
     const std::vector<char> encryptedBuffer = DataEncryption::encryptBuffer(buffer);
@@ -72,9 +72,6 @@ void PacketHandler::recvMessage(std::function<void(const std::string&)> callback
         callback(message);
     });
 }
-
-
-
 
 const std::string PacketHandler::packetToString(const Packet& packet) {
     if (packet.data.empty()) {
@@ -108,17 +105,17 @@ void PacketHandler::sendPacket(const Packet& packet) {
     auto self(shared_from_this());
     boost::asio::async_write(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
-            CREATE_EVENT_LOG("Failed to send packet size");
+            CREATE_EVENT_LOG("Failed to send packet size: " + errorCode.message());
             return;
         } 
 
         boost::asio::async_write(self->m_socket, boost::asio::buffer(packetPointer->data), [self, packetPointer](boost::system::error_code errorCode, std::size_t bytes) {
             if (errorCode) {
-                CREATE_EVENT_LOG("Failed to send packet body");
+                CREATE_EVENT_LOG("Failed to send packet body: " + errorCode.message());
                 return;
             } 
 
-            CREATE_EVENT_LOG("Packet sended without errors: " + std::to_string(bytes) + " bytes sended");
+            CREATE_EVENT_LOG("Packet sended without errors");
         });
     });
 }
@@ -133,7 +130,7 @@ void PacketHandler::recvPacket(std::function<void(const Packet&)> callback) {
     auto self(shared_from_this());
     boost::asio::async_read(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
-            CREATE_EVENT_LOG("Failed to send packet size");
+            CREATE_EVENT_LOG("Failed to send packet size: " + errorCode.message());
             callback(Packet());
         } 
         
@@ -146,11 +143,11 @@ void PacketHandler::recvPacket(std::function<void(const Packet&)> callback) {
         
         boost::asio::async_read(self->m_socket, boost::asio::buffer(packetPointer->data), [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t bytes) {
             if (errorCode) {
-                CREATE_EVENT_LOG("Failed to recv packet body");
+                CREATE_EVENT_LOG("Failed to recv packet body: " + errorCode.message());
                 callback(Packet());
             } 
 
-            CREATE_EVENT_LOG("Packet received without errors: " + std::to_string(bytes) + " bytes received");
+            CREATE_EVENT_LOG("Packet received without errors");
 
             callback(*packetPointer);
         });
