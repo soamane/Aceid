@@ -18,6 +18,8 @@ Session::~Session() {
 		CREATE_EVENT_LOG("Socket was closed because the session expired");
 		return;
 	} 
+
+	CREATE_EVENT_LOG("Session closed");
 }
 
 void Session::run() {
