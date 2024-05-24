@@ -8,8 +8,6 @@ API::API(const std::string& jsonString) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
 
-	CREATE_EVENT_LOG("API initialized successfully");
-
 	getUserData(jsonString); // get main info of user ( username, password etc. )
 	getMemberId(); // fills member id into AuthData for perform user hwid request after ( based on parse data by getUserData method )
 	getProfileGroupId(); // fills group id into AuthData for definition access to the cheats ( based on parse data by getUserData method )
@@ -48,6 +46,9 @@ void API::getUserData(const std::string& jsonString) {
 }
 
 void API::getProfileGroupId() {
+
+	CREATE_EVENT_LOG("Request to get profile group");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "groups" },
@@ -58,8 +59,6 @@ void API::getProfileGroupId() {
 			{ "hwid", m_authData.hwid }
 		}
 		);
-
-	CREATE_EVENT_LOG("Request to get profile group");
 
 	std::optional<const std::string> requestResult = performApiRequest(jsonString);
 	if (!requestResult.has_value()) {
@@ -77,6 +76,9 @@ void API::getProfileGroupId() {
 }
 
 void API::getMemberId() {
+
+	CREATE_EVENT_LOG("Request to get member id");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" } },
@@ -85,8 +87,6 @@ void API::getMemberId() {
 			{ "password", m_authData.password }
 		}
 		);
-
-	CREATE_EVENT_LOG("Request to get member id");
 
 	std::optional<const std::string> requestResult = performApiRequest(jsonString);
 	if (!requestResult.has_value()) {
@@ -105,6 +105,9 @@ void API::getMemberId() {
 
 
 bool API::checkUserAuthentication() {
+
+	CREATE_EVENT_LOG("Request to verify account availability");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "auth" } },
@@ -114,12 +117,13 @@ bool API::checkUserAuthentication() {
 		}
 		);
 
-	CREATE_EVENT_LOG("Request to verify account availability");
-
 	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserHwid() {
+
+	CREATE_EVENT_LOG("Request to verify hardware id");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "hwid" },
@@ -131,12 +135,13 @@ bool API::checkUserHwid() {
 		}
 		);
 
-	CREATE_EVENT_LOG("Request to verify hardware id");
-
 	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserLicense() {
+
+	CREATE_EVENT_LOG("Request to verify the availability license");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "license" },
@@ -148,12 +153,13 @@ bool API::checkUserLicense() {
 		}
 		);
 
-	CREATE_EVENT_LOG("Request to verify the availability license");
-
 	return performApiRequest(jsonString).has_value();
 }
 
 bool API::checkUserToken() {
+
+	CREATE_EVENT_LOG("Request to verify session token");
+
 	const std::string jsonString = JsonWrapper::getInstance()->createJsonString
 	(
 		{ { "action", "session" },
@@ -166,12 +172,12 @@ bool API::checkUserToken() {
 		}
 		);
 
-	CREATE_EVENT_LOG("Request to verify session token");
-
 	return performApiRequest(jsonString).has_value();
 }
 
 std::optional<const std::string> API::performApiRequest(const std::string& jsonString) {
+	CREATE_EVENT_LOG("Detailed information on request: ");
+
 	if (jsonString.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -192,16 +198,17 @@ std::optional<const std::string> API::performApiRequest(const std::string& jsonS
 
 	const std::string decryptedResponse = DataEncryption::decryptBase64(response);
 	if (decryptedResponse.empty()) {
-		CREATE_EVENT_LOG("Failed to decrypt the received response\n");
+		CREATE_EVENT_LOG("Failed to decrypt the received response");
 		return std::nullopt;
 	}
 
 	if (JsonWrapper::getInstance()->haveErrorField(decryptedResponse)) {
-		CREATE_EVENT_LOG("Request have error field\n");
+		CREATE_EVENT_LOG("Request have error field");
 		return std::nullopt;
 	}
 
-	CREATE_EVENT_LOG("Request performed successfully\n");
+	CREATE_EVENT_LOG("Request performed successfully");
+	CREATE_EVENT_LOG("Host response: " + response + "\n");
 
 	return decryptedResponse;
 }
