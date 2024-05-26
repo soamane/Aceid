@@ -21,27 +21,21 @@ class API {
 public:
     API(const std::string& jsonString);
 
-    const AuthStatus getAuthStatus();
-
-    const AuthData& getAuthDataObject();
+    const AuthStatus getAuthStatus() const;
+    const AuthData& getAuthDataObject() const;
 
 private:
 
-    void getUserData(const std::string& jsonString);
+    void fillUserData(const std::string& jsonString);
+    void fillProfileGroupId();
+    void fillMemberId();
 
-    void getProfileGroupId();
+    const bool checkUserAuthentication() const;
+    const bool checkUserHwid() const;
+    const bool checkUserLicense() const;
+    const bool checkUserToken() const;
 
-    void getMemberId();
-
-    bool checkUserAuthentication();
-
-    bool checkUserHwid();
-
-    bool checkUserLicense();
-
-    bool checkUserToken();
-
-    std::optional<const std::string> performApiRequest(const std::string& jsonString);
+    std::optional<std::string> performApiRequest(const std::string& jsonString) const;
 
 private:
     AuthData m_authData; 

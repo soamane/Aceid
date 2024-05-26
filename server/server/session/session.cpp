@@ -17,10 +17,11 @@ Session::~Session() {
 		m_socket.close();
 		CREATE_EVENT_LOG("Socket was closed because the session expired");
 		return;
-	} 
+	}
 
 	CREATE_EVENT_LOG("Session closed");
 }
+
 
 void Session::run() {
 	auto self(shared_from_this());
@@ -33,21 +34,23 @@ void Session::run() {
 		API api(message);
 
 		const AuthStatus authStatus = api.getAuthStatus();
-		if (authStatus != AUTH_SUCCESS) {
+		if (authStatus == AUTH_SUCCESS) {
+			CREATE_EVENT_LOG("Client has successfully logged in");
+			LogManager::getInstance()->getEventLog()->renameAndMove(api.getAuthDataObject().username); // rename event log file
+
+			self->m_packetHandler->sendServerResponse(SUCCESS_AUTH);
+
+			const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
+			if (fileBytes.empty()) {
+				CREATE_EVENT_LOG("Failed to convert the file");
+				return;
+			}
+
+			self->m_packetHandler->sendBuffer(fileBytes);
+		} else {
 			CREATE_EVENT_LOG("Client failed to authenticate");
 			self->m_packetHandler->sendServerResponse(FAILED_AUTH);
 			return;
 		}
-
-		self->m_packetHandler->sendServerResponse(SUCCESS_AUTH);
-
-		const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
-		if (fileBytes.empty()) {
-			CREATE_EVENT_LOG("Failed to convert the file");
-			return;
-		}
-
-		self->m_packetHandler->sendBuffer(fileBytes);
-		LogManager::getInstance()->getEventLog()->renameAndMove(api.getAuthDataObject().username);
 	});
 }
