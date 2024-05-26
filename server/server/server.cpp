@@ -7,27 +7,32 @@ Server::Server(boost::asio::io_context& context, short port)
     : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
 void Server::start() {
-    std::shared_ptr<boost::asio::ip::tcp::socket> socket = std::make_shared<boost::asio::ip::tcp::socket>(m_acceptor.get_executor());
-    if (!socket) {
-        throw std::runtime_error("Failed to initialize socket");
+    auto newConnection = std::make_shared<boost::asio::ip::tcp::socket>(m_acceptor.get_executor());
+    if (newConnection == nullptr) {
+        CREATE_SERVER_LOG("Failed init new connection");
     }
 
-    m_acceptor.async_accept(*socket, [this, socket](boost::system::error_code errorCode) {
+    m_acceptor.async_accept(*newConnection, [this, newConnection](boost::system::error_code errorCode) {
         if (!errorCode) {
-            createSession(socket);
+            createSession(newConnection);
         }
         start();
     });
 }
 
 void Server::stop() {
-    m_acceptor.close();
+    if (m_acceptor.is_open()) {
+        m_acceptor.close();
+        CREATE_SERVER_LOG("Server closed");
+    }
 }
 
 void Server::createSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {
-    std::shared_ptr<Session> session = std::make_shared<Session>(*socket);
-    if (!session) {
-        throw std::runtime_error("Failed to initialize session");
+    auto newSession = std::make_shared<Session>(*socket);
+    if (newSession == nullptr) {
+        CREATE_SERVER_LOG("Failed init new session");
+        return;
     }
-    session->run();
+
+    newSession->run();
 }
