@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <sstream>
 
-std::string Log::getCurrentTime() {
+std::string Log::GetCurrentServerTime() {
     std::time_t time = std::time(nullptr);
     std::tm* now = std::localtime(&time);
 

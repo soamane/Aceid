@@ -11,7 +11,7 @@ public:
 	Session(boost::asio::ip::tcp::socket& socket);
 	~Session();
 
-	void run();
+	void Run();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;

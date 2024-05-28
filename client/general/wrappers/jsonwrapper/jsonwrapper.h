@@ -12,17 +12,17 @@
 
 class JsonWrapper {
 public:
-	static JsonWrapper* getInstance();
+	static JsonWrapper* GetInstance();
 
-	const rapidjson::Document parseJsonString(const std::string& jsonString);
-	const rapidjson::Value& parseDocumentParams(rapidjson::Document& document);
+	const rapidjson::Document ConvertStringToJson(const std::string& jsonString) const;
+	const rapidjson::Value& ParseDocumentParams(rapidjson::Document& document) const;
 
-	bool haveErrorField(const std::string& jsonString);
-	bool haveTokenField(const std::string& jsonString);
-	bool paramsFieldExist(const std::string& jsonString, const std::string& fieldName);
+	const bool IsErrorField(const std::string& jsonString) const;
+	const bool haveTokenField(const std::string& jsonString) const;
+	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
 
-	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
-	const std::string parseSessionToken(const std::string& jsonString);
+	const std::string CreateJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params) const;
+	const std::string ParseSessionToken(const std::string& jsonString) const;
 
 private:
 	JsonWrapper();

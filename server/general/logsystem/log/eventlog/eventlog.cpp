@@ -6,10 +6,10 @@
 #include <boost/format.hpp>
 
 EventLog::EventLog() {
-    m_path = m_tempPath + getRandomFileName();
+    m_path = m_tempPath + GenerateRandomFileName();
 }
 
-void EventLog::write(const std::string& log) {
+void EventLog::WriteLog(const std::string& log) {
     if (log.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
@@ -19,11 +19,11 @@ void EventLog::write(const std::string& log) {
         throw std::runtime_error("failed to open event log file: " + m_path);
     }
 
-    m_file << getCurrentTime() << ' ' << log << std::endl;
+    m_file << GetCurrentServerTime() << ' ' << log << std::endl;
     m_file.close();
 }
 
-void EventLog::renameAndMove(const std::string& newFileName) {
+void EventLog::RenameAndMove(const std::string& newFileName) {
     if (newFileName.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
@@ -47,7 +47,7 @@ EventLog::~EventLog() {
     }
 }
 
-std::string EventLog::getRandomFileName() {
+const std::string EventLog::GenerateRandomFileName() {
     std::random_device device;
     std::mt19937 gen(device());
     std::uniform_int_distribution<> dis('a', 'z');

@@ -12,7 +12,7 @@ public:
 	Application();
 	~Application();
 
-	void createApplicationMutex();
+	void CreateApplicationMutex();
 
 private:
 	HANDLE applicationHandle = nullptr;

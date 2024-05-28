@@ -17,37 +17,37 @@ Session::~Session() {
 	}
 }
 
-void Session::run() {
-	const std::string credentials = Console::getUserCredentials();
+void Session::Run() {
+	const std::string credentials = Console::GetUserCredentials();
 	if (credentials.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get user credentials"));
 	}
 
-	m_packetHandler->sendMessage(credentials);
+	m_packetHandler->SendClientMessage(credentials);
 
-	const EServerResponse serverResponse = m_packetHandler->recvServerResponse();
+	const EServerResponse serverResponse = m_packetHandler->ReceiveServerResponse();
 	switch (serverResponse) {
 		case FAILED_AUTH:
-			Console::showConsoleMessage(xorstr_("FAILED AUTH"));
+			Console::PrintConsoleMessage(xorstr_("FAILED AUTH"));
 			std::this_thread::sleep_for(std::chrono::seconds(3));
 			return;
 
 		case SUCCESS_AUTH:
-			Console::showConsoleMessage(xorstr_("SUCCESS AUTH "));
+			Console::PrintConsoleMessage(xorstr_("SUCCESS AUTH "));
 			break;
 
 		default:
 			throw std::invalid_argument(xorstr_("Unknown server response"));
 	}
 
-	std::vector<char> fileBytes = m_packetHandler->recvBuffer();
+	std::vector<char> fileBytes = m_packetHandler->ReceiveDataBuffer();
 	if (fileBytes.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
 
-	Console::showConsoleMessage(xorstr_("OPEN GAME FOR CHEAT INJECTION\n"));
+	Console::PrintConsoleMessage(xorstr_("OPEN GAME FOR CHEAT INJECTION\n"));
 	std::this_thread::sleep_for(std::chrono::seconds(5));
-	Console::clearConsole();
+	Console::Clear();
 
 	RunPE::RunExecutable(fileBytes, { });
 }

@@ -6,9 +6,8 @@
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 
-Session::Session(boost::asio::ip::tcp::socket& socket)
-	: m_socket(std::move(socket)), m_packetHandler(std::make_shared<PacketHandler>(m_socket)) {
-	LogManager::getInstance()->initEventLog();
+Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)), m_packetHandler(std::make_shared<PacketHandler>(m_socket)) {
+	LogManager::GetInstance()->InitEventLog();
 	CREATE_EVENT_LOG("Session created");
 }
 
@@ -23,9 +22,9 @@ Session::~Session() {
 }
 
 
-void Session::run() {
+void Session::Run() {
 	auto self(shared_from_this());
-	m_packetHandler->recvMessage([self](const std::string& message) {
+	m_packetHandler->ReceiveClientMessage([self](const std::string& message) {
 		if (message.empty()) {
 			CREATE_EVENT_LOG("Received message is empty");
 			return;
@@ -33,23 +32,23 @@ void Session::run() {
 
 		API api(message);
 
-		const AuthStatus authStatus = api.getAuthStatus();
+		const AuthStatus authStatus = api.GetAuthStatus();
 		if (authStatus == AUTH_SUCCESS) {
 			CREATE_EVENT_LOG("Client has successfully logged in");
-			LogManager::getInstance()->getEventLog()->renameAndMove(api.getAuthDataObject().username); // rename event log file
+			LogManager::GetInstance()->GetEventLog()->RenameAndMove(api.GetAuthDataObject().username); // rename event log file
 
-			self->m_packetHandler->sendServerResponse(SUCCESS_AUTH);
+			self->m_packetHandler->SendServerResponse(SUCCESS_AUTH);
 
-			const std::vector<char> fileBytes = Utils::convertFileToBytes("aceid.exe");
+			const std::vector<char>& fileBytes = Utils::ConvertFileToBytes("aceid.exe");
 			if (fileBytes.empty()) {
 				CREATE_EVENT_LOG("Failed to convert the file");
 				return;
 			}
 
-			self->m_packetHandler->sendBuffer(fileBytes);
+			self->m_packetHandler->SendDataBuffer(fileBytes);
 		} else {
 			CREATE_EVENT_LOG("Client failed to authenticate");
-			self->m_packetHandler->sendServerResponse(FAILED_AUTH);
+			self->m_packetHandler->SendServerResponse(FAILED_AUTH);
 			return;
 		}
 	});

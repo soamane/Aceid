@@ -14,14 +14,14 @@ enum RequestType {
 
 class CurlWrapper {
 public:
-	static CurlWrapper* getInstance();
+	static CurlWrapper* GetInstance();
 
-	const curl_slist* addHeaders(std::initializer_list<std::string> headers);
-	const std::string performRequest(RequestType type, const std::string& source, const curl_slist* headers);
+	const curl_slist* AddHeaders(std::initializer_list<std::string> headers) const;
+	const std::string PerformRequest(RequestType type, const std::string& source, const curl_slist* headers) const;
 
 private:
 	CurlWrapper();
-	static size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer);
+	static const std::size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer);
 };
 
 #endif // !CURL_WRAPPER_H

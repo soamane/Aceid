@@ -11,15 +11,13 @@ class EventLog : public Log {
 public:
 	EventLog();
 
-	void write(const std::string& log);
-
-	void renameAndMove(const std::string& newFileName);
+	void WriteLog(const std::string& log);
+	void RenameAndMove(const std::string& newFileName);
 
 	~EventLog();
 
 private:
-
-	std::string getRandomFileName();
+	const std::string GenerateRandomFileName();
 
 private:
 	std::ofstream m_file;

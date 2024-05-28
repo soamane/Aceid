@@ -9,11 +9,10 @@
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"
 
 enum AuthStatus {
-    AUTH_ERROR_INVALID_CREDENTIALS,
-    AUTH_ERROR_INVALID_HWID,
-    AUTH_ERROR_INVALID_LICENSE,
-    AUTH_ERROR_INVALID_TOKEN,
-
+    AUTH_INVALID_CREDENTIALS,
+    AUTH_INVALID_HWID,
+    AUTH_INVALID_LICENSE,
+    AUTH_INVALID_TOKEN,
     AUTH_SUCCESS
 };
 
@@ -21,21 +20,20 @@ class API {
 public:
     API(const std::string& jsonString);
 
-    const AuthStatus getAuthStatus() const;
-    const AuthData& getAuthDataObject() const;
+    const AuthStatus GetAuthStatus() const;
+    const AuthData& GetAuthDataObject() const;
 
 private:
+    void GetUserData(const std::string& jsonString);
+    void GetProfileGroupId();
+    void GetMemberId();
 
-    void fillUserData(const std::string& jsonString);
-    void fillProfileGroupId();
-    void fillMemberId();
+    const bool CheckUserAuthentication() const;
+    const bool CheckUserHwid() const;
+    const bool CheckUserLicense() const;
+    const bool CheckUserToken() const;
 
-    const bool checkUserAuthentication() const;
-    const bool checkUserHwid() const;
-    const bool checkUserLicense() const;
-    const bool checkUserToken() const;
-
-    std::optional<std::string> performApiRequest(const std::string& jsonString) const;
+    std::optional<std::string> PerformApiRequest(const std::string& jsonString) const;
 
 private:
     AuthData m_authData; 

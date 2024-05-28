@@ -10,21 +10,18 @@
 
 class LogManager {
 public:
-	static std::shared_ptr<LogManager> getInstance();
+	static std::shared_ptr<LogManager> GetInstance();
+	static std::shared_ptr<EventLog> GetEventLog();
+	static std::shared_ptr<ServerLog> GetServerLog();
 
-	static std::shared_ptr<EventLog> getEventLog();
-
-	static std::shared_ptr<ServerLog> getServerLog();
-
-	void initEventLog();
-
-	void createLog(std::shared_ptr<Log> object, const std::string& log);
+	void InitEventLog();
+	void CreateLog(std::shared_ptr<Log> object, const std::string& log);
 
 private:
 	std::shared_ptr<EventLog> m_event;
 };
 
-#define CREATE_EVENT_LOG(log) LogManager::getInstance()->createLog(LogManager::getInstance()->getEventLog(), log);
-#define CREATE_SERVER_LOG(log) LogManager::getInstance()->createLog(LogManager::getInstance()->getServerLog(), log);
+#define CREATE_EVENT_LOG(log) LogManager::GetInstance()->CreateLog(LogManager::GetInstance()->GetEventLog(), log);
+#define CREATE_SERVER_LOG(log) LogManager::GetInstance()->CreateLog(LogManager::GetInstance()->GetServerLog(), log);
 
 #endif // !LOG_MANAGER_H
