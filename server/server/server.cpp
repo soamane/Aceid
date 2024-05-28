@@ -3,6 +3,8 @@
 #include "session/session.h"
 #include "../general/logsystem/logmanager/logmanager.h"
 
+#include <iostream>
+
 Server::Server(boost::asio::io_context& context, short port)
     : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
@@ -15,6 +17,7 @@ void Server::start() {
     m_acceptor.async_accept(*newConnection, [this, newConnection](boost::system::error_code errorCode) {
         if (!errorCode) {
             createSession(newConnection);
+            std::cout << "[Server]: New connection detected" << std::endl;
         }
         start();
     });
