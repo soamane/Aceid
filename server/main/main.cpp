@@ -6,7 +6,7 @@ int main() {
 
 	try {
 		boost::asio::io_context context;
-		Server server(context, 25565);
+		Server server(context, 17521);
 		{
 			server.start();
 			context.run();

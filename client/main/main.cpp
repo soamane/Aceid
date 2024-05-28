@@ -11,7 +11,7 @@ int main() {
 		boost::asio::io_context context;
 		Client client(context);
 		{
-			client.connect(xorstr_("31.129.43.210"), xorstr_("25565"));
+			client.connect(xorstr_("31.129.59.129"), xorstr_("17521"));
 		}
 	} catch (const std::exception& exception) {
 		MessageBoxA(GetForegroundWindow(), exception.what(), nullptr, MB_OK | MB_ICONERROR);
