@@ -17,23 +17,19 @@ struct Packet {
 
 class PacketHandler : public std::enable_shared_from_this<PacketHandler> {
 public:
-
     PacketHandler(boost::asio::ip::tcp::socket& socket);
     
-    void sendServerResponse(const EServerResponse& response);
+    void SendServerResponse(const EServerResponse& response);
+    void SendServerMessage(const std::string& message);
+    void SendDataBuffer(const std::vector<char>& buffer); 
 
-    void sendMessage(const std::string& message);
+    void ReceiveClientMessage(std::function<void(const std::string&)> callback);
 
-    void sendBuffer(const std::vector<char>& buffer);
+    const std::string ConvertPacketToString(const Packet& packet);
 
-    void recvMessage(std::function<void(const std::string&)> callback);
-
-    const std::string packetToString(const Packet& packet);
 private:
-
-    void sendPacket(const Packet& packet);
-
-    void recvPacket(std::function<void(const Packet&)> callback);
+    void SendPacket(const Packet& packet);
+    void ReceivePacket(std::function<void(const Packet&)> callback);
 
 private:
     boost::asio::ip::tcp::socket m_socket;

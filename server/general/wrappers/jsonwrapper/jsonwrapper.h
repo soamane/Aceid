@@ -17,24 +17,19 @@ struct AuthData {
 
 class JsonWrapper {
 public:
+	static JsonWrapper* GetInstance();
 
-	static JsonWrapper* getInstance();
+	const rapidjson::Document ConvertStringToJson(const std::string& jsonString) const;
+	const rapidjson::Value& ParseDocumentParams(rapidjson::Document& document) const;
 
-	const rapidjson::Document parseJsonString(const std::string& jsonString);
+	const bool IsErrorField(const std::string& jsonString) const;
+	const bool IsMemberIdField(const std::string& jsonString) const;
+	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
 
-	const rapidjson::Value& parseDocumentParams(rapidjson::Document& document);
+	const std::string ParseParamsField(const std::string& jsonString, const std::string& fieldName) const;
+	const AuthData ParseUserData(const std::string& jsonString) const;
 
-	bool haveErrorField(const std::string& jsonString);
-
-	bool haveMemberIdField(const std::string& jsonString);
-
-	bool paramsFieldExist(const std::string& jsonString, const std::string& fieldName);
-
-	const std::string parseParamsField(const std::string& jsonString, const std::string& fieldName);
-
-	const AuthData parseUserData(const std::string& jsonString);
-
-	const std::string createJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params);
+	const std::string CreateJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params) const;
 
 private:
 	JsonWrapper();

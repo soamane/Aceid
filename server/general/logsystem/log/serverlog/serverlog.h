@@ -9,7 +9,7 @@
 
 class ServerLog : public Log {
 public:
-    void write(const std::string& log) override;
+    void WriteLog(const std::string& log) override;
 
 public:
     std::ofstream m_file;

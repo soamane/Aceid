@@ -4,7 +4,7 @@
 
 #include "../protect/xorstring/xorstring.h"
 
-const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
+const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
 	if (path.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path)"));
 	}
@@ -23,7 +23,7 @@ const std::vector<char> Utils::convertFileToBytes(const std::string& path) {
 	return bytes;
 }
 
-void Utils::createFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
+void Utils::CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
 	if (path.empty() || bytes.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path/bytes)"));
 	}

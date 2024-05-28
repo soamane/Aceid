@@ -18,15 +18,15 @@ class PacketHandler {
 public:
 	PacketHandler(boost::asio::ip::tcp::socket& socket);
 
-	void sendMessage(const std::string& message);
+	void SendClientMessage(const std::string& message);
 
-	const EServerResponse recvServerResponse();
-	const std::string recvMessage();
-	const std::vector<char> recvBuffer();
+	const EServerResponse ReceiveServerResponse();
+	const std::string ReceiveMessage();
+	const std::vector<char> ReceiveDataBuffer();
 
 private:
-	void sendPacket(const Packet& packet);
-	const Packet recvPacket();
+	void SendPacket(const Packet& packet);
+	const Packet ReceivePacket();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;

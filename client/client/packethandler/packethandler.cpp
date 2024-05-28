@@ -8,7 +8,7 @@ PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 
 }
 
-const EServerResponse PacketHandler::recvServerResponse() {
+const EServerResponse PacketHandler::ReceiveServerResponse() {
 	EServerResponse response;
 	{
 		boost::system::error_code errorCode;
@@ -20,8 +20,8 @@ const EServerResponse PacketHandler::recvServerResponse() {
 	return response;
 }
 
-const std::string PacketHandler::recvMessage() {
-	const std::vector<char> msgBuffer = recvPacket().data;
+const std::string PacketHandler::ReceiveMessage() {
+	const std::vector<char> msgBuffer = ReceivePacket().data;
 	if (msgBuffer.empty()) {
 		throw std::runtime_error(xorstr_("Failed to recv message packet"));
 	}
@@ -31,37 +31,37 @@ const std::string PacketHandler::recvMessage() {
 		throw std::runtime_error(xorstr_("Failed to assemble the read packet"));
 	}
 
-	receivedMessage = DataEncryption::decryptCustomMethod(receivedMessage);
+	receivedMessage = DataEncryption::DecryptCustomMethod(receivedMessage);
 
 	return receivedMessage;
 }
 
-const std::vector<char> PacketHandler::recvBuffer() {
-	std::vector<char> buffer = recvPacket().data;
+const std::vector<char> PacketHandler::ReceiveDataBuffer() {
+	std::vector<char> buffer = ReceivePacket().data;
 	if (buffer.empty()) {
 		throw std::runtime_error(xorstr_("Failed to recv buffer packet"));
 	}
 
-	buffer = DataEncryption::decryptBuffer(buffer);
+	buffer = DataEncryption::DecryptBuffer(buffer);
 	return buffer;
 }
 
-void PacketHandler::sendMessage(const std::string& message) {
+void PacketHandler::SendClientMessage(const std::string& message) {
 	if (message.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument"));
 	}
 
-	const std::string encryptedMessage = DataEncryption::encryptCustomMethod(message);
+	const std::string encryptedMessage = DataEncryption::EncryptCustomMethod(message);
 	Packet packet;
 	{
 		packet.size = encryptedMessage.size();
 		packet.data = std::vector<char>(encryptedMessage.begin(), encryptedMessage.end());
 	}
 
-	sendPacket(packet);
+	SendPacket(packet);
 }
 
-void PacketHandler::sendPacket(const Packet& packet) {
+void PacketHandler::SendPacket(const Packet& packet) {
 	boost::system::error_code errorCode;
 	m_socket.write_some(boost::asio::buffer(&packet.size, sizeof(packet.size)), errorCode);
 	if (errorCode) {
@@ -75,7 +75,7 @@ void PacketHandler::sendPacket(const Packet& packet) {
 	}
 }
 
-const Packet PacketHandler::recvPacket() {
+const Packet PacketHandler::ReceivePacket() {
 	Packet packet;
 	{
 		boost::system::error_code errorCode;

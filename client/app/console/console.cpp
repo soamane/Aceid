@@ -7,36 +7,36 @@
 
 #include "../../general/protect/xorstring/xorstring.h"
 
-const std::string Console::getUserCredentials() {
+const std::string Console::GetUserCredentials() {
 	AuthData authData;
 	API api(&authData);
 
-	showConsoleMessage(xorstr_("USERNAME: "));
+	PrintConsoleMessage(xorstr_("USERNAME: "));
 	std::cin >> authData.username;
 
-	showConsoleMessage(xorstr_("PASSWORD: "));
+	PrintConsoleMessage(xorstr_("PASSWORD: "));
 	std::cin >> authData.password;
 
-	authData.hwid = Hardware::getHardwareId();
+	authData.hwid = Hardware::GetHardwareId();
 	if (authData.hwid.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get hardware id"));
 	}
 
-	authData.token = api.getSessionToken();
+	authData.token = api.GetSessionToken();
 	if (authData.token.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get session token"));
 	}
 
-	const std::string convertedAuthData = api.convertAuthDataToJson();
+	const std::string convertedAuthData = api.ConvertAuthDataToJson();
 	if (convertedAuthData.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get auth data"));
 	}
 
-	Console::clearConsole();
+	Console::Clear();
 	return convertedAuthData;
 }
 
-void Console::showConsoleMessage(const std::string& message) {
+void Console::PrintConsoleMessage(const std::string& message) {
 	if (message.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (console message)"));
 	}
@@ -44,6 +44,6 @@ void Console::showConsoleMessage(const std::string& message) {
 	std::cout << message;
 }
 
-void Console::clearConsole() {
+void Console::Clear() {
 	system(xorstr_("cls"));
 }

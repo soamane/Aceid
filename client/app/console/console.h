@@ -6,9 +6,9 @@
 
 class Console {
 public:
-	static const std::string getUserCredentials();
-	static void showConsoleMessage(const std::string& message);
-	static void clearConsole();
+	static const std::string GetUserCredentials();
+	static void PrintConsoleMessage(const std::string& message);
+	static void Clear();
 };
 
 #endif // !CONSOLE_H

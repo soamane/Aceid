@@ -5,7 +5,7 @@
 
 #include "base64/base64.h"
 
-const std::string DataEncryption::encryptBase64(const std::string& source) {
+const std::string DataEncryption::EncryptBase64(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
@@ -13,7 +13,7 @@ const std::string DataEncryption::encryptBase64(const std::string& source) {
 	return base64::to_base64(source);
 }
 
-const std::string DataEncryption::decryptBase64(const std::string& source) {
+const std::string DataEncryption::DecryptBase64(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
@@ -21,14 +21,14 @@ const std::string DataEncryption::decryptBase64(const std::string& source) {
 	return base64::from_base64(source);
 }
 
-const std::string DataEncryption::encryptMultiBase64(const std::string& source) {
+const std::string DataEncryption::EncryptMultiBase64(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
 
 	std::string result;
 	for (auto& c : source) {
-		result += encryptBase64(std::string(1, c));
+		result += EncryptBase64(std::string(1, c));
 	}
 
 	std::size_t pos = result.find('=');
@@ -37,16 +37,16 @@ const std::string DataEncryption::encryptMultiBase64(const std::string& source) 
 		pos = result.find('=', pos + 1);
 	}
 
-	result = encryptBase64(result);
+	result = EncryptBase64(result);
 	return result;
 }
 
-const std::string DataEncryption::decryptMultiBase64(const std::string& source) {
+const std::string DataEncryption::DecryptMultiBase64(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
 
-	std::string decrypted = decryptBase64(source);
+	std::string decrypted = DecryptBase64(source);
 	if (decrypted.empty()) {
 		throw std::runtime_error(xorstr_("Failed to decrypt the source"));
 	}
@@ -61,13 +61,13 @@ const std::string DataEncryption::decryptMultiBase64(const std::string& source) 
 	const std::size_t offset = 4;
 	for (std::size_t pad = 0; pad < decrypted.length(); pad += offset) {
 		std::string chunk = decrypted.substr(pad, offset);
-		result += decryptBase64(chunk);
+		result += DecryptBase64(chunk);
 	}
 
 	return result;
 }
 
-const std::string DataEncryption::encryptCustomMethod(const std::string& source) {
+const std::string DataEncryption::EncryptCustomMethod(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
@@ -75,7 +75,7 @@ const std::string DataEncryption::encryptCustomMethod(const std::string& source)
 	std::vector<int> sourceData(source.begin(), source.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = generateKeyCode(keyData);
+	const int keyCode = GenerateKeyCode(keyData);
 	for (auto& it : sourceData) {
 		it -= keyCode ^ key.size();
 	}
@@ -85,17 +85,17 @@ const std::string DataEncryption::encryptCustomMethod(const std::string& source)
 		throw std::runtime_error(xorstr_("Failed to initialize result string"));
 	}
 
-	result = encryptMultiBase64(result);
+	result = EncryptMultiBase64(result);
 
 	return result;
 }
 
-const std::string DataEncryption::decryptCustomMethod(const std::string& source) {
+const std::string DataEncryption::DecryptCustomMethod(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source)"));
 	}
 
-	const std::string decrypted = decryptMultiBase64(source);
+	const std::string decrypted = DecryptMultiBase64(source);
 	if (decrypted.empty()) {
 		throw std::runtime_error(xorstr_("Failed to decrypt the source"));
 	}
@@ -103,7 +103,7 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 	std::vector<int> sourceData(decrypted.begin(), decrypted.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = generateKeyCode(keyData);
+	const int keyCode = GenerateKeyCode(keyData);
 	for (auto& it : sourceData) {
 		it += keyCode ^ key.size();
 	}
@@ -112,7 +112,7 @@ const std::string DataEncryption::decryptCustomMethod(const std::string& source)
 	return result;
 }
 
-const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& source) {
+const std::vector<char> DataEncryption::EncryptBuffer(const std::vector<char>& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source data)"));
 	}
@@ -120,7 +120,7 @@ const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& s
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = generateKeyCode(keyData);
+	const int keyCode = GenerateKeyCode(keyData);
 	for (char& ch : encryptedData) {
 		ch -= static_cast<char>(keyCode);
 	}
@@ -128,7 +128,7 @@ const std::vector<char> DataEncryption::encryptBuffer(const std::vector<char>& s
 	return encryptedData;
 }
 
-const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& source) {
+const std::vector<char> DataEncryption::DecryptBuffer(const std::vector<char>& source) {
 	if (source.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (source data)"));
 	}
@@ -136,7 +136,7 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = generateKeyCode(keyData);
+	const int keyCode = GenerateKeyCode(keyData);
 	for (char& ch : encryptedData) {
 		ch += static_cast<char>(keyCode);
 	}
@@ -144,7 +144,7 @@ const std::vector<char> DataEncryption::decryptBuffer(const std::vector<char>& s
 	return encryptedData;
 }
 
-const int DataEncryption::generateKeyCode(const std::vector<int>& keyData) {
+const int DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
 	if (keyData.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (key data)"));
 	}

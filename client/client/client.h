@@ -8,11 +8,11 @@
 class Client {
 public:
 	Client(boost::asio::io_context& context);
-	void connect(std::string_view address, std::string_view port);
+	void Connect(std::string_view address, std::string_view port);
 
 private:
-	void createSession(boost::asio::ip::tcp::socket& socket);
-	void checkInternetConnection();
+	void CreateSession(boost::asio::ip::tcp::socket& socket);
+	void CheckInternetConnection();
 
 private:
 	boost::asio::ip::tcp::resolver m_resolver;

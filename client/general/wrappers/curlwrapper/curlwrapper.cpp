@@ -4,12 +4,12 @@
 
 #include "../../protect/xorstring/xorstring.h"
 
-CurlWrapper* CurlWrapper::getInstance() {
+CurlWrapper* CurlWrapper::GetInstance() {
     static CurlWrapper* Instance = new CurlWrapper();
     return Instance;
 }
 
-const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> headers) {
+const curl_slist* CurlWrapper::AddHeaders(std::initializer_list<std::string> headers) const {
     curl_slist* headerList = nullptr;
     for (const auto& header : headers) {
         headerList = curl_slist_append(headerList, header.c_str());
@@ -20,7 +20,7 @@ const curl_slist* CurlWrapper::addHeaders(std::initializer_list<std::string> hea
     return headerList;
 }
 
-const std::string CurlWrapper::performRequest(RequestType type, const std::string& source, const curl_slist* headers) {
+const std::string CurlWrapper::PerformRequest(RequestType type, const std::string& source, const curl_slist* headers) const {
     CURL* curl = curl_easy_init();
     if (!curl) {
         throw std::runtime_error(xorstr_("Failed init curl"));
@@ -51,7 +51,7 @@ const std::string CurlWrapper::performRequest(RequestType type, const std::strin
 
 CurlWrapper::CurlWrapper() { }
 
-size_t CurlWrapper::WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer) {
+const std::size_t CurlWrapper::WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer) {
     size_t total_size = size * nmemb;
     buffer->append(reinterpret_cast<char*>(contents), total_size);
     return total_size;

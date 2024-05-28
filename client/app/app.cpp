@@ -12,7 +12,7 @@ Application::~Application() {
 	}
 }
 
-void Application::createApplicationMutex() {
+void Application::CreateApplicationMutex() {
 	applicationHandle = CreateMutexA(NULL, TRUE, applicationName.c_str());
 	if (applicationHandle == nullptr) {
 		throw std::runtime_error(xorstr_("Failed to create application handle"));
