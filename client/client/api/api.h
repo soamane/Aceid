@@ -16,6 +16,7 @@ struct AuthData {
 	std::string hwid;
 
 	std::string token;
+	std::string launchParams;
 };
 
 class API {
@@ -23,6 +24,7 @@ public:
 	API(AuthData* data);
 
 	const std::string ConvertAuthDataToJson();
+	const std::string CreateLaunchParams();
 	const std::string GetSessionToken();
 
 private:
