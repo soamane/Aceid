@@ -1,13 +1,9 @@
 #include "../client/client.h"
 
-#include "../app/app.h"
 #include "../general/protect/xorstring/xorstring.h"
 
 int main() {
 	try {
-		Application app;
-		app.CreateApplicationMutex();
-
 		boost::asio::io_context context;
 		Client client(context);
 		{

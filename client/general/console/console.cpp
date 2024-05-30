@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "../../client/api/api.h"
-#include "../../app/hardware/hardware.h"
 
+#include "../../general/hardware/hardware.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
 const std::pair<std::string, AuthData&> Console::GetUserData() {
