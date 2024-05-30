@@ -41,6 +41,8 @@ const std::string CurlWrapper::PerformRequest(RequestType type, const std::strin
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
     CURLcode res = curl_easy_perform(curl);
+
+    curl_slist_free_all(const_cast<curl_slist*>(headers));
     curl_easy_cleanup(curl);
 
     if (res != CURLE_OK) {
