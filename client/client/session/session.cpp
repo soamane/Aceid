@@ -1,10 +1,8 @@
 #include "session.h"
 
-#include "../../app/console/console.h"
+#include "../../general/console/console.h"
 #include "../../general/utils/utils.h"
-
-#include "../../app/runpe/runpe.h"
-
+#include "../../general/runpe/runpe.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
@@ -16,8 +14,6 @@ Session::~Session() {
 		m_socket.close();
 	}
 }
-
-#include <iostream>
 
 void Session::Run() {
 	const std::pair<std::string, AuthData&> userData = Console::GetUserData();
