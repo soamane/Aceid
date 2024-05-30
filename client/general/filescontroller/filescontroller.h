@@ -1,14 +1,14 @@
 #pragma once
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef FILES_CONTROLLER_H
+#define FILES_CONTROLLER_H
 
 #include <vector>
 #include <string>
 
-class Utils {
+class FilesController {
 public:
 	static const std::vector<char> ConvertFileToBytes(const std::string& path);
 	static void CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes);
 };
 
-#endif // !UTILS_H
+#endif // !FILES_CONTROLLER_H

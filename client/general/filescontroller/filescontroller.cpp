@@ -1,10 +1,10 @@
-#include "utils.h"
+#include "filescontroller.h"
 
 #include <fstream>
 
 #include "../protect/xorstring/xorstring.h"
 
-const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
+const std::vector<char> FilesController::ConvertFileToBytes(const std::string& path) {
 	if (path.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path)"));
 	}
@@ -23,7 +23,7 @@ const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
 	return bytes;
 }
 
-void Utils::CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
+void FilesController::CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
 	if (path.empty() || bytes.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path/bytes)"));
 	}

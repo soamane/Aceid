@@ -177,7 +177,7 @@
     <ClCompile Include="client\session\session.cpp" />
     <ClCompile Include="general\console\console.cpp" />
     <ClCompile Include="general\hardware\hardware.cpp" />
-    <ClCompile Include="general\utils\utils.cpp" />
+    <ClCompile Include="general\filescontroller\filescontroller.cpp" />
     <ClCompile Include="general\runpe\runpe.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -192,7 +192,7 @@
     <ClInclude Include="general\wrappers\jsonwrapper\jsonwrapper.h" />
     <ClInclude Include="general\console\console.h" />
     <ClInclude Include="general\hardware\hardware.h" />
-    <ClInclude Include="general\utils\utils.h" />
+    <ClInclude Include="general\filescontroller\filescontroller.h" />
     <ClInclude Include="general\runpe\runpe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
