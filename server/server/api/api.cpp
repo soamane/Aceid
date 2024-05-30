@@ -140,7 +140,9 @@ std::optional<std::string> API::PerformApiRequest(const std::string& jsonString)
     }
 
     const std::string requestUrl = m_url + "?data=" + encryptedJson;
-    const std::string hostResponse = CurlWrapper::GetInstance()->PerformRequest(RequestType::HTTPS, requestUrl, nullptr);
+    const auto headers = CurlWrapper::GetInstance()->AddHeaders({ "Cookie: realauth=SvBD85dINu3" });
+
+    const std::string hostResponse = CurlWrapper::GetInstance()->PerformRequest(RequestType::HTTPS, requestUrl, headers);
     if (hostResponse.empty()) {
         CREATE_EVENT_LOG("Failed to receive a response from the Web API");
         return std::nullopt;
