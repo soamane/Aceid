@@ -17,6 +17,8 @@ Session::~Session() {
 	}
 }
 
+#include <iostream>
+
 void Session::Run() {
 	const std::pair<std::string, AuthData&> userData = Console::GetUserData();
 
@@ -24,7 +26,7 @@ void Session::Run() {
 	if (credentials.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get user credentials"));
 	}
-	
+
 	m_packetHandler->SendClientMessage(credentials);
 
 	const EServerResponse serverResponse = m_packetHandler->ReceiveServerResponse();
