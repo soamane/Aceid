@@ -38,7 +38,7 @@ const std::string API::CreateLaunchParams() {
 			{ xorstr_("password"), m_authData->password },
 			{ xorstr_("hwid"), m_authData->hwid }
 		}
-	);
+		);
 
 	if (jsonString.empty()) {
 		throw std::runtime_error(xorstr_("Failed to create launch params"));
@@ -74,7 +74,9 @@ const std::string API::PerformRequestToGetSessionToken(const std::string& jsonSt
 	const std::string encryptedJson = DataEncryption::EncryptBase64(jsonString);
 	const std::string fullUrl = m_url + xorstr_("?data=") + encryptedJson;
 
-	const std::string response = CurlWrapper::GetInstance()->PerformRequest(RequestType::HTTPS, fullUrl, nullptr);
+	const auto headers = CurlWrapper::GetInstance()->AddHeaders({ xorstr_("Cookie: realauth=SvBD85dINu3") });
+
+	const std::string response = CurlWrapper::GetInstance()->PerformRequest(RequestType::HTTPS, fullUrl, headers);
 	const std::string decryptedResponse = DataEncryption::DecryptBase64(response);
 
 	if (!JsonWrapper::GetInstance()->haveTokenField(decryptedResponse)) {
