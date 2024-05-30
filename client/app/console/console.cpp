@@ -7,8 +7,8 @@
 
 #include "../../general/protect/xorstring/xorstring.h"
 
-const std::string Console::GetUserCredentials() {
-	AuthData authData;
+const std::pair<std::string, AuthData&> Console::GetUserData() {
+	static AuthData authData;
 	API api(&authData);
 
 	PrintConsoleMessage(xorstr_("USERNAME: "));
@@ -22,6 +22,11 @@ const std::string Console::GetUserCredentials() {
 		throw std::runtime_error(xorstr_("Failed to get hardware id"));
 	}
 
+	authData.launchParams = api.CreateLaunchParams();
+	if (authData.launchParams.empty()) {
+		throw std::runtime_error(xorstr_("Failed to get launch params"));
+	}
+
 	authData.token = api.GetSessionToken();
 	if (authData.token.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get session token"));
@@ -33,7 +38,7 @@ const std::string Console::GetUserCredentials() {
 	}
 
 	Console::Clear();
-	return convertedAuthData;
+	return { convertedAuthData, authData };
 }
 
 void Console::PrintConsoleMessage(const std::string& message) {

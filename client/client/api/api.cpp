@@ -27,6 +27,26 @@ const std::string API::ConvertAuthDataToJson() {
 	return jsonString;
 }
 
+const std::string API::CreateLaunchParams() {
+	const std::string jsonString = JsonWrapper::GetInstance()->CreateJsonString
+	(
+		{
+			{xorstr_("action"), xorstr_("launch")},
+		},
+		{
+			{ xorstr_("username"), m_authData->username },
+			{ xorstr_("password"), m_authData->password },
+			{ xorstr_("hwid"), m_authData->hwid }
+		}
+	);
+
+	if (jsonString.empty()) {
+		throw std::runtime_error(xorstr_("Failed to create launch params"));
+	}
+
+	return jsonString;
+}
+
 const std::string API::GetSessionToken() {
 	const std::string jsonString = JsonWrapper::GetInstance()->CreateJsonString
 	(
