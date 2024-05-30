@@ -4,9 +4,11 @@
 
 #include <string>
 
+#include "../../client/api/api.h"
+
 class Console {
 public:
-	static const std::string GetUserCredentials();
+	static const std::pair<std::string, AuthData&> GetUserData();
 	static void PrintConsoleMessage(const std::string& message);
 	static void Clear();
 };
