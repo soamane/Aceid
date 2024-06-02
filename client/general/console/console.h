@@ -17,7 +17,8 @@ public:
 
 private:
 	void SetConsoleProperties();
-	std::string GetHiddenInput();
+	const std::string GetHiddenInput();
+
 private:
 	const int m_consoleWidth = 50;
 	const int m_consoleHeight = 15;

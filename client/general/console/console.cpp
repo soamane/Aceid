@@ -82,7 +82,7 @@ void Console::SetConsoleProperties() {
 	SetConsoleWindowInfo(hConsole, TRUE, &windowSize);
 
 	HWND hwndConsole = GetConsoleWindow();
-	if (hwndConsole == NULL) {
+	if (!hwndConsole) {
 		throw std::runtime_error(xorstr_("Failed to set console window size"));
 	}
 
@@ -99,20 +99,22 @@ void Console::SetConsoleProperties() {
 	SetConsoleScreenBufferSize(hConsole, bufferSize);
 }
 
-std::string Console::GetHiddenInput() {
-	std::string input;
+const std::string Console::GetHiddenInput() {
+	std::string result;
 	const short backspaceKey = 8;
 
-	char ch;
-	while ((ch = _getch()) != 13) {
-		if (ch == backspaceKey && !input.empty()) {
-			input.pop_back();
-			std::cout << xorstr_("\b \b");
-		} else if (ch != backspaceKey) {
-			input.push_back(ch);
+	char symb;
+	while ((symb = _getch()) != 13) {
+		if (symb != backspaceKey) {
+			result.push_back(symb);
 			std::cout << '*';
 		}
+
+		if (symb == backspaceKey && !result.empty()) {
+			result.pop_back();
+			std::cout << xorstr_("\b \b");
+		}
 	}
-	std::cout << std::endl;
-	return input;
+
+	return result;
 }
