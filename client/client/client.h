@@ -12,7 +12,6 @@ public:
 
 private:
 	void CreateSession(boost::asio::ip::tcp::socket& socket);
-	void CheckInternetConnection();
 
 private:
 	boost::asio::ip::tcp::resolver m_resolver;
