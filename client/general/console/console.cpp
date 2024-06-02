@@ -10,7 +10,7 @@
 
 Console::Console() {
 	SetConsoleTitleA(xorstr_(" "));
-	SetConsoleSize(m_consoleWidth, m_consoleHeight);
+	SetConsoleProperties();
 }
 Console::~Console() {
 	Console::Clear();
@@ -71,30 +71,32 @@ void Console::Clear() {
 	SetConsoleCursorPosition(hConsole, cursorPosition);
 }
 
-void Console::SetConsoleSize(int width, int height) {
+void Console::SetConsoleProperties() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	SMALL_RECT windowSize;
 	windowSize.Left = 0;
 	windowSize.Top = 0;
-	windowSize.Right = width - 1;
-	windowSize.Bottom = height - 1;
+	windowSize.Right = m_consoleWidth - 1;
+	windowSize.Bottom = m_consoleHeight - 1;
 	SetConsoleWindowInfo(hConsole, TRUE, &windowSize);
 
-	COORD bufferSize;
-	bufferSize.X = width;
-	bufferSize.Y = height;
-	SetConsoleScreenBufferSize(hConsole, bufferSize);
-
 	HWND hwndConsole = GetConsoleWindow();
-	if (hwndConsole != NULL) {
-		LONG style = GetWindowLong(hwndConsole, GWL_STYLE);
-		style &= ~WS_SIZEBOX;
-		style &= ~WS_MAXIMIZEBOX;
-		SetWindowLong(hwndConsole, GWL_STYLE, style);
-
-		SetWindowPos(hwndConsole, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+	if (hwndConsole == NULL) {
+		throw std::runtime_error(xorstr_("Failed to set console window size"));
 	}
+
+	LONG style = GetWindowLong(hwndConsole, GWL_STYLE);
+	style &= ~WS_SIZEBOX;
+	style &= ~WS_MAXIMIZEBOX;
+	SetWindowLong(hwndConsole, GWL_STYLE, style);
+
+	SetWindowPos(hwndConsole, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+
+	COORD bufferSize;
+	bufferSize.X = m_consoleWidth;
+	bufferSize.Y = m_consoleHeight;
+	SetConsoleScreenBufferSize(hConsole, bufferSize);
 }
 
 std::string Console::GetHiddenInput() {
