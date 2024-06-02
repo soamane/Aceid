@@ -34,5 +34,5 @@ void Server::CreateSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket)
         return;
     }
 
-    newSession->Run();
+    newSession->Open();
 }

@@ -11,11 +11,12 @@ public:
 	Session(boost::asio::ip::tcp::socket& socket);
 	~Session();
 
-	void Run();
+	void Open();
+	void Close();
 
 private:
-	void Close();
-	void SetTimeout();
+	void InitTimeoutThread();
+	void TimeoutFunction();
 
 private:
 	boost::asio::ip::tcp::socket m_socket;

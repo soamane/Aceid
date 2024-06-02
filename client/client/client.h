@@ -11,10 +11,8 @@ public:
 	void Connect(std::string_view address, std::string_view port);
 
 private:
-	void CreateSession(boost::asio::ip::tcp::socket& socket);
-
-private:
 	boost::asio::ip::tcp::resolver m_resolver;
+	boost::asio::ip::tcp::socket m_socket;
 };
 
 #endif // !CONNECTOR_H
