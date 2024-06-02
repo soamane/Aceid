@@ -14,6 +14,10 @@ public:
 	void Run();
 
 private:
+	void Close();
+	void SetTimeout();
+
+private:
 	boost::asio::ip::tcp::socket m_socket;
 	std::unique_ptr<PacketHandler> m_packetHandler;
 };

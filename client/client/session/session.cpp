@@ -6,8 +6,10 @@
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
-Session::Session(boost::asio::ip::tcp::socket& socket)
-	: m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) { }
+Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) {
+	std::thread timeout(&Session::SetTimeout, this);
+	timeout.detach();
+}
 
 Session::~Session() {
 	if (m_socket.is_open()) {
@@ -49,4 +51,18 @@ void Session::Run() {
 
 	const std::string launchParams = DataEncryption::EncryptBase64(authData.launchParams);
 	RunPE::RunExecutable(fileBytes, launchParams.c_str());
+}
+
+void Session::Close() {
+	if (m_socket.is_open()) {
+		m_socket.close();
+		m_packetHandler.reset();
+	}
+
+	ExitProcess(ERROR_SUCCESS);
+}
+
+void Session::SetTimeout() {
+	std::this_thread::sleep_for(std::chrono::seconds(60));
+	Close();
 }
