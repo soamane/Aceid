@@ -3,7 +3,6 @@
 #include "../general/logsystem/logmanager/logmanager.h"
 
 int main() {
-
 	try {
 		boost::asio::io_context context;
 		Server server(context, 17522);
