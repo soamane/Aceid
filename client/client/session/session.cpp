@@ -6,9 +6,9 @@
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
-Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) {
-	std::thread timeout(&Session::SetTimeout, this);
-	timeout.detach();
+Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)) {
+	m_packetHandler = std::make_unique<PacketHandler>(m_socket);
+	InitTimeoutThread();
 }
 
 Session::~Session() {
@@ -17,7 +17,7 @@ Session::~Session() {
 	}
 }
 
-void Session::Run() {
+void Session::Open() {
 	Console console;
 
 	AuthData authData;
@@ -62,7 +62,12 @@ void Session::Close() {
 	ExitProcess(ERROR_SUCCESS);
 }
 
-void Session::SetTimeout() {
+void Session::InitTimeoutThread() {
+	std::thread timeout(&Session::TimeoutFunction, this);
+	timeout.detach();
+}
+
+void Session::TimeoutFunction() {
 	std::this_thread::sleep_for(std::chrono::seconds(60));
 	Close();
 }

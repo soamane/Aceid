@@ -22,7 +22,7 @@ Session::~Session() {
 }
 
 
-void Session::Run() {
+void Session::Open() {
 	auto self(shared_from_this());
 	m_packetHandler->ReceiveClientMessage([self](const std::string& message) {
 		if (message.empty()) {

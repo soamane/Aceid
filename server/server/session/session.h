@@ -12,7 +12,7 @@ public:
 	Session(boost::asio::ip::tcp::socket& socket);
 	~Session();
 
-	void Run();
+	void Open();
 
 private:
 	boost::asio::ip::tcp::socket m_socket; 
