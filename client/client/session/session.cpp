@@ -16,10 +16,12 @@ Session::~Session() {
 }
 
 void Session::Run() {
+	Console console;
+
 	AuthData authData;
 	API api(&authData);
 
-	const std::string userCredentials = Console::GetUserCredentials(authData, api);
+	const std::string userCredentials = console.GetUserCredentials(authData, api);
 	if (userCredentials.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get user credentials"));
 	}
@@ -29,12 +31,11 @@ void Session::Run() {
 	const EServerResponse serverResponse = m_packetHandler->ReceiveServerResponse();
 	switch (serverResponse) {
 	case FAILED_AUTH:
-		Console::PrintConsoleMessage(xorstr_("FAILED AUTH"));
+		Console::PrintConsoleMessage(xorstr_("Entered data is not valid and/or is not licensed"));
 		std::this_thread::sleep_for(std::chrono::seconds(3));
 		return;
 
 	case SUCCESS_AUTH:
-		Console::PrintConsoleMessage(xorstr_("SUCCESS AUTH "));
 		break;
 
 	default:
