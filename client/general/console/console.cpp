@@ -29,13 +29,13 @@ const std::string Console::GetUserCredentials(AuthData& authData, API& api) {
 		throw std::runtime_error(xorstr_("Failed to get session token"));
 	}
 
-	const std::string convertedAuthData = api.ConvertAuthDataToJson();
-	if (convertedAuthData.empty()) {
+	const std::string credentials = api.ConvertAuthDataToJson();
+	if (credentials.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get auth data"));
 	}
 
 	Console::Clear();
-	return convertedAuthData;
+	return credentials;
 }
 
 void Console::PrintConsoleMessage(const std::string& message) {
