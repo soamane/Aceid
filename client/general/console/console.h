@@ -8,7 +8,7 @@
 
 class Console {
 public:
-	static const std::pair<std::string, AuthData&> GetUserData();
+	static const std::string GetUserCredentials(AuthData& authData, API& api);
 	static void PrintConsoleMessage(const std::string& message);
 	static void Clear();
 };
