@@ -16,10 +16,10 @@ public:
 	static void Clear();
 
 private:
-	void SetConsoleSize(int width, int height);
+	void SetConsoleProperties();
 	std::string GetHiddenInput();
 private:
-	const int m_consoleWidth = 48;
+	const int m_consoleWidth = 50;
 	const int m_consoleHeight = 15;
 };
 
