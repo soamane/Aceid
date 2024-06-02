@@ -4,18 +4,46 @@
 
 #include <boost/asio.hpp>
 
+/*
+    Основной класс приложения для
+    установки соединения с удалённым хостом.
+*/
 class Server {
 public:
-	Server(boost::asio::io_context& context, short port);
+    /*
+        Инициализирует слушатель входящих подключений на указанном порту
+        (используется привязка по умолчанию для IP-адреса).
+    */
+    Server(boost::asio::io_context& context, short port);
 
-	void Start();
-	void Stop();
+    /*
+        Активирует слушатель boost::tcp::acceptor для входящих соединений.
+        Примечание: используется рекурсивный вызов для циклического прослушивания.
+
+        Действия:
+        1. Создаёт сессию с активным сокетом при безошибочном подключении.
+        2. В случае ошибки подключения, повторяет попытку прослушивания.
+    */
+    void Start();
+
+    /*
+        Закрывает прослушиватель соединений tcp::acceptor,
+        прекращая приём новых соединений и освобождая связанные ресурсы.
+    */
+    void Stop();
 
 private:
-	void CreateSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
+    /*
+        Создаёт уникальную сессию для каждого успешно подключившегося сокета.
+
+        Действия:
+        1. При вызове создаёт новый объект типа shared_ptr<Session> с инициализатором: подключенный сокет.
+        2. Вызывает метод запуска сессии.
+    */
+    void CreateSession(boost::asio::ip::tcp::socket& socket);
 
 private:
-	boost::asio::ip::tcp::acceptor m_acceptor;
+    boost::asio::ip::tcp::acceptor m_acceptor; // Слушатель
 };
 
 #endif // !SERVER_H

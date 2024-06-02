@@ -3,18 +3,12 @@
 #include "session/session.h"
 #include "../general/logsystem/logmanager/logmanager.h"
 
-Server::Server(boost::asio::io_context& context, short port)
-    : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
+Server::Server(boost::asio::io_context& context, short port) : m_acceptor(context, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)) { }
 
 void Server::Start() {
-    auto newConnection = std::make_shared<boost::asio::ip::tcp::socket>(m_acceptor.get_executor());
-    if (newConnection == nullptr) {
-        CREATE_SERVER_LOG("Failed init new connection");
-    }
-
-    m_acceptor.async_accept(*newConnection, [this, newConnection](boost::system::error_code errorCode) {
+    m_acceptor.async_accept([this](boost::system::error_code errorCode, boost::asio::ip::tcp::socket socket) {
         if (!errorCode) {
-            CreateSession(newConnection);
+            CreateSession(socket);
         }
         Start();
     });
@@ -27,12 +21,12 @@ void Server::Stop() {
     }
 }
 
-void Server::CreateSession(std::shared_ptr<boost::asio::ip::tcp::socket> socket) {
-    auto newSession = std::make_shared<Session>(*socket);
-    if (newSession == nullptr) {
+void Server::CreateSession(boost::asio::ip::tcp::socket& socket) {
+    std::shared_ptr<Session> session = std::make_shared<Session>(socket);
+    if (session == nullptr) {
         CREATE_SERVER_LOG("Failed init new session");
         return;
     }
 
-    newSession->Open();
+    session->Open();
 }

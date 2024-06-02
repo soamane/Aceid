@@ -22,6 +22,7 @@ void PacketHandler::SendServerMessage(const std::string& message) {
         return;
     }
 
+    // Шифрование исходной строки для дальнейшей передачи
     const std::string encryptedMessage = DataEncryption::EncryptCustomMethod(message);
     if (encryptedMessage.empty()) {
         CREATE_EVENT_LOG("Failed to encrypt message");
@@ -37,6 +38,7 @@ void PacketHandler::SendDataBuffer(const std::vector<char>& buffer) {
         return;
     }
 
+    // Шифрование массива символа для дальнейшей передачи
     const std::vector<char> encryptedBuffer = DataEncryption::EncryptBuffer(buffer);
     if (encryptedBuffer.empty()) {
         CREATE_EVENT_LOG("Failed to encrypt buffer");
@@ -64,6 +66,7 @@ const std::string PacketHandler::ConvertPacketToString(const Packet& packet) {
         return {};
     }
 
+    // Расшифровка конвертируемого пакета
     const std::string decryptedMessage = DataEncryption::DecryptCustomMethod(std::string(packet.data.begin(), packet.data.end()));
     if (decryptedMessage.empty()) {
         CREATE_EVENT_LOG("Failed to decrypt message string");
@@ -77,14 +80,14 @@ void PacketHandler::SendPacket(const Packet& packet) {
     auto self(shared_from_this());
     auto packetPointer = std::make_shared<Packet>(packet);
 
-    boost::asio::async_write(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), 
+    boost::asio::async_write(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)),
                              [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
             CREATE_EVENT_LOG("Failed to send packet size: " + errorCode.message());
             return;
         }
 
-        boost::asio::async_write(self->m_socket, boost::asio::buffer(packetPointer->data), 
+        boost::asio::async_write(self->m_socket, boost::asio::buffer(packetPointer->data),
                                  [self, packetPointer](boost::system::error_code errorCode, std::size_t) {
             if (errorCode) {
                 CREATE_EVENT_LOG("Failed to send packet body: " + errorCode.message());
@@ -99,7 +102,7 @@ void PacketHandler::ReceivePacket(std::function<void(const Packet&)> callback) {
     auto self(shared_from_this());
     auto packetPointer = std::make_shared<Packet>();
 
-    boost::asio::async_read(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)), 
+    boost::asio::async_read(self->m_socket, boost::asio::buffer(&packetPointer->size, sizeof(packetPointer->size)),
                             [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
         if (errorCode) {
             CREATE_EVENT_LOG("Failed to receive packet size: " + errorCode.message());
@@ -113,7 +116,7 @@ void PacketHandler::ReceivePacket(std::function<void(const Packet&)> callback) {
             callback(Packet());
         }
 
-        boost::asio::async_read(self->m_socket, boost::asio::buffer(packetPointer->data), 
+        boost::asio::async_read(self->m_socket, boost::asio::buffer(packetPointer->data),
                                 [self, packetPointer, callback](boost::system::error_code errorCode, std::size_t) {
             if (errorCode) {
                 CREATE_EVENT_LOG("Failed to receive packet body: " + errorCode.message());

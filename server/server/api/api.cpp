@@ -9,9 +9,9 @@ API::API(const std::string& jsonString) {
         return;
     }
 
-    GetUserCredentials(jsonString); // get main info of user (username, password etc.)
-    GetMemberId(); // fills member id into AuthData for perform user hwid request after (based on parse data by getUserData method)
-    GetProfileGroupId(); // fills group id into AuthData for definition access to the cheats (based on parse data by getUserData method)
+    GetUserCredentials(jsonString); 
+    GetMemberId(); 
+    GetProfileGroupId(); 
 }
 
 const AuthStatus API::GetAuthStatus() const {
@@ -44,6 +44,7 @@ void API::GetUserCredentials(const std::string& jsonString) {
         return;
     }
 
+    // Парсинг JSON строки в структуру AuthData
     m_authData = JsonWrapper::GetInstance()->ParseUserData(jsonString);
 }
 
@@ -55,13 +56,14 @@ void API::GetProfileGroupId() {
         { {"username", m_authData.username}, {"password", m_authData.password}, {"hwid", m_authData.hwid} }
     );
 
-    auto requestResult = PerformApiRequest(jsonString);
-    if (!requestResult) {
+    std::optional<std::string> result = PerformApiRequest(jsonString);
+    if (!result) {
         CREATE_EVENT_LOG("Failed to get 'groups' field value");
         return;
     }
 
-    m_authData.profile_group = JsonWrapper::GetInstance()->ParseParamsField(*requestResult, "groups");
+    // Парсинг поля "groups" из полученного ответа в формате JSON
+    m_authData.profile_group = JsonWrapper::GetInstance()->ParseParamsField(*result, "groups");
 }
 
 void API::GetMemberId() {
@@ -78,6 +80,7 @@ void API::GetMemberId() {
         return;
     }
 
+    // Парсинг поля "id" из полученного ответа в формате JSON
     m_authData.member_id = JsonWrapper::GetInstance()->ParseParamsField(*requestResult, "id");
 }
 
@@ -133,27 +136,34 @@ std::optional<std::string> API::PerformApiRequest(const std::string& jsonString)
 
     CREATE_EVENT_LOG("Detailed information on request: ");
 
+    // Шифрование входящей строки запроса
     const std::string encryptedJson = DataEncryption::EncryptBase64(jsonString);
     if (encryptedJson.empty()) {
         CREATE_EVENT_LOG("Failed to encrypt JSON string");
         return std::nullopt;
     }
 
+    // Конкатинация адреса api с параметрами GET-запроса 
     const std::string requestUrl = m_url + "?data=" + encryptedJson;
+
+    // Добавление cookie хедера для обхода DDoS системы на WEB интерфейсе
     const auto headers = CurlWrapper::GetInstance()->AddHeaders({ "Cookie: realauth=SvBD85dINu3" });
 
+    // Получение ответа от WEB интерфейса
     const std::string hostResponse = CurlWrapper::GetInstance()->PerformRequest(RequestType::HTTPS, requestUrl, headers);
     if (hostResponse.empty()) {
         CREATE_EVENT_LOG("Failed to receive a response from the Web API");
         return std::nullopt;
     }
 
+    // Расшифровка полученного ответа
     const std::string decryptedResponse = DataEncryption::DecryptBase64(hostResponse);
     if (decryptedResponse.empty()) {
         CREATE_EVENT_LOG("Failed to decrypt the received response");
         return std::nullopt;
     }
 
+    // Проверка ответа на наличие поля "error" ( что соответствует отклонённому или ошибочному запросу )
     if (JsonWrapper::GetInstance()->IsErrorField(decryptedResponse)) {
         CREATE_EVENT_LOG("Request have error field");
         return std::nullopt;
