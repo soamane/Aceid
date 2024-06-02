@@ -1,4 +1,4 @@
-#include "packethandler.h"
+﻿#include "packethandler.h"
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/logsystem/logmanager/logmanager.h"

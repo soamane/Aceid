@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef PACKET_HANDLER_H
 #define PACKET_HANDLER_H
 
