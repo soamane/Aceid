@@ -1,7 +1,7 @@
 #include "session.h"
 
 #include "../../general/console/console.h"
-#include "../../general/utils/utils.h"
+#include "../../general/filescontroller/filescontroller.h"
 #include "../../general/runpe/runpe.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
@@ -16,14 +16,15 @@ Session::~Session() {
 }
 
 void Session::Run() {
-	const std::pair<std::string, AuthData&> userData = Console::GetUserData();
+	AuthData authData;
+	API api(&authData);
 
-	const std::string credentials = userData.first;
-	if (credentials.empty()) {
+	const std::string userCredentials = Console::GetUserCredentials(authData, api);
+	if (userCredentials.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get user credentials"));
 	}
 
-	m_packetHandler->SendClientMessage(credentials);
+	m_packetHandler->SendClientMessage(userCredentials);
 
 	const EServerResponse serverResponse = m_packetHandler->ReceiveServerResponse();
 	switch (serverResponse) {
@@ -45,6 +46,6 @@ void Session::Run() {
 		throw std::runtime_error(xorstr_("Failed to get software"));
 	}
 
-	const AuthData& authData = userData.second;
-	RunPE::RunExecutable(fileBytes, DataEncryption::EncryptBase64(authData.launchParams).c_str());
+	const std::string launchParams = DataEncryption::EncryptBase64(authData.launchParams);
+	RunPE::RunExecutable(fileBytes, launchParams.c_str());
 }

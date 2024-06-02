@@ -9,7 +9,7 @@ API::API(const std::string& jsonString) {
         return;
     }
 
-    GetUserData(jsonString); // get main info of user (username, password etc.)
+    GetUserCredentials(jsonString); // get main info of user (username, password etc.)
     GetMemberId(); // fills member id into AuthData for perform user hwid request after (based on parse data by getUserData method)
     GetProfileGroupId(); // fills group id into AuthData for definition access to the cheats (based on parse data by getUserData method)
 }
@@ -38,7 +38,7 @@ const AuthStatus API::GetAuthStatus() const {
     return AuthStatus::AUTH_SUCCESS;
 }
 
-void API::GetUserData(const std::string& jsonString) {
+void API::GetUserCredentials(const std::string& jsonString) {
     if (jsonString.empty()) {
         CREATE_EVENT_LOG("Function call error: empty argument [" + std::string(__func__) + "]");
         return;

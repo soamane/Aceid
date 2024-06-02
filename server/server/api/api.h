@@ -24,7 +24,7 @@ public:
     const AuthData& GetAuthDataObject() const;
 
 private:
-    void GetUserData(const std::string& jsonString);
+    void GetUserCredentials(const std::string& jsonString);
     void GetProfileGroupId();
     void GetMemberId();
 

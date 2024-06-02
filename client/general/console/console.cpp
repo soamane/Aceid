@@ -7,10 +7,7 @@
 #include "../../general/hardware/hardware.h"
 #include "../../general/protect/xorstring/xorstring.h"
 
-const std::pair<std::string, AuthData&> Console::GetUserData() {
-	static AuthData authData;
-	API api(&authData);
-
+const std::string Console::GetUserCredentials(AuthData& authData, API& api) {
 	PrintConsoleMessage(xorstr_("USERNAME: "));
 	std::cin >> authData.username;
 
@@ -38,7 +35,7 @@ const std::pair<std::string, AuthData&> Console::GetUserData() {
 	}
 
 	Console::Clear();
-	return { convertedAuthData, authData };
+	return convertedAuthData;
 }
 
 void Console::PrintConsoleMessage(const std::string& message) {
