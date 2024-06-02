@@ -1,4 +1,4 @@
-#include "session.h"
+﻿#include "session.h"
 #include "../api/api.h"
 
 #include "../../general/logsystem/logmanager/logmanager.h"

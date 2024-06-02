@@ -1,4 +1,4 @@
-#include "session.h"
+﻿#include "session.h"
 
 #include "../../general/console/console.h"
 #include "../../general/filescontroller/filescontroller.h"

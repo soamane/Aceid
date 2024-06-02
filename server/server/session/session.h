@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef SESSION_H
 #define SESSION_H
 

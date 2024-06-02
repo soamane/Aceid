@@ -1,4 +1,4 @@
-#include "api.h"
+﻿#include "api.h"
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 
