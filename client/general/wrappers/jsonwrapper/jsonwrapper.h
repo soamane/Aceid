@@ -4,7 +4,7 @@
 
 #include <string>
 #include <utility>
-#include <initializer_list>
+#include <unordered_map>
 
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
@@ -21,7 +21,7 @@ public:
 	const bool haveTokenField(const std::string& jsonString) const;
 	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
 
-	const std::string CreateJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params) const;
+	const std::string CreateJsonString(const std::unordered_map<std::string, std::string>& args, const std::unordered_map<std::string, std::string>& params) const;
 	const std::string ParseSessionToken(const std::string& jsonString) const;
 
 private:
