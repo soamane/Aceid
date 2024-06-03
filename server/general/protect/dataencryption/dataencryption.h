@@ -23,7 +23,7 @@ private:
 	static const int GenerateKeyCode(const std::vector<int>& keyData);
 
 private:
-	static inline const std::string key = "aceid"; // encode salt
+	static inline const std::string key = "aceid"; // Соль шифрования
 };
 
 #endif // !DATA_ENCRYPTION_H
