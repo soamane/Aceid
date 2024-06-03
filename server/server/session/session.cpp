@@ -25,15 +25,16 @@ Session::~Session() {
 
 
 void Session::Open() {
+	auto self(shared_from_this());
 	// Получение авторизационных данных клиента в формате JSON
-	m_packetHandler->ReceiveClientMessage([this](const std::string& jsonData) {
+	m_packetHandler->ReceiveClientMessage([self](const std::string& jsonData) {
 		if (jsonData.empty()) {
 			CREATE_EVENT_LOG("Received message is empty");
 			return;
 		}
 
 		// Вызов сессионного обработчика данных
-		HandleClientMessage(jsonData);
+		self->HandleClientMessage(jsonData);
 	});
 }
 
@@ -48,7 +49,7 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 	if (authStatus == AUTH_SUCCESS) {
 		CREATE_EVENT_LOG("Client has successfully logged in");
 
-		// Переименовывает event-лог файл в юзернейм, указанное в структуре данных клиента
+		// Переименовывает event-лог файл в юзернейм, указанный в структуре данных клиента
 		LogManager::GetInstance()->GetEventLog()->RenameAndMove(api.GetAuthDataObject().username);
 
 		// Отсылает успешный ответ на запрос авторизации
@@ -68,6 +69,5 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 
 		// Отсылает отклоненный ответ на запрос авторизации
 		m_packetHandler->SendServerResponse(FAILED_AUTH);
-		return;
 	}
 }
