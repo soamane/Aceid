@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #ifndef DATA_ENCRYPTION_H
 #define DATA_ENCRYPTION_H
 
@@ -23,7 +23,7 @@ private:
 	static const int GenerateKeyCode(const std::vector<int>& keyData);
 
 private:
-	static inline const std::string key = "aceid"; // Соль шифрования
+	static inline const std::string key = "aceid"; // РЎРѕР»СЊ С€РёС„СЂРѕРІР°РЅРёСЏ
 };
 
 #endif // !DATA_ENCRYPTION_H
