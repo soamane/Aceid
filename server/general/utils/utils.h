@@ -8,13 +8,14 @@
 class Utils {
 public:
 	/*
-	Converts once before the first shipment to any of the clients to optimize the subsequent transfer.
-	Warning: 
-		(1) will cause undefined behavior when using different files 
-		(2) does not read every time == server restart is required to update the target file
+	Конвертирует файл один раз перед первой отправкой любому из клиентов, чтобы оптимизировать последующую отправку.
+	Примечание: Приводит к неопределенному поведению при использовании разных файлов
+				Не выполняется чтение каждый раз, т.е для обновления целевого файла требуется перезагрузка сервера
 	
 	*/
 	static const std::vector<char>& ConvertFileToBytes(const std::string& path);
+
+	// Создает на диске файл из поступаемого массива байт по указанному пути
 	static void CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes);
 };
 
