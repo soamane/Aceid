@@ -1,4 +1,4 @@
-#include "log.h"
+ï»¿#include "log.h"
 
 #include <iomanip>
 #include <sstream>
@@ -8,7 +8,7 @@ std::string Log::GetCurrentServerTime() {
     std::tm* now = std::localtime(&time);
 
     std::ostringstream oss;
-    oss << std::put_time(now, "[Date: %Y-%m-%d Time: %H:%M:%S]"); // Ïðèìåð: [Date: 2024-06-03 Time: 11:29:00]
+    oss << std::put_time(now, "[Date: %Y-%m-%d Time: %H:%M:%S]"); // ÐŸÑ€Ð¸Ð¼ÐµÑ€: [Date: 2024-06-03 Time: 11:29:00]
 
     return oss.str();
 }

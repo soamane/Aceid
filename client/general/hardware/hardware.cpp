@@ -1,4 +1,4 @@
-#include "hardware.h"
+﻿#include "hardware.h"
 
 #include <intrin.h>
 #include <sstream>

@@ -75,7 +75,7 @@ private:
 
 private:
     AuthData m_authData; // Объект структуры данных пользователя
-    const std::string m_url = "https://aceid.cc/server_api/api.php"; // Адрес web-api
+    const std::string m_url = "https://aceid.cc/server_api/api.php"; // Адрес Web API
 };
 
 #endif // !API_H

@@ -1,4 +1,4 @@
-#include "jsonwrapper.h"
+﻿#include "jsonwrapper.h"
 
 #include <stdexcept>
 
@@ -77,7 +77,7 @@ const std::string JsonWrapper::ParseSessionToken(const std::string& jsonString) 
 	auto document = ConvertStringToJson(jsonString);
 	auto& params = ParseDocumentParams(document);
 
-	if (!params.HasMember(xorstr_("token"))) {
+	if (!haveTokenField(jsonString)) {
 		throw std::runtime_error(xorstr_("Failed to parse token field"));
 	}
 

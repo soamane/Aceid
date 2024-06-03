@@ -1,4 +1,4 @@
-#include "eventlog.h"
+﻿#include "eventlog.h"
 
 #include <random>
 #include <windows.h>

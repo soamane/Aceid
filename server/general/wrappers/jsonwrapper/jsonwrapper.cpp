@@ -1,4 +1,4 @@
-#include "jsonwrapper.h"
+﻿#include "jsonwrapper.h"
 
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
@@ -115,25 +115,25 @@ const bool JsonWrapper::ParamsFieldExist(const std::string& jsonString, const st
 	return params.HasMember(fieldName.c_str());
 }
 
-const std::string JsonWrapper::CreateJsonString(std::initializer_list<std::pair<std::string, std::string>> fields, std::initializer_list<std::pair<std::string, std::string>> args) const {
+const std::string JsonWrapper::CreateJsonString(const std::unordered_map<std::string, std::string>& additionals, const std::unordered_map<std::string, std::string>& params) const {
 	rapidjson::Document document;
 	document.SetObject();
 
-	rapidjson::Document::AllocatorType allocator;
+	rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
 
-	for (const auto& add : fields) {
-		rapidjson::Value key(add.first.data(), allocator);
-		rapidjson::Value value(add.second.data(), allocator);
+	for (const auto& add : additionals) {
+		rapidjson::Value key(add.first.c_str(), allocator);
+		rapidjson::Value value(add.second.c_str(), allocator);
 		document.AddMember(key, value, allocator);
 	}
 
-	rapidjson::Value params(rapidjson::kObjectType);
-	for (const auto& arg : args) {
-		rapidjson::Value key(arg.first.data(), allocator);
-		rapidjson::Value value(arg.second.data(), allocator);
-		params.AddMember(key, value, allocator);
+	rapidjson::Value paramsObject(rapidjson::kObjectType);
+	for (const auto& param : params) {
+		rapidjson::Value key(param.first.c_str(), allocator);
+		rapidjson::Value value(param.second.c_str(), allocator);
+		paramsObject.AddMember(key, value, allocator);
 	}
-	document.AddMember("params", params, allocator);
+	document.AddMember("params", paramsObject, allocator);
 
 	rapidjson::StringBuffer buffer;
 	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -141,6 +141,7 @@ const std::string JsonWrapper::CreateJsonString(std::initializer_list<std::pair<
 
 	return buffer.GetString();
 }
+
 
 
 JsonWrapper::JsonWrapper() { }

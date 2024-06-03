@@ -1,4 +1,4 @@
-#include "../client/client.h"
+﻿#include "../client/client.h"
 
 #include "../general/protect/xorstring/xorstring.h"
 

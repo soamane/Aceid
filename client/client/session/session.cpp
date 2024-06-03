@@ -12,9 +12,7 @@ Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(sock
 }
 
 Session::~Session() {
-	if (m_socket.is_open()) {
-		m_socket.close();
-	}
+	Close();
 }
 
 void Session::Open() {
@@ -56,9 +54,9 @@ void Session::Open() {
 void Session::Close() {
 	if (m_socket.is_open()) {
 		m_socket.close();
-		m_packetHandler.reset();
 	}
 
+	m_packetHandler.reset();
 	ExitProcess(ERROR_SUCCESS);
 }
 

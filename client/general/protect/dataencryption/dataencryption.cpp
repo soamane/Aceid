@@ -1,4 +1,4 @@
-#include "dataencryption.h"
+﻿#include "dataencryption.h"
 
 #include <iomanip>
 #include <sstream>

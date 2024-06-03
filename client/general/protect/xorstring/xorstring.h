@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright 2017 - 2021 Justas Masiulis
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
