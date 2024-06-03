@@ -1,4 +1,4 @@
-#include "console.h"
+﻿#include "console.h"
 
 #include <iostream>
 #include <conio.h>
@@ -107,12 +107,12 @@ const std::string Console::GetHiddenInput() {
 	while ((symb = _getch()) != 13) {
 		if (symb != backspaceKey) {
 			result.push_back(symb);
-			std::cout << '*';
+			PrintConsoleMessage(xorstr_("*"));
 		}
 
 		if (symb == backspaceKey && !result.empty()) {
 			result.pop_back();
-			std::cout << xorstr_("\b \b");
+			PrintConsoleMessage(xorstr_("\b \b"));
 		}
 	}
 

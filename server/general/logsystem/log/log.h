@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #ifndef LOG_H
 #define LOG_H
 
@@ -6,14 +6,14 @@
 
 class Log {
 public:
-	// Виртуальная функция записи логов для переопределения в наследниках
+	// Р’РёСЂС‚СѓР°Р»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ Р·Р°РїРёСЃРё Р»РѕРіРѕРІ РґР»СЏ РїРµСЂРµРѕРїСЂРµРґРµР»РµРЅРёСЏ РІ РЅР°СЃР»РµРґРЅРёРєР°С…
 	virtual void WriteLog(const std::string& log) = 0;
 
-	// Возвращает текущее время 
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ 
 	std::string GetCurrentServerTime();
 
 public:
-	const std::string fileExtension = ".log"; // Расширение для файла лога
+	const std::string fileExtension = ".log"; // Р Р°СЃС€РёСЂРµРЅРёРµ РґР»СЏ С„Р°Р№Р»Р° Р»РѕРіР°
 };
 
 #endif // !LOG_H

@@ -1,4 +1,4 @@
-#include "logmanager.h"
+﻿#include "logmanager.h"
 
 std::shared_ptr<LogManager> LogManager::GetInstance() {
 	static std::shared_ptr<LogManager> Instance = std::make_shared<LogManager>();

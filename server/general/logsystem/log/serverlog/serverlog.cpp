@@ -1,4 +1,4 @@
-#include "serverlog.h"
+﻿#include "serverlog.h"
 
 void ServerLog::WriteLog(const std::string& log) {
     if (log.empty()) {

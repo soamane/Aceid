@@ -1,61 +1,63 @@
-#pragma once
+п»ї#pragma once
 #ifndef JSON_WRAPPER_H
 #define JSON_WRAPPER_H
 
 #include <string>
+#include <unordered_map>
+
 #include <rapidjson/document.h>
 
 /*
-	Структура данных клиента для аутентификации
+	РЎС‚СЂСѓРєС‚СѓСЂР° РґР°РЅРЅС‹С… РєР»РёРµРЅС‚Р° РґР»СЏ Р°СѓС‚РµРЅС‚РёС„РёРєР°С†РёРё
 */
 struct AuthData {
 	std::string username;
 	std::string password; 
-	std::string hwid; // Уникальный ID компьютера 
+	std::string hwid; // РЈРЅРёРєР°Р»СЊРЅС‹Р№ ID РєРѕРјРїСЊСЋС‚РµСЂР° 
 
-	std::string token; // Токен текущей сессии с сервером
+	std::string token; // РўРѕРєРµРЅ С‚РµРєСѓС‰РµР№ СЃРµСЃСЃРёРё СЃ СЃРµСЂРІРµСЂРѕРј
 	std::string member_id; 
 	std::string profile_group; 
 };
 
 /*
-	Класс-обёртка библиотеки RapidJSON
-	Обрабатывает, конвертирует и парсит необходимые данные
-	Примечание: специализирован под обработку данных поступаемых в качестве ответа от web-сервера и данных клиента
+	РљР»Р°СЃСЃ-РѕР±С‘СЂС‚РєР° Р±РёР±Р»РёРѕС‚РµРєРё RapidJSON
+	РћР±СЂР°Р±Р°С‚С‹РІР°РµС‚, РєРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ Рё РїР°СЂСЃРёС‚ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РґР°РЅРЅС‹Рµ
+	РџСЂРёРјРµС‡Р°РЅРёРµ: СЃРїРµС†РёР°Р»РёР·РёСЂРѕРІР°РЅ РїРѕРґ РѕР±СЂР°Р±РѕС‚РєСѓ РґР°РЅРЅС‹С… РїРѕСЃС‚СѓРїР°РµРјС‹С… РІ РєР°С‡РµСЃС‚РІРµ РѕС‚РІРµС‚Р° РѕС‚ web-СЃРµСЂРІРµСЂР° Рё РґР°РЅРЅС‹С… РєР»РёРµРЅС‚Р°
 */
 class JsonWrapper {
 public:
 	static JsonWrapper* GetInstance();
 
-	// Конвертирует поступаемую строку в документ JSON формата 
+	// РљРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ РїРѕСЃС‚СѓРїР°РµРјСѓСЋ СЃС‚СЂРѕРєСѓ РІ РґРѕРєСѓРјРµРЅС‚ JSON С„РѕСЂРјР°С‚Р° 
 	const rapidjson::Document ConvertStringToJson(const std::string& jsonString) const;
 
-	// Возвращает поле "params" в обрабатываемом документе JSON
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»Рµ "params" РІ РѕР±СЂР°Р±Р°С‚С‹РІР°РµРјРѕРј РґРѕРєСѓРјРµРЅС‚Рµ JSON
 	const rapidjson::Value& ParseDocumentParams(rapidjson::Document& document) const;
 
-	// Проверяет наличие поле "error" в полях JSON строки
+	// РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїРѕР»Рµ "error" РІ РїРѕР»СЏС… JSON СЃС‚СЂРѕРєРё
 	const bool IsErrorField(const std::string& jsonString) const;
 
-	// Проверяет наличие поля "id" в полях JSON строки
+	// РџСЂРѕРІРµСЂСЏРµС‚ РЅР°Р»РёС‡РёРµ РїРѕР»СЏ "id" РІ РїРѕР»СЏС… JSON СЃС‚СЂРѕРєРё
 	const bool IsMemberIdField(const std::string& jsonString) const;
 
-	// Проверяет существование поля с указанным именем 
+	// РџСЂРѕРІРµСЂСЏРµС‚ СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ РїРѕР»СЏ СЃ СѓРєР°Р·Р°РЅРЅС‹Рј РёРјРµРЅРµРј 
 	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
 
-	// Парсит данные из указанного поля в аргументах "params"
+	// РџР°СЂСЃРёС‚ РґР°РЅРЅС‹Рµ РёР· СѓРєР°Р·Р°РЅРЅРѕРіРѕ РїРѕР»СЏ РІ Р°СЂРіСѓРјРµРЅС‚Р°С… "params"
 	const std::string ParseParamsField(const std::string& jsonString, const std::string& fieldName) const;
 
 	/*
-		Парсит учётные данные пользователя в структуру AuthData
-		Примечание: на вход поступает строка JSON формата от клиента (учётные данные)
+		РџР°СЂСЃРёС‚ СѓС‡С‘С‚РЅС‹Рµ РґР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ AuthData
+		РџСЂРёРјРµС‡Р°РЅРёРµ: РЅР° РІС…РѕРґ РїРѕСЃС‚СѓРїР°РµС‚ СЃС‚СЂРѕРєР° JSON С„РѕСЂРјР°С‚Р° РѕС‚ РєР»РёРµРЅС‚Р° (СѓС‡С‘С‚РЅС‹Рµ РґР°РЅРЅС‹Рµ)
 	*/
 	const AuthData ParseUserData(const std::string& jsonString) const;
 
 	/*
-		Конвертирует аргументы функции в строку JSON формата
-		Поддерживает добавление заголовков (аргументов)
+		РљРѕРЅРІРµСЂС‚РёСЂСѓРµС‚ Р°СЂРіСѓРјРµРЅС‚С‹ С„СѓРЅРєС†РёРё РІ СЃС‚СЂРѕРєСѓ JSON С„РѕСЂРјР°С‚Р°
+		РџРѕРґРґРµСЂР¶РёРІР°РµС‚ РґРѕР±Р°РІР»РµРЅРёРµ Р·Р°РіРѕР»РѕРІРєРѕРІ (Р°СЂРіСѓРјРµРЅС‚РѕРІ)
 	*/
-	const std::string CreateJsonString(std::initializer_list<std::pair<std::string, std::string>> args, std::initializer_list<std::pair<std::string, std::string>> params) const;
+	const std::string CreateJsonString(const std::unordered_map<std::string, std::string>& args, const std::unordered_map<std::string, std::string>& params) const;
 
 private:
 	JsonWrapper();

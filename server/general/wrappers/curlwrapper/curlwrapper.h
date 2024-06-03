@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #ifndef CURL_WRAPPER_H
 #define CURL_WRAPPER_H
 
@@ -8,7 +8,7 @@
 #include <curl/curl.h>
 
 /*
-	Типы протокола для запроса на web сервер
+	РўРёРїС‹ РїСЂРѕС‚РѕРєРѕР»Р° РґР»СЏ Р·Р°РїСЂРѕСЃР° РЅР° web СЃРµСЂРІРµСЂ
 */
 enum RequestType {
 	HTTP,
@@ -16,21 +16,20 @@ enum RequestType {
 };
 
 /*
-	Класс-обёртка библиотеки CURL для работы с HTTP запросами
+	РљР»Р°СЃСЃ-РѕР±С‘СЂС‚РєР° Р±РёР±Р»РёРѕС‚РµРєРё CURL РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ HTTP Р·Р°РїСЂРѕСЃР°РјРё
 */
 class CurlWrapper {
 public:
 	static CurlWrapper* GetInstance();
 
-	// Заполняет структуру curl_slist заголовками для HTTP запроса
+	// Р—Р°РїРѕР»РЅСЏРµС‚ СЃС‚СЂСѓРєС‚СѓСЂСѓ curl_slist Р·Р°РіРѕР»РѕРІРєР°РјРё РґР»СЏ HTTP Р·Р°РїСЂРѕСЃР°
 	const curl_slist* AddHeaders(std::initializer_list<std::string> headers) const;
 
-	// Выполняет запрос указанного типа
+	// Р’С‹РїРѕР»РЅСЏРµС‚ Р·Р°РїСЂРѕСЃ СѓРєР°Р·Р°РЅРЅРѕРіРѕ С‚РёРїР°
 	const std::string PerformRequest(RequestType type, const std::string& source, const curl_slist* headers);
 
 private:
 	CurlWrapper();
-
 	static const size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer);
 };
 

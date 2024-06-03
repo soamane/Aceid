@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #ifndef SERVER_LOG_H
 #define SERVER_LOG_H
 
@@ -13,7 +13,7 @@ public:
 
 public:
     std::ofstream m_file;
-    std::string m_fileName = "server.log"; // Имя файла лога
+    std::string m_fileName = "server.log"; // РРјСЏ С„Р°Р№Р»Р° Р»РѕРіР°
 };
 
 #endif // !SERVER_LOG_H

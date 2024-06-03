@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef BASE64_HPP_
 #define BASE64_HPP_
 

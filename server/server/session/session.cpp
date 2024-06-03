@@ -14,12 +14,12 @@ Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(sock
 Session::~Session() {
 	if (m_socket.is_open()) {
 		m_socket.close();
-		m_packetHandler.reset();
 
 		CREATE_EVENT_LOG("Socket was closed because the session expired");
 		return;
 	}
 
+	m_packetHandler.reset();
 	CREATE_EVENT_LOG("Session closed");
 }
 

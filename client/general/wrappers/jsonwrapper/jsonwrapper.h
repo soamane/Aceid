@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef JSON_WRAPPER_H
 #define JSON_WRAPPER_H
 
@@ -10,18 +10,33 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 
+/*
+	Класс-обёртка библиотеки RapidJSON
+	Специализирован под обработку данных JSON формата и конвертирование данных в JSON формат
+*/
 class JsonWrapper {
 public:
 	static JsonWrapper* GetInstance();
 
+	// Конвертирует поступаемую строку в JSON документ
 	const rapidjson::Document ConvertStringToJson(const std::string& jsonString) const;
+
+	// Получает объект "params" в JSON документе
 	const rapidjson::Value& ParseDocumentParams(rapidjson::Document& document) const;
 
+	// Проверяет существование поля "error" в объекте "params"
 	const bool IsErrorField(const std::string& jsonString) const;
+
+	// Проверяет существование поля "token" в объекте "params"
 	const bool haveTokenField(const std::string& jsonString) const;
+
+	// Проверяет существования fieldName поля в объекте "params" 
 	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
 
+	// Конвертирует поступаемые аргументы в JSON формат строку
 	const std::string CreateJsonString(const std::unordered_map<std::string, std::string>& args, const std::unordered_map<std::string, std::string>& params) const;
+
+	// Парсит поле"token" из объекта "params" 
 	const std::string ParseSessionToken(const std::string& jsonString) const;
 
 private:
