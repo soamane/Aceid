@@ -13,7 +13,7 @@ public:
 
 public:
     std::ofstream m_file;
-    std::string m_fileName = "server.log";
+    std::string m_fileName = "server.log"; // ָלÿ פאיכא כמדא
 };
 
 #endif // !SERVER_LOG_H
