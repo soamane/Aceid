@@ -73,27 +73,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
-    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
+    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
-    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
+    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
-    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
+    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson;..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\include;..\assets\boost_1_84_0</IncludePath>
-    <LibraryPath>..\assets\curl\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
+    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
