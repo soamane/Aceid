@@ -6,6 +6,8 @@
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 
+#include <filesystem>
+
 Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) {
 	LogManager::GetInstance()->InitEventLog(); // Инициализирует объект EventLog для записи будущих event-логов
 	CREATE_EVENT_LOG("Session created");
@@ -57,11 +59,15 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 		// Отсылает успешный ответ на запрос авторизации
 		m_packetHandler->SendServerResponse(SUCCESS_AUTH);
 
-		const std::string resultFileName = api.GetAuthDataObject().username + ".exe";
-		Utils::ExecuteObfuscation(resultFileName);
+		const std::string resultFilePath = "builds/" + api.GetAuthDataObject().username + ".exe";
+
+		// Проверка на уже существующий билд под клиента
+		if (!std::filesystem::exists(resultFilePath)) {
+			Utils::ExecuteObfuscation(resultFilePath);
+		}
 
 		// Конвертирование удаленного файла в массив байтов для последующей передачи
-		const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultFileName);
+		const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultFilePath);
 		if (fileBytes.empty()) {
 			CREATE_EVENT_LOG("Failed to convert the file");
 			return;
