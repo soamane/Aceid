@@ -26,6 +26,8 @@ public:
 	// Очищает консоль
 	static void Clear();
 
+	// Устанавливает визуальную загрузку в консоли
+	static void SetLoadingMessage();
 private:
 	/*
 		Устанавливает настройки консоли

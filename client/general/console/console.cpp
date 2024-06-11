@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <conio.h>
+#include <thread>
 
 #include "../../client/api/api.h"
 
@@ -69,6 +70,22 @@ void Console::Clear() {
 	FillConsoleOutputCharacter(hConsole, ' ', consoleSize, cursorPosition, &charsWritten);
 
 	SetConsoleCursorPosition(hConsole, cursorPosition);
+}
+
+void Console::SetLoadingMessage() {
+	PrintConsoleMessage(xorstr_("\n\n\n\n\t\t     LOADING\n"));
+	for (int i = 0; i < 15; ++i) {
+		PrintConsoleMessage(xorstr_("\r\t\t["));
+		for (int j = 0; j <= i; ++j) {
+			std::cout << char(219);
+		}
+		for (int k = 0; k < 14 - i; ++k) {
+			PrintConsoleMessage(xorstr_(" "));
+		}
+		PrintConsoleMessage(xorstr_("]"));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	}
+	PrintConsoleMessage(xorstr_("\nPlease, wait..."));
 }
 
 void Console::SetConsoleProperties() {
