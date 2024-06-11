@@ -35,8 +35,10 @@ void Session::Open() {
 
 		// Вызов сессионного обработчика данных
 		self->HandleClientMessage(jsonData);
-	});
+		});
 }
+
+#include <iostream>
 
 void Session::HandleClientMessage(const std::string& jsonData) {
 	// Инициализация API для обработки авторизационных данных
@@ -55,8 +57,11 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 		// Отсылает успешный ответ на запрос авторизации
 		m_packetHandler->SendServerResponse(SUCCESS_AUTH);
 
+		const std::string resultFileName = api.GetAuthDataObject().username + ".exe";
+		Utils::ExecuteObfuscation(resultFileName);
+
 		// Конвертирование удаленного файла в массив байтов для последующей передачи
-		const std::vector<char>& fileBytes = Utils::ConvertFileToBytes("aceid.exe");
+		const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultFileName);
 		if (fileBytes.empty()) {
 			CREATE_EVENT_LOG("Failed to convert the file");
 			return;
@@ -64,7 +69,8 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 
 		// Отправка прочитанного файла
 		m_packetHandler->SendDataBuffer(fileBytes);
-	} else {
+	}
+	else {
 		CREATE_EVENT_LOG("Client failed to authenticate");
 
 		// Отсылает отклоненный ответ на запрос авторизации

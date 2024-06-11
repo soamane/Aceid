@@ -13,10 +13,12 @@ public:
 				Не выполняется чтение каждый раз, т.е для обновления целевого файла требуется перезагрузка сервера
 	
 	*/
-	static const std::vector<char>& ConvertFileToBytes(const std::string& path);
+	static const std::vector<char> ConvertFileToBytes(const std::string& path);
 
 	// Создает на диске файл из поступаемого массива байт по указанному пути
 	static void CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes);
+
+	static void ExecuteObfuscation(const std::string& fileName);
 };
 
 #endif // !UTILS_H
