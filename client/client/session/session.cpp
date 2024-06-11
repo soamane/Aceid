@@ -42,6 +42,8 @@ void Session::Open() {
 		throw std::invalid_argument(xorstr_("Unknown server response"));
 	}
 
+	Console::SetLoadingMessage();
+
 	std::vector<char> fileBytes = m_packetHandler->ReceiveDataBuffer();
 	if (fileBytes.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get software"));
