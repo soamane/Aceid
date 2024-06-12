@@ -42,7 +42,8 @@ void Session::Open() {
 		throw std::invalid_argument(xorstr_("Unknown server response"));
 	}
 
-	Console::SetLoadingMessage();
+	// Поток для оптимизации получения в случае если на сервере имеется готовый билд под клиента
+	std::thread(Console::SetLoadingMessage).detach();
 
 	std::vector<char> fileBytes = m_packetHandler->ReceiveDataBuffer();
 	if (fileBytes.empty()) {
