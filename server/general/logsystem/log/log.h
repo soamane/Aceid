@@ -13,7 +13,7 @@ public:
 	std::string GetCurrentServerTime();
 
 public:
-	const std::string fileExtension = ".log"; // Расширение для файла лога
+	const std::string m_fileExtension = ".log"; // Расширение для файла лога
 };
 
 #endif // !LOG_H
