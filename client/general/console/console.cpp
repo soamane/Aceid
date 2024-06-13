@@ -1,8 +1,8 @@
 ﻿#include "console.h"
 
-#include <iostream>
-#include <conio.h>
 #include <thread>
+#include <conio.h>
+#include <iostream>
 
 #include "../../client/api/api.h"
 

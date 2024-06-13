@@ -1,10 +1,8 @@
 ﻿#include "hardware.h"
 
-#include <intrin.h>
-#include <sstream>
-
 #include <d3d9.h>
-#pragma comment(lib, "d3d9.lib")
+#include <sstream>
+#include <intrin.h>
 
 #include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
