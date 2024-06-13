@@ -8,17 +8,18 @@
 class Utils {
 public:
 	/*
-	Конвертирует файл один раз перед первой отправкой любому из клиентов, чтобы оптимизировать последующую отправку.
-	Примечание: Приводит к неопределенному поведению при использовании разных файлов
-				Не выполняется чтение каждый раз, т.е для обновления целевого файла требуется перезагрузка сервера
-	
+		Конвертирует указанный файл в массив символов
 	*/
 	static const std::vector<char> ConvertFileToBytes(const std::string& path);
 
 	// Создает на диске файл из поступаемого массива байт по указанному пути
 	static void CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes);
 
-	static void ExecuteObfuscation(const std::string& fileName);
+	/*
+		Запускает обфускацию VMProtect для input файла и сохраняет его в output файл
+		Примечание: возвращает относительный путь к зашифрованному файлу
+	*/ 	
+	static const std::string ExecuteObfuscation(const std::string& input, const std::string& output);
 };
 
 #endif // !UTILS_H
