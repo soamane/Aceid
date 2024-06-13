@@ -5,10 +5,9 @@
 #include <memory>
 #include <string>
 
+#include "../../general/protect/xorstring/xorstring.h"
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"
-
-#include "../../general/protect/xorstring/xorstring.h"
 
 /*
 	Структура данных клиента для аутентификации

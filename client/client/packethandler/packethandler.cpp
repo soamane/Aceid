@@ -1,7 +1,7 @@
 ﻿#include "packethandler.h"
 
-#include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/protect/xorstring/xorstring.h"
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 PacketHandler::PacketHandler(boost::asio::ip::tcp::socket& socket)
 	: m_socket(std::move(socket)) {
