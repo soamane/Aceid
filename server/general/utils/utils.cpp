@@ -1,8 +1,10 @@
 ﻿#include "utils.h"
 
-#include <windows.h>
 #include <fstream>
 #include <iostream>
+#include <windows.h>
+#include <filesystem>
+
 #include "../logsystem/logmanager/logmanager.h"
 
 const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
@@ -38,7 +40,13 @@ void Utils::CreateFileFromBytes(const std::string& path, const std::vector<char>
     file.close();
 }
 
-void Utils::ExecuteObfuscation(const std::string& fileName) {
+const std::string Utils::ExecuteObfuscation(const std::string& input, const std::string& output) {
+    // Проверка на уже существующий билд под клиента
+    const std::string outputPath = "builds/" + output;
+    if (std::filesystem::exists(outputPath)) {
+        return outputPath;
+    }
+
     STARTUPINFOA si;
     PROCESS_INFORMATION pi;
 
@@ -46,7 +54,7 @@ void Utils::ExecuteObfuscation(const std::string& fileName) {
     si.cb = sizeof(si);
     ZeroMemory(&pi, sizeof(pi));
 
-    const std::string command = "VMProtect.exe aceid.exe " + fileName + " -pf script.vmp";
+    const std::string command = "VMProtect.exe " + input + " " + outputPath + " -pf script.vmp";
 
     if (!CreateProcessA(NULL, const_cast<LPSTR>(command.c_str()), NULL, NULL, FALSE, CREATE_NEW_CONSOLE | CREATE_NEW_PROCESS_GROUP, NULL, NULL, &si, &pi)) {
         throw std::runtime_error("Failed to create process");
@@ -56,4 +64,6 @@ void Utils::ExecuteObfuscation(const std::string& fileName) {
 
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
+
+    return outputPath;
 }
