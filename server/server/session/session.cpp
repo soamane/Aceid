@@ -1,12 +1,10 @@
 ﻿#include "session.h"
+
 #include "../api/api.h"
 
-#include "../../general/logsystem/logmanager/logmanager.h"
 #include "../../general/utils/utils.h"
-
+#include "../../general/logsystem/logmanager/logmanager.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
-
-#include <filesystem>
 
 Session::Session(boost::asio::ip::tcp::socket& socket) : m_socket(std::move(socket)), m_packetHandler(std::make_unique<PacketHandler>(m_socket)) {
 	LogManager::GetInstance()->InitEventLog(); // Инициализирует объект EventLog для записи будущих event-логов
@@ -40,8 +38,6 @@ void Session::Open() {
 		});
 }
 
-#include <iostream>
-
 void Session::HandleClientMessage(const std::string& jsonData) {
 	// Инициализация API для обработки авторизационных данных
 	API api(jsonData);
@@ -50,36 +46,31 @@ void Session::HandleClientMessage(const std::string& jsonData) {
 	const AuthStatus authStatus = api.GetAuthStatus();
 
 	// Проверка полученного результата
-	if (authStatus == AUTH_SUCCESS) {
-		CREATE_EVENT_LOG("Client has successfully logged in");
-
-		// Переименовывает event-лог файл в юзернейм, указанный в структуре данных клиента
-		LogManager::GetInstance()->GetEventLog()->RenameAndMove(api.GetAuthDataObject().username);
-
-		// Отсылает успешный ответ на запрос авторизации
-		m_packetHandler->SendServerResponse(SUCCESS_AUTH);
-
-		const std::string resultFilePath = "builds/" + api.GetAuthDataObject().username + ".exe";
-
-		// Проверка на уже существующий билд под клиента
-		if (!std::filesystem::exists(resultFilePath)) {
-			Utils::ExecuteObfuscation(resultFilePath);
-		}
-
-		// Конвертирование удаленного файла в массив байтов для последующей передачи
-		const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultFilePath);
-		if (fileBytes.empty()) {
-			CREATE_EVENT_LOG("Failed to convert the file");
-			return;
-		}
-
-		// Отправка прочитанного файла
-		m_packetHandler->SendDataBuffer(fileBytes);
-	}
-	else {
+	if (authStatus != AUTH_SUCCESS) {
 		CREATE_EVENT_LOG("Client failed to authenticate");
 
 		// Отсылает отклоненный ответ на запрос авторизации
 		m_packetHandler->SendServerResponse(FAILED_AUTH);
+		return;
 	}
+
+	CREATE_EVENT_LOG("Client has successfully logged in");
+
+	// Переименовывает event-лог файл в юзернейм, указанный в структуре данных клиента
+	LogManager::GetInstance()->GetEventLog()->RenameAndMove(api.GetAuthDataObject().username);
+
+	// Отсылает успешный ответ на запрос авторизации
+	m_packetHandler->SendServerResponse(SUCCESS_AUTH);
+
+	const std::string resultPath = Utils::ExecuteObfuscation("aceid.exe", api.GetAuthDataObject().username + ".exe");
+
+	// Конвертирование удаленного файла в массив байтов для последующей передачи
+	const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultPath);
+	if (fileBytes.empty()) {
+		CREATE_EVENT_LOG("Failed to convert the file");
+		return;
+	}
+
+	// Отправка прочитанного файла
+	m_packetHandler->SendDataBuffer(fileBytes);
 }

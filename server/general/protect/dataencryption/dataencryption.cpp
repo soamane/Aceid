@@ -5,8 +5,6 @@
 
 #include "base64/base64.h"
 
-#include <iostream>
-
 const std::string DataEncryption::EncryptBase64(const std::string& source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");

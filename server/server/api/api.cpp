@@ -1,7 +1,7 @@
 ﻿#include "api.h"
 
-#include "../../general/protect/dataencryption/dataencryption.h"
 #include "../../general/logsystem/logmanager/logmanager.h"
+#include "../../general/protect/dataencryption/dataencryption.h"
 
 API::API(const std::string& jsonString) {
     if (jsonString.empty()) {
