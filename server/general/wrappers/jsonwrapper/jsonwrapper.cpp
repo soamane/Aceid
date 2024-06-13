@@ -1,9 +1,8 @@
 ﻿#include "jsonwrapper.h"
 
+#include <stdexcept>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
-
-#include <stdexcept>
 
 #include "../../../general/logsystem/logmanager/logmanager.h"
 
