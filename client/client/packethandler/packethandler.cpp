@@ -46,7 +46,7 @@ const std::vector<char> PacketHandler::ReceiveDataBuffer() {
 	return buffer;
 }
 
-void PacketHandler::SendClientMessage(const std::string& message) {
+void PacketHandler::SendClientMessage(std::string_view message) {
 	if (message.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument"));
 	}

@@ -15,7 +15,7 @@ public:
 	static std::shared_ptr<ServerLog> GetServerLog();
 
 	void InitEventLog();
-	void CreateLog(std::shared_ptr<Log> object, const std::string& log);
+	void CreateLog(std::shared_ptr<Log> object, std::string_view log);
 
 private:
 	std::shared_ptr<EventLog> m_event;

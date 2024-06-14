@@ -27,7 +27,7 @@ Session::~Session() {
 void Session::Open() {
 	auto self(shared_from_this());
 	// Получение авторизационных данных клиента в формате JSON
-	m_packetHandler->ReceiveClientMessage([self](const std::string& jsonData) {
+	m_packetHandler->ReceiveClientMessage([self](std::string_view jsonData) {
 		if (jsonData.empty()) {
 			CREATE_EVENT_LOG("Received message is empty");
 			return;
@@ -38,7 +38,7 @@ void Session::Open() {
 		});
 }
 
-void Session::HandleClientMessage(const std::string& jsonData) {
+void Session::HandleClientMessage(std::string_view jsonData) {
 	// Инициализация API для обработки авторизационных данных
 	API api(jsonData);
 

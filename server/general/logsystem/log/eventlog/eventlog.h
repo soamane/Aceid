@@ -11,10 +11,10 @@ class EventLog : public Log {
 public:
 	EventLog();
 
-	void WriteLog(const std::string& log);
+	void WriteLog(std::string_view log);
 
 	// Переименовывает файл лога и перемещает в каталог авторизированных пользователей
-	void RenameAndMove(const std::string& newFileName);
+	void RenameAndMove(std::string_view newFileName);
 
 	~EventLog();
 

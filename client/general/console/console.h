@@ -21,7 +21,7 @@ public:
 	const std::string GetUserCredentials(AuthData& authData, API& api);
 
 	// Выводит указанную строку в консоль
-	static void PrintConsoleMessage(const std::string& message);
+	static void PrintConsoleMessage(std::string_view message);
 
 	// Очищает консоль
 	static void Clear();

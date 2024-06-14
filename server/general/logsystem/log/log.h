@@ -7,7 +7,7 @@
 class Log {
 public:
 	// Виртуальная функция записи логов для переопределения в наследниках
-	virtual void WriteLog(const std::string& log) = 0;
+	virtual void WriteLog(std::string_view log) = 0;
 
 	// Возвращает текущее время 
 	std::string GetCurrentServerTime();

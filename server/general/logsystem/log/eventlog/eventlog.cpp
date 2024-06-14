@@ -9,7 +9,7 @@ EventLog::EventLog() {
     m_path = m_tempPath + GenerateRandomFileName();
 }
 
-void EventLog::WriteLog(const std::string& log) {
+void EventLog::WriteLog(std::string_view log) {
     if (log.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
@@ -23,7 +23,7 @@ void EventLog::WriteLog(const std::string& log) {
     m_file.close();
 }
 
-void EventLog::RenameAndMove(const std::string& newFileName) {
+void EventLog::RenameAndMove(std::string_view newFileName) {
     if (newFileName.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
@@ -32,7 +32,7 @@ void EventLog::RenameAndMove(const std::string& newFileName) {
         m_file.close();
     }
 
-    const std::string newPath = m_defaultPath + newFileName + m_fileExtension;
+    const std::string newPath = m_defaultPath + std::string(newFileName) + m_fileExtension;
     DeleteFileA(newPath.c_str());
 
     std::rename(m_path.c_str(), newPath.c_str());

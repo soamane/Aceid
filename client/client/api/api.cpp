@@ -66,7 +66,7 @@ const std::string API::GetSessionToken() {
 	return PerformRequestToGetSessionToken(jsonString);
 }
 
-const std::string API::PerformRequestToGetSessionToken(const std::string& jsonString) {
+const std::string API::PerformRequestToGetSessionToken(std::string_view jsonString) {
 	if (jsonString.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument"));
 	}

@@ -9,9 +9,9 @@ JsonWrapper* JsonWrapper::GetInstance() {
 	return Instance;
 }
 
-const rapidjson::Document JsonWrapper::ConvertStringToJson(const std::string& jsonString) const {
+const rapidjson::Document JsonWrapper::ConvertStringToJson(std::string_view jsonString) const {
 	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
+	document.Parse(jsonString.data());
 
 	if (!document.IsObject()) {
 		throw std::runtime_error(xorstr_("Failed to parse json document"));
@@ -30,19 +30,19 @@ const rapidjson::Value& JsonWrapper::ParseDocumentParams(rapidjson::Document& do
 	return params;
 }
 
-const bool JsonWrapper::IsErrorField(const std::string& jsonString) const {
+const bool JsonWrapper::IsErrorField(std::string_view jsonString) const {
 	return ParamsFieldExist(jsonString, xorstr_("error"));
 }
 
-const bool JsonWrapper::haveTokenField(const std::string& jsonString) const {
+const bool JsonWrapper::haveTokenField(std::string_view jsonString) const {
 	return ParamsFieldExist(jsonString, xorstr_("token"));
 }
 
-const bool JsonWrapper::ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const {
+const bool JsonWrapper::ParamsFieldExist(std::string_view jsonString, std::string_view fieldName) const {
 	auto document = ConvertStringToJson(jsonString);
 	auto& params = ParseDocumentParams(document);
 
-	return params.HasMember(fieldName.c_str());
+	return params.HasMember(fieldName.data());
 }
 
 const std::string JsonWrapper::CreateJsonString(const std::unordered_map<std::string, std::string>& additionals, const std::unordered_map<std::string, std::string>& params) const {
@@ -73,7 +73,7 @@ const std::string JsonWrapper::CreateJsonString(const std::unordered_map<std::st
 }
 
 
-const std::string JsonWrapper::ParseSessionToken(const std::string& jsonString) const {
+const std::string JsonWrapper::ParseSessionToken(std::string_view jsonString) const {
 	auto document = ConvertStringToJson(jsonString);
 	auto& params = ParseDocumentParams(document);
 

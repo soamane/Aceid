@@ -1,6 +1,6 @@
 ﻿#include "serverlog.h"
 
-void ServerLog::WriteLog(const std::string& log) {
+void ServerLog::WriteLog(std::string_view log) {
     if (log.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }

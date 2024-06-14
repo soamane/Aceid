@@ -33,7 +33,7 @@ public:
 		Метод-обёртка для отправки пакета строкового формата
 		Примечание: использует метод SendPacket как основную функцию для отправки данных
 	*/
-	void SendClientMessage(const std::string& message);
+	void SendClientMessage(std::string_view message);
 
 	/*
 		Независимый метод для получения ответа сервера

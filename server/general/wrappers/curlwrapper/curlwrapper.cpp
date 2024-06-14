@@ -21,14 +21,14 @@ const curl_slist* CurlWrapper::AddHeaders(std::initializer_list<std::string> hea
     return headerList;
 }
 
-const std::string CurlWrapper::PerformRequest(RequestType type, const std::string& source, const curl_slist* headers) {
+const std::string CurlWrapper::PerformRequest(RequestType type, std::string_view source, const curl_slist* headers) {
     CURL* curl = curl_easy_init();
     if (!curl) {
         throw std::runtime_error("Failed to initialize curl");
     }
 
     std::string response;
-    curl_easy_setopt(curl, CURLOPT_URL, source.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, source.data());
     if (type == RequestType::HTTPS) {
         curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
     }
