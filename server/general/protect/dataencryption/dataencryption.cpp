@@ -5,7 +5,7 @@
 
 #include "base64/base64.h"
 
-const std::string DataEncryption::EncryptBase64(const std::string& source) {
+const std::string DataEncryption::EncryptBase64(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -13,7 +13,7 @@ const std::string DataEncryption::EncryptBase64(const std::string& source) {
 	return base64::to_base64(source);
 }
 
-const std::string DataEncryption::DecryptBase64(const std::string& source) {
+const std::string DataEncryption::DecryptBase64(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -21,7 +21,7 @@ const std::string DataEncryption::DecryptBase64(const std::string& source) {
 	return base64::from_base64(source);
 }
 
-const std::string DataEncryption::EncryptMultiBase64(const std::string& source) {
+const std::string DataEncryption::EncryptMultiBase64(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -41,7 +41,7 @@ const std::string DataEncryption::EncryptMultiBase64(const std::string& source) 
 	return result;
 }
 
-const std::string DataEncryption::DecryptMultiBase64(const std::string& source) {
+const std::string DataEncryption::DecryptMultiBase64(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -67,7 +67,7 @@ const std::string DataEncryption::DecryptMultiBase64(const std::string& source) 
 	return result;
 }
 
-const std::string DataEncryption::EncryptCustomMethod(const std::string& source) {
+const std::string DataEncryption::EncryptCustomMethod(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -90,7 +90,7 @@ const std::string DataEncryption::EncryptCustomMethod(const std::string& source)
 	return result;
 }
 
-const std::string DataEncryption::DecryptCustomMethod(const std::string& source) {
+const std::string DataEncryption::DecryptCustomMethod(std::string_view source) {
 	if (source.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -162,7 +162,8 @@ const int DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
 	for (std::size_t i = 0; i < encryptedKeyData.size(); ++i) {
 		if (i % 2 == 0) {
 			result += encryptedKeyData[i] >> 3;
-		} else {
+		}
+		else {
 			result -= encryptedKeyData[i] << 3;
 		}
 	}

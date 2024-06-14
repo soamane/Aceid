@@ -16,7 +16,7 @@ void PacketHandler::SendServerResponse(const EServerResponse& response) {
     });
 }
 
-void PacketHandler::SendServerMessage(const std::string& message) {
+void PacketHandler::SendServerMessage(std::string_view message) {
     if (message.empty()) {
         CREATE_EVENT_LOG("Function call error: empty argument [" + std::string(__func__) + "]");
         return;
@@ -48,7 +48,7 @@ void PacketHandler::SendDataBuffer(const std::vector<char>& buffer) {
     SendPacket({ encryptedBuffer.size(), encryptedBuffer });
 }
 
-void PacketHandler::ReceiveClientMessage(std::function<void(const std::string&)> callback) {
+void PacketHandler::ReceiveClientMessage(std::function<void(std::string)> callback) {
     ReceivePacket([this, callback](const Packet& packet) {
         const std::string message = ConvertPacketToString(packet);
         if (message.empty()) {

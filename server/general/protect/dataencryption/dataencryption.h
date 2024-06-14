@@ -11,10 +11,10 @@
 class DataEncryption {
 public:
 	// Шифрование строки обычным base64
-	static const std::string EncryptBase64(const std::string& source);
+	static const std::string EncryptBase64(std::string_view source);
 
 	// Дешифрование строки обычным base64
-	static const std::string DecryptBase64(const std::string& source);
+	static const std::string DecryptBase64(std::string_view source);
 
 	/*
 		Шифрование усложнённой версией base64
@@ -22,10 +22,10 @@ public:
 					Полученные символы '=' заменяются на значение соли шифрования
 					
 	*/ 
-	static const std::string EncryptMultiBase64(const std::string& source);
+	static const std::string EncryptMultiBase64(std::string_view source);
 
 	// Дешифрование усложнённой версией base64
-	static const std::string DecryptMultiBase64(const std::string& source);
+	static const std::string DecryptMultiBase64(std::string_view source);
 
 	/*
 		Шифрование кастомным методом
@@ -37,10 +37,10 @@ public:
 		2. Полученный набор ASCII символов переводится в строковое представление
 		3. Полученная строка обрабатывается методом усложнённой версии base64
 	*/
-	static const std::string EncryptCustomMethod(const std::string& source);
+	static const std::string EncryptCustomMethod(std::string_view source);
 
 	// Дешифрование кастомного метода
-	static const std::string DecryptCustomMethod(const std::string& source);
+	static const std::string DecryptCustomMethod(std::string_view source);
 
 	/*
 		Шифрование массива символов

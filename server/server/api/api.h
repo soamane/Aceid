@@ -31,7 +31,7 @@ public:
         2. Вызывает метод для получения memberId
         3. Вызывает метод для получения profileGroupId (дополнительных подписок)
     */
-    API(const std::string& jsonString);
+    API(std::string_view jsonString);
 
     /*
         Возвращает итоговый результат обработки данных
@@ -51,7 +51,7 @@ public:
 
 private:
     // Метод для получения общей структуры данных пользователя
-    void GetUserCredentials(const std::string& jsonString);
+    void GetUserCredentials(std::string_view jsonString);
 
     // Метод для получения profileGroupId (дополнительных подписок)
     void GetProfileGroupId();
@@ -71,7 +71,7 @@ private:
     /*
         Выполняет HTTP API запрос по сформированному json формату url
     */
-    std::optional<std::string> PerformApiRequest(const std::string& jsonString) const;
+    std::optional<std::string> PerformApiRequest(std::string_view jsonString) const;
 
 private:
     AuthData m_authData; // Объект структуры данных пользователя

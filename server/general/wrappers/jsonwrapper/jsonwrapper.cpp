@@ -15,13 +15,13 @@ JsonWrapper* JsonWrapper::GetInstance() {
 	return Instance;
 }
 
-const rapidjson::Document JsonWrapper::ConvertStringToJson(const std::string& jsonString) const {
+const rapidjson::Document JsonWrapper::ConvertStringToJson(std::string_view jsonString) const {
 	if (jsonString.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
 
 	rapidjson::Document document;
-	document.Parse(jsonString.c_str());
+	document.Parse(jsonString.data());
 
 	if (!document.IsObject()) { 
 		throw std::runtime_error("Failed parse json document");
@@ -43,7 +43,7 @@ const rapidjson::Value& JsonWrapper::ParseDocumentParams(rapidjson::Document& do
 	return params;
 }
 
-const std::string JsonWrapper::ParseParamsField(const std::string& jsonString, const std::string& fieldName) const {
+const std::string JsonWrapper::ParseParamsField(std::string_view jsonString, std::string_view fieldName) const {
 	if (jsonString.empty() || fieldName.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -58,7 +58,7 @@ const std::string JsonWrapper::ParseParamsField(const std::string& jsonString, c
 		throw std::runtime_error("Document params is not of object");
 	}
 
-	const rapidjson::Value& fieldValue = params[fieldName.c_str()];
+	const rapidjson::Value& fieldValue = params[fieldName.data()];
 	switch (fieldValue.GetType()) {
 		case rapidjson::kStringType:
 			return fieldValue.GetString();
@@ -68,7 +68,7 @@ const std::string JsonWrapper::ParseParamsField(const std::string& jsonString, c
 	}
 }
 
-const AuthData JsonWrapper::ParseUserData(const std::string& jsonString) const {
+const AuthData JsonWrapper::ParseUserData(std::string_view jsonString) const {
 	if (jsonString.empty()) {
 		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
 	}
@@ -92,15 +92,15 @@ const AuthData JsonWrapper::ParseUserData(const std::string& jsonString) const {
 	return authData;
 }
 
-const bool JsonWrapper::IsErrorField(const std::string& jsonString) const {
+const bool JsonWrapper::IsErrorField(std::string_view jsonString) const {
 	return ParamsFieldExist(jsonString, "error");
 }
 
-const bool JsonWrapper::IsMemberIdField(const std::string& jsonString) const {
+const bool JsonWrapper::IsMemberIdField(std::string_view jsonString) const {
 	return ParamsFieldExist(jsonString, "id");
 }
 
-const bool JsonWrapper::ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const {
+const bool JsonWrapper::ParamsFieldExist(std::string_view jsonString, std::string_view fieldName) const {
 	auto document = ConvertStringToJson(jsonString);
 	if (!document.IsObject()) {
 		throw std::runtime_error("Failed parse json document");
@@ -111,7 +111,7 @@ const bool JsonWrapper::ParamsFieldExist(const std::string& jsonString, const st
 		throw std::runtime_error("Document params is not of object");
 	}
 
-	return params.HasMember(fieldName.c_str());
+	return params.HasMember(fieldName.data());
 }
 
 const std::string JsonWrapper::CreateJsonString(const std::unordered_map<std::string, std::string>& additionals, const std::unordered_map<std::string, std::string>& params) const {

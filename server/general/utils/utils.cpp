@@ -7,12 +7,12 @@
 
 #include "../logsystem/logmanager/logmanager.h"
 
-const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
+const std::vector<char> Utils::ConvertFileToBytes(std::string_view path) {
     if (path.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
 
-    std::ifstream file(path, std::ios::binary);
+    std::ifstream file(path.data(), std::ios::binary);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open target file");
     }
@@ -26,12 +26,12 @@ const std::vector<char> Utils::ConvertFileToBytes(const std::string& path) {
     return bytes;
 }
 
-void Utils::CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
+void Utils::CreateFileFromBytes(std::string_view path, const std::vector<char>& bytes) {
     if (path.empty() || bytes.empty()) {
         throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
     }
 
-    std::ofstream file(path, std::ios::binary);
+    std::ofstream file(path.data(), std::ios::binary);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open target file");
     }
@@ -40,9 +40,9 @@ void Utils::CreateFileFromBytes(const std::string& path, const std::vector<char>
     file.close();
 }
 
-const std::string Utils::ExecuteObfuscation(const std::string& input, const std::string& output) {
+const std::string Utils::ExecuteObfuscation(std::string_view input, std::string_view output) {
     // Проверка на уже существующий билд под клиента
-    const std::string outputPath = "builds/" + output;
+    const std::string outputPath = "builds/" + std::string(output);
     if (std::filesystem::exists(outputPath)) {
         return outputPath;
     }
@@ -54,7 +54,7 @@ const std::string Utils::ExecuteObfuscation(const std::string& input, const std:
     si.cb = sizeof(si);
     ZeroMemory(&pi, sizeof(pi));
 
-    const std::string command = "VMProtect.exe " + input + " " + outputPath + " -pf script.vmp";
+    const std::string command = "VMProtect.exe " + std::string(input) + " " + outputPath + " -pf script.vmp";
 
     if (!CreateProcessA(NULL, const_cast<LPSTR>(command.c_str()), NULL, NULL, FALSE, CREATE_NEW_CONSOLE | CREATE_NEW_PROCESS_GROUP, NULL, NULL, &si, &pi)) {
         throw std::runtime_error("Failed to create process");

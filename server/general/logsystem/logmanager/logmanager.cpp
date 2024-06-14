@@ -28,6 +28,6 @@ void LogManager::InitEventLog() {
 	}
 }
 
-void LogManager::CreateLog(std::shared_ptr<Log> object, const std::string& log) {
+void LogManager::CreateLog(std::shared_ptr<Log> object, std::string_view log) {
 	object->WriteLog(log);
 }

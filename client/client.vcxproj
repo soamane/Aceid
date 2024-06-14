@@ -75,6 +75,7 @@
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
     <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
@@ -88,6 +89,7 @@
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
     <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
     <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
@@ -106,7 +108,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>libcurl_a.lib;d3d9.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -127,7 +129,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>libcurl_a.lib;d3d9.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateMapFile>false</GenerateMapFile>
     </Link>
@@ -142,7 +144,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>libcurl_a.lib;d3d9.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -163,7 +165,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>libcurl_a.lib;d3d9.lib;ws2_32.lib;crypt32.lib;wldap32.lib;normaliz.lib;wininet.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateMapFile>false</GenerateMapFile>
     </Link>

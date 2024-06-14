@@ -4,12 +4,12 @@
 
 #include "../protect/xorstring/xorstring.h"
 
-const std::vector<char> FilesController::ConvertFileToBytes(const std::string& path) {
+const std::vector<char> FilesController::ConvertFileToBytes(std::string_view path) {
 	if (path.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path)"));
 	}
 
-	std::ifstream file(path, std::ios::binary);
+	std::ifstream file(path.data(), std::ios::binary);
 	if (!file.is_open()) {
 		throw std::runtime_error(xorstr_("Failed to open target file"));
 	}
@@ -23,12 +23,12 @@ const std::vector<char> FilesController::ConvertFileToBytes(const std::string& p
 	return bytes;
 }
 
-void FilesController::CreateFileFromBytes(const std::string& path, const std::vector<char>& bytes) {
+void FilesController::CreateFileFromBytes(std::string_view path, const std::vector<char>& bytes) {
 	if (path.empty() || bytes.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (path/bytes)"));
 	}
 
-	std::ofstream file(path, std::ios::binary);
+	std::ofstream file(path.data(), std::ios::binary);
 	if (!file.is_open()) {
 		throw std::runtime_error(xorstr_("Failed to open target file"));
 	}

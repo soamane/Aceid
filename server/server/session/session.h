@@ -40,7 +40,7 @@ private:
         3. При успешной авторизации отправляет необходимые данные клиенту
            * в случае безуспешной авторизации отправляет только отклоненный ответ
     */
-    void HandleClientMessage(const std::string& jsonData);
+    void HandleClientMessage(std::string_view jsonData);
 
 private:
     boost::asio::ip::tcp::socket m_socket; // Прослушиваемый сокет

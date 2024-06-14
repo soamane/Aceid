@@ -44,7 +44,7 @@ private:
 	/*
 		Выполняет HTTP API запрос по сформированному json формату url
 	*/
-	const std::string PerformRequestToGetSessionToken(const std::string& jsonString);
+	const std::string PerformRequestToGetSessionToken(std::string_view jsonString);
 
 private:
 	AuthData* m_authData; // Объект структуры данных пользователя

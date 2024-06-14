@@ -47,7 +47,7 @@ const std::string Console::GetUserCredentials(AuthData& authData, API& api) {
 	return credentials;
 }
 
-void Console::PrintConsoleMessage(const std::string& message) {
+void Console::PrintConsoleMessage(std::string_view message) {
 	if (message.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (console message)"));
 	}
@@ -83,7 +83,7 @@ void Console::SetLoadingMessage() {
 			PrintConsoleMessage(xorstr_(" "));
 		}
 		PrintConsoleMessage(xorstr_("]"));
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1750));
 	}
 	PrintConsoleMessage(xorstr_("\nPlease, wait..."));
 }

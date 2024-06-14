@@ -3,7 +3,7 @@
 #include "../../general/logsystem/logmanager/logmanager.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
 
-API::API(const std::string& jsonString) {
+API::API(std::string_view jsonString) {
     if (jsonString.empty()) {
         CREATE_EVENT_LOG("Function call error: empty argument [" + std::string(__func__) + "]");
         return;
@@ -38,7 +38,7 @@ const AuthStatus API::GetAuthStatus() const {
     return AuthStatus::AUTH_SUCCESS;
 }
 
-void API::GetUserCredentials(const std::string& jsonString) {
+void API::GetUserCredentials(std::string_view jsonString) {
     if (jsonString.empty()) {
         CREATE_EVENT_LOG("Function call error: empty argument [" + std::string(__func__) + "]");
         return;
@@ -128,7 +128,7 @@ const bool API::CheckUserToken() const {
     return PerformApiRequest(jsonString).has_value();
 }
 
-std::optional<std::string> API::PerformApiRequest(const std::string& jsonString) const {
+std::optional<std::string> API::PerformApiRequest(std::string_view jsonString) const {
     if (jsonString.empty()) {
         CREATE_EVENT_LOG("Function call error: empty argument [" + std::string(__func__) + "]");
         return std::nullopt;

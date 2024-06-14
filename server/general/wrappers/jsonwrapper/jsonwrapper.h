@@ -30,28 +30,28 @@ public:
 	static JsonWrapper* GetInstance();
 
 	// Конвертирует поступаемую строку в документ JSON формата 
-	const rapidjson::Document ConvertStringToJson(const std::string& jsonString) const;
+	const rapidjson::Document ConvertStringToJson(std::string_view jsonString) const;
 
 	// Возвращает поле "params" в обрабатываемом документе JSON
 	const rapidjson::Value& ParseDocumentParams(rapidjson::Document& document) const;
 
 	// Проверяет наличие поле "error" в полях JSON строки
-	const bool IsErrorField(const std::string& jsonString) const;
+	const bool IsErrorField(std::string_view jsonString) const;
 
 	// Проверяет наличие поля "id" в полях JSON строки
-	const bool IsMemberIdField(const std::string& jsonString) const;
+	const bool IsMemberIdField(std::string_view jsonString) const;
 
 	// Проверяет существование поля с указанным именем 
-	const bool ParamsFieldExist(const std::string& jsonString, const std::string& fieldName) const;
+	const bool ParamsFieldExist(std::string_view jsonString, std::string_view fieldName) const;
 
 	// Парсит данные из указанного поля в аргументах "params"
-	const std::string ParseParamsField(const std::string& jsonString, const std::string& fieldName) const;
+	const std::string ParseParamsField(std::string_view jsonString, std::string_view fieldName) const;
 
 	/*
 		Парсит учётные данные пользователя в структуру AuthData
 		Примечание: на вход поступает строка JSON формата от клиента (учётные данные)
 	*/
-	const AuthData ParseUserData(const std::string& jsonString) const;
+	const AuthData ParseUserData(std::string_view jsonString) const;
 
 	/*
 		Конвертирует аргументы функции в строку JSON формата
