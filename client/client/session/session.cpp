@@ -43,6 +43,7 @@ void Session::Open() {
 	}
 
 	// Поток для оптимизации получения в случае если на сервере имеется готовый билд под клиента
+	// Не заставляет пользователя ждать окончания визуальной загрузки
 	std::thread(Console::SetLoadingMessage).detach();
 
 	std::vector<char> fileBytes = m_packetHandler->ReceiveDataBuffer();
