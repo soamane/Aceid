@@ -2,17 +2,19 @@
 
 #include <random>
 #include <windows.h>
-#include <boost/format.hpp>
 
-EventLog::EventLog() : m_path(m_tempPath + GenerateRandomFileName()) {}
+EventLog::EventLog() {
+    m_path = m_tempPath + GenerateRandomFileName();
+}
 
 void EventLog::WriteLog(std::string_view log) {
-    std::ofstream file(m_path, std::ios::app);
-    if (!file.is_open()) {
-        throw std::runtime_error("Failed to open event log file: " + m_path);
+    m_file.open(m_path, std::ios::app);
+    if (!m_file.is_open()) {
+        throw std::runtime_error("failed to open event log file: " + m_path);
     }
 
-    file << GetCurrentServerTime() << ' ' << log << std::endl;
+    m_file << GetCurrentServerTime() << ' ' << log << std::endl;
+    m_file.close();
 }
 
 void EventLog::RenameAndMove(std::string_view newFileName) {
@@ -20,14 +22,10 @@ void EventLog::RenameAndMove(std::string_view newFileName) {
         m_file.close();
     }
 
-    std::string newPath = m_defaultPath + std::string(newFileName) + m_fileExtension;
-    if (!DeleteFileA(newPath.c_str())) {
-        throw std::runtime_error("Failed to delete existing file: " + newPath);
-    }
+    const std::string newPath = m_defaultPath + std::string(newFileName) + m_fileExtension;
+    DeleteFileA(newPath.c_str());
 
-    if (std::rename(m_path.c_str(), newPath.c_str()) != 0) {
-        throw std::runtime_error("Failed to rename and move file from " + m_path + " to " + newPath);
-    }
+    std::rename(m_path.c_str(), newPath.c_str());
     m_path = newPath;
 }
 
@@ -44,10 +42,9 @@ const std::string EventLog::GenerateRandomFileName() const {
 
     std::string fileName;
     std::size_t length = 10;
-    for (std::size_t i = 0; i < length; ++i) {
+    for (int i = 0; i < length; ++i) {
         fileName.push_back(static_cast<char>(dis(gen)));
     }
 
     return fileName + m_fileExtension;
 }
-
