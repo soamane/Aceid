@@ -1,6 +1,7 @@
 ﻿#include "jsonwrapper.h"
 
 #include <stdexcept>
+#include <boost/format.hpp>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 
@@ -16,10 +17,6 @@ JsonWrapper* JsonWrapper::GetInstance() {
 }
 
 const rapidjson::Document JsonWrapper::ConvertStringToJson(std::string_view jsonString) const {
-	if (jsonString.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-	}
-
 	rapidjson::Document document;
 	document.Parse(jsonString.data());
 
@@ -31,10 +28,6 @@ const rapidjson::Document JsonWrapper::ConvertStringToJson(std::string_view json
 }
 
 const rapidjson::Value& JsonWrapper::ParseDocumentParams(rapidjson::Document& document) const {
-	if (!document.IsObject()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-	}
-
 	const rapidjson::Value& params = document["params"];
 	if (!params.IsObject()) {
 		throw std::runtime_error("Document params is not of object");
@@ -44,10 +37,6 @@ const rapidjson::Value& JsonWrapper::ParseDocumentParams(rapidjson::Document& do
 }
 
 const std::string JsonWrapper::ParseParamsField(std::string_view jsonString, std::string_view fieldName) const {
-	if (jsonString.empty() || fieldName.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-	}
-
 	auto document = ConvertStringToJson(jsonString);
 	if (!document.IsObject()) {
 		throw std::runtime_error("Failed parse json document");
@@ -69,10 +58,6 @@ const std::string JsonWrapper::ParseParamsField(std::string_view jsonString, std
 }
 
 const AuthData JsonWrapper::ParseUserData(std::string_view jsonString) const {
-	if (jsonString.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-	}
-
 	auto document = ConvertStringToJson(jsonString);
 	if (!document.IsObject()) {
 		throw std::runtime_error("Failed parse json document");

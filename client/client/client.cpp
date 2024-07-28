@@ -1,7 +1,5 @@
 ﻿#include "client.h"
-
 #include "session/session.h"
-
 #include "../general/protect/xorstring/xorstring.h"
 
 Client::Client(boost::asio::io_context& context) : m_resolver(context), m_socket(context) { }

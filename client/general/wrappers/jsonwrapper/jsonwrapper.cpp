@@ -1,8 +1,7 @@
 ﻿#include "jsonwrapper.h"
+#include "../../protect/xorstring/xorstring.h"
 
 #include <stdexcept>
-
-#include "../../protect/xorstring/xorstring.h"
 
 JsonWrapper* JsonWrapper::GetInstance() {
 	static JsonWrapper* Instance = new JsonWrapper();

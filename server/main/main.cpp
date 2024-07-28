@@ -1,5 +1,4 @@
 ﻿#include "../server/server.h"
-
 #include "../general/logsystem/logmanager/logmanager.h"
 
 int main() {

@@ -1,8 +1,7 @@
 ﻿#include "filescontroller.h"
+#include "../protect/xorstring/xorstring.h"
 
 #include <fstream>
-
-#include "../protect/xorstring/xorstring.h"
 
 const std::vector<char> FilesController::ConvertFileToBytes(std::string_view path) {
 	if (path.empty()) {

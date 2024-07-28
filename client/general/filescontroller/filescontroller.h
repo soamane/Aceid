@@ -3,7 +3,7 @@
 #define FILES_CONTROLLER_H
 
 #include <vector>
-#include <string>
+#include <string_view>
 
 /*
 	Класс для работы с файлами

@@ -2,12 +2,13 @@
 
 #include <iomanip>
 #include <sstream>
+#include <boost/format.hpp>
 
 #include "base64/base64.h"
 
 const std::string DataEncryption::EncryptBase64(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	return base64::to_base64(source);
@@ -15,7 +16,7 @@ const std::string DataEncryption::EncryptBase64(std::string_view source) {
 
 const std::string DataEncryption::DecryptBase64(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	return base64::from_base64(source);
@@ -23,7 +24,7 @@ const std::string DataEncryption::DecryptBase64(std::string_view source) {
 
 const std::string DataEncryption::EncryptMultiBase64(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::string result;
@@ -43,7 +44,7 @@ const std::string DataEncryption::EncryptMultiBase64(std::string_view source) {
 
 const std::string DataEncryption::DecryptMultiBase64(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::string decrypted = DecryptBase64(source);
@@ -69,7 +70,7 @@ const std::string DataEncryption::DecryptMultiBase64(std::string_view source) {
 
 const std::string DataEncryption::EncryptCustomMethod(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::vector<int> sourceData(source.begin(), source.end());
@@ -92,7 +93,7 @@ const std::string DataEncryption::EncryptCustomMethod(std::string_view source) {
 
 const std::string DataEncryption::DecryptCustomMethod(std::string_view source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	const std::string decrypted = DecryptMultiBase64(source);
@@ -114,7 +115,7 @@ const std::string DataEncryption::DecryptCustomMethod(std::string_view source) {
 
 const std::vector<char> DataEncryption::EncryptBuffer(const std::vector<char>& source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::vector<char> encryptedData(source);
@@ -130,7 +131,7 @@ const std::vector<char> DataEncryption::EncryptBuffer(const std::vector<char>& s
 
 const std::vector<char> DataEncryption::DecryptBuffer(const std::vector<char>& source) {
 	if (source.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::vector<char> encryptedData(source);
@@ -146,7 +147,7 @@ const std::vector<char> DataEncryption::DecryptBuffer(const std::vector<char>& s
 
 const int DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
 	if (keyData.empty()) {
-		throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
+		 throw std::invalid_argument(boost::str(boost::format("Function call error: empty argument [%1%]") % __func__));
 	}
 
 	std::vector<int> encryptedKeyData = keyData;

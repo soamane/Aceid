@@ -1,17 +1,12 @@
 ﻿#include "utils.h"
 
-#include <fstream>
-#include <iostream>
 #include <windows.h>
 #include <filesystem>
+#include <boost/format.hpp>
 
 #include "../logsystem/logmanager/logmanager.h"
 
 const std::vector<char> Utils::ConvertFileToBytes(std::string_view path) {
-    if (path.empty()) {
-        throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-    }
-
     std::ifstream file(path.data(), std::ios::binary);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open target file");
@@ -27,10 +22,6 @@ const std::vector<char> Utils::ConvertFileToBytes(std::string_view path) {
 }
 
 void Utils::CreateFileFromBytes(std::string_view path, const std::vector<char>& bytes) {
-    if (path.empty() || bytes.empty()) {
-        throw std::invalid_argument("Function call error: empty argument [" + std::string(__func__) + "]");
-    }
-
     std::ofstream file(path.data(), std::ios::binary);
     if (!file.is_open()) {
         throw std::runtime_error("Failed to open target file");

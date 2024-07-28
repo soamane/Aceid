@@ -1,5 +1,4 @@
 ﻿#include "api.h"
-
 #include "../../general/protect/dataencryption/dataencryption.h"
 
 #include <stdexcept>

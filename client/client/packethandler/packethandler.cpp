@@ -1,5 +1,4 @@
 ﻿#include "packethandler.h"
-
 #include "../../general/protect/xorstring/xorstring.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
 

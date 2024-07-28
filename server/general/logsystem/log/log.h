@@ -3,6 +3,7 @@
 #define LOG_H
 
 #include <string>
+#include <fstream>
 
 class Log {
 public:

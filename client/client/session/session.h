@@ -2,8 +2,6 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include <boost/asio.hpp>
-
 #include "../packethandler/packethandler.h"
 
 /*

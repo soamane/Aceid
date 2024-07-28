@@ -55,7 +55,7 @@ public:
 
 private:
 	// Функция генерации целого числа из ASCII значений соли шифрования
-	static const int GenerateKeyCode(const std::vector<int>& keyData);
+	static const std::size_t GenerateKeyCode(const std::vector<int>& keyData);
 
 private:
 	static inline const std::string key = "aceid"; // Соль шифрования

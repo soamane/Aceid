@@ -1,6 +1,7 @@
 ﻿#include "api.h"
 
 #include "../../general/logsystem/logmanager/logmanager.h"
+#include "../../general/wrappers/curlwrapper/curlwrapper.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
 
 API::API(std::string_view jsonString) {

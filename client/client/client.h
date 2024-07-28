@@ -2,7 +2,6 @@
 #ifndef CONNECTOR_H
 #define CONNECTOR_H
 
-#include <string_view>
 #include <boost/asio.hpp>
 
 /*

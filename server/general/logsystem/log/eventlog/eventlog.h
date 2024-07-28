@@ -2,9 +2,6 @@
 #ifndef EVENT_LOG_H
 #define EVENT_LOG_H
 
-#include <string>
-#include <fstream>
-
 #include "../log.h"
 
 class EventLog : public Log {
@@ -21,7 +18,7 @@ public:
 private:
 
 	// Генерирует рандомную строку для дальнейшего использования в имени временного лога
-	const std::string GenerateRandomFileName();
+	const std::string GenerateRandomFileName() const;
 
 private:
 	std::ofstream m_file;

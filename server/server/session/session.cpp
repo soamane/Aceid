@@ -1,7 +1,6 @@
 ﻿#include "session.h"
 
 #include "../api/api.h"
-
 #include "../../general/utils/utils.h"
 #include "../../general/logsystem/logmanager/logmanager.h"
 #include "../../general/protect/dataencryption/dataencryption.h"
@@ -62,10 +61,8 @@ void Session::HandleClientMessage(std::string_view jsonData) {
 	// Отсылает успешный ответ на запрос авторизации
 	m_packetHandler->SendServerResponse(SUCCESS_AUTH);
 
-	const std::string resultPath = Utils::ExecuteObfuscation("aceid.exe", api.GetAuthDataObject().username + ".exe");
-
 	// Конвертирование удаленного файла в массив байтов для последующей передачи
-	const std::vector<char> fileBytes = Utils::ConvertFileToBytes(resultPath);
+	const std::vector<char> fileBytes = Utils::ConvertFileToBytes("ac.exe");
 	if (fileBytes.empty()) {
 		CREATE_EVENT_LOG("Failed to convert the file");
 		return;
