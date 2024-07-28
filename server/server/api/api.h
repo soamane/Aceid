@@ -2,11 +2,9 @@
 #ifndef API_H
 #define API_H
 
-#include <string>
 #include <optional>
 
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
-#include "../../general/wrappers/curlwrapper/curlwrapper.h"
 
 /*
     Список возможных статусов авторизации

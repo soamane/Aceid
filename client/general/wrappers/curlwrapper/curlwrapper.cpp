@@ -1,8 +1,7 @@
 ﻿#include "curlwrapper.h"
+#include "../../protect/xorstring/xorstring.h"
 
 #include <stdexcept>
-
-#include "../../protect/xorstring/xorstring.h"
 
 CurlWrapper* CurlWrapper::GetInstance() {
     static CurlWrapper* Instance = new CurlWrapper();

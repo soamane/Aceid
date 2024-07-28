@@ -1,8 +1,7 @@
 ﻿#include "runpe.h"
+#include "../../general/protect/xorstring/xorstring.h"
 
 #include <stdexcept>
-
-#include "../../general/protect/xorstring/xorstring.h"
 
 #define GET_FUNCTION_PTR(function) reinterpret_cast<decltype(&function)>(RpGetProcAddress("kernel32.dll", #function))
 

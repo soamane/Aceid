@@ -3,9 +3,8 @@
 #define CURL_WRAPPER_H
 
 #include <string>
-#include <initializer_list>
-
 #include <curl/curl.h>
+#include <initializer_list>
 
 /*
 	Типы протокола для запроса на web сервер
@@ -30,7 +29,7 @@ public:
 
 private:
 	CurlWrapper();
-	static const size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* buffer);
+	static const std::size_t WriteCallback(void* contents, std::size_t size, std::size_t nmemb, std::string* buffer);
 };
 
 #endif // !CURL_WRAPPER_H

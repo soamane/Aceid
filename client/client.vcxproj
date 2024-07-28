@@ -73,36 +73,36 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
-    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(RAPIDJSON_PATH)\include;$(CURL_PATH)\include;$(BOOST_ROOT)\include\boost-1_85</IncludePath>
+    <LibraryPath>$(CURL_PATH)\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
-    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(RAPIDJSON_PATH)\include;$(CURL_PATH)\include;$(BOOST_ROOT)\include\boost-1_85</IncludePath>
+    <LibraryPath>$(CURL_PATH)\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
-    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(RAPIDJSON_PATH)\include;$(CURL_PATH)\include;$(BOOST_ROOT)\include\boost-1_85</IncludePath>
+    <LibraryPath>$(CURL_PATH)\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\bin\$(ProjectName)\$(Configuration)</OutDir>
     <IntDir>..\bin\$(ProjectName)\$(Configuration)\build</IntDir>
-    <IncludePath>..\assets\rapidjson\include;..\assets\curl\;..\assets\boost_1_85_0</IncludePath>
-    <LibraryPath>..\assets\curl\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(RAPIDJSON_PATH)\include;$(CURL_PATH)\include;$(BOOST_ROOT)\include\boost-1_85</IncludePath>
+    <LibraryPath>$(CURL_PATH)\builds\libcurl-vc-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -118,7 +118,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MinSpace</Optimization>
@@ -138,7 +138,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -154,7 +154,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);CURL_STATICLIB;_CRT_SECURE_NO_WARNINGS;JM_XORSTR_DISABLE_AVX_INTRINSICS;JM_XORSTR_DISABLE_AVX_INTRINSICS;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MinSpace</Optimization>

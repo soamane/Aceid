@@ -2,9 +2,6 @@
 #ifndef API_H
 #define API_H
 
-#include <memory>
-#include <string>
-
 #include "../../general/protect/xorstring/xorstring.h"
 #include "../../general/wrappers/jsonwrapper/jsonwrapper.h"
 #include "../../general/wrappers/curlwrapper/curlwrapper.h"

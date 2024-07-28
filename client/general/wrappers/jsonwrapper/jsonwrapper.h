@@ -2,8 +2,8 @@
 #ifndef JSON_WRAPPER_H
 #define JSON_WRAPPER_H
 
-#include <string>
 #include <utility>
+#include <string_view>
 #include <unordered_map>
 
 #include <rapidjson/document.h>

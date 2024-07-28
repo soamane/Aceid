@@ -1,11 +1,10 @@
 ﻿#include "hardware.h"
+#include "../../general/protect/dataencryption/dataencryption.h"
+#include "../../general/protect/xorstring/xorstring.h"
 
 #include <d3d9.h>
 #include <sstream>
 #include <intrin.h>
-
-#include "../../general/protect/dataencryption/dataencryption.h"
-#include "../../general/protect/xorstring/xorstring.h"
 
 const std::string Hardware::GetHardwareId() {
     const std::string cpuInfo = GetCPUInfo();

@@ -1,13 +1,10 @@
 ﻿#include "console.h"
+#include "../../general/hardware/hardware.h"
+#include "../../general/protect/xorstring/xorstring.h"
 
 #include <thread>
 #include <conio.h>
 #include <iostream>
-
-#include "../../client/api/api.h"
-
-#include "../../general/hardware/hardware.h"
-#include "../../general/protect/xorstring/xorstring.h"
 
 Console::Console() {
 	SetConsoleTitleA(xorstr_(" "));

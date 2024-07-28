@@ -1,9 +1,8 @@
 ﻿#include "dataencryption.h"
+#include "base64/base64.h"
 
 #include <iomanip>
 #include <sstream>
-
-#include "base64/base64.h"
 
 const std::string DataEncryption::EncryptBase64(std::string_view source) {
 	if (source.empty()) {
@@ -103,7 +102,7 @@ const std::string DataEncryption::DecryptCustomMethod(std::string_view source) {
 	std::vector<int> sourceData(decrypted.begin(), decrypted.end());
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = GenerateKeyCode(keyData);
+	const std::size_t keyCode = GenerateKeyCode(keyData);
 	for (auto& it : sourceData) {
 		it += keyCode ^ key.size();
 	}
@@ -120,7 +119,7 @@ const std::vector<char> DataEncryption::EncryptBuffer(const std::vector<char>& s
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = GenerateKeyCode(keyData);
+	const std::size_t keyCode = GenerateKeyCode(keyData);
 	for (char& ch : encryptedData) {
 		ch -= static_cast<char>(keyCode);
 	}
@@ -136,7 +135,7 @@ const std::vector<char> DataEncryption::DecryptBuffer(const std::vector<char>& s
 	std::vector<char> encryptedData(source);
 	std::vector<int> keyData(key.begin(), key.end());
 
-	const int keyCode = GenerateKeyCode(keyData);
+	const std::size_t keyCode = GenerateKeyCode(keyData);
 	for (char& ch : encryptedData) {
 		ch += static_cast<char>(keyCode);
 	}
@@ -144,7 +143,7 @@ const std::vector<char> DataEncryption::DecryptBuffer(const std::vector<char>& s
 	return encryptedData;
 }
 
-const int DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
+const std::size_t DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
 	if (keyData.empty()) {
 		throw std::invalid_argument(xorstr_("Function call error: empty argument (key data)"));
 	}
@@ -158,7 +157,7 @@ const int DataEncryption::GenerateKeyCode(const std::vector<int>& keyData) {
 
 	std::reverse(encryptedKeyData.begin() + middle, encryptedKeyData.end());
 
-	int result = 0;
+	std::size_t result = 0;
 	for (std::size_t i = 0; i < encryptedKeyData.size(); ++i) {
 		if (i % 2 == 0) {
 			result += encryptedKeyData[i] >> 3;

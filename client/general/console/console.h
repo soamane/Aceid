@@ -2,8 +2,6 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include <string>
-
 #include "../../client/api/api.h"
 
 /*

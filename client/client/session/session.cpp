@@ -1,5 +1,4 @@
 ﻿#include "session.h"
-
 #include "../../general/runpe/runpe.h"
 #include "../../general/console/console.h"
 #include "../../general/protect/xorstring/xorstring.h"

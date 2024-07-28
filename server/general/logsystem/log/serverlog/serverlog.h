@@ -2,18 +2,15 @@
 #ifndef SERVER_LOG_H
 #define SERVER_LOG_H
 
-#include <string>
-#include <fstream>
-
 #include "../log.h"
 
 class ServerLog : public Log {
 public:
     void WriteLog(std::string_view log) override;
 
-public:
+private:
     std::ofstream m_file;
-    std::string m_fileName = "server.log"; // Имя файла лога
+    const std::string m_fileName = "server.log"; // Имя файла лога
 };
 
-#endif // !SERVER_LOG_H
+#endif // SERVER_LOG_H
