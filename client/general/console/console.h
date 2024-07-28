@@ -43,6 +43,9 @@ private:
 	*/
 	const std::string GetHiddenInput();
 
+	/* Проверяет наличие русский символов в строке */
+	bool hasRussianCharacters(std::string_view str);
+
 private:
 	const int m_consoleWidth = 50; // Ширина окна консоли
 	const int m_consoleHeight = 15; // Высота окна консоли

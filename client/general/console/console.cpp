@@ -20,6 +20,10 @@ const std::string Console::GetUserCredentials(AuthData& authData, API& api) {
 	PrintConsoleMessage(xorstr_("password: "));
 	authData.password = GetHiddenInput();
 
+	if (hasRussianCharacters(authData.username) || hasRussianCharacters(authData.password)) {
+		throw std::runtime_error(xorstr_("Russsian characters in credentials"));
+	}
+
 	authData.hwid = Hardware::GetHardwareId();
 	if (authData.hwid.empty()) {
 		throw std::runtime_error(xorstr_("Failed to get hardware id"));
@@ -131,4 +135,27 @@ const std::string Console::GetHiddenInput() {
 	}
 
 	return result;
+}
+
+bool Console::hasRussianCharacters(std::string_view str) {
+	for (size_t i = 0; i < str.length(); ) {
+		unsigned char c = str[i];
+		// Check for Russian characters in UTF-8
+		if ((c >= 0xD0 && c <= 0xD1) && (i + 1 < str.length())) {
+			unsigned char next = str[i + 1];
+			if ((c == 0xD0 && (next >= 0x90 && next <= 0xBF)) ||
+				(c == 0xD1 && (next >= 0x80 && next <= 0x8F))) {
+				return true;
+			}
+			i += 2;
+		}
+		// Check for Russian characters in Windows-1251
+		else if ((c >= 0xC0 && c <= 0xFF) || c == 0xA8 || c == 0xB8) {
+			return true;
+		}
+		else {
+			++i;
+		}
+	}
+	return false;
 }
