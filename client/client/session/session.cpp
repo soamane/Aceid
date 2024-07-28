@@ -20,10 +20,17 @@ void Session::Open() {
 	AuthData authData;
 	API api(&authData);
 
-	const std::string userCredentials = console.GetUserCredentials(authData, api);
-	if (userCredentials.empty()) {
-		throw std::runtime_error(xorstr_("Failed to get user credentials"));
+	std::string userCredentials;
+	try {
+		userCredentials = console.GetUserCredentials(authData, api);
+		if (userCredentials.empty()) {
+			throw std::runtime_error(xorstr_("Failed to get user credentials"));
+		}
 	}
+	catch (std::runtime_error e) {
+		MessageBoxA(GetConsoleWindow(), e.what(), nullptr, MB_ICONERROR);
+	}
+
 
 	m_packetHandler->SendClientMessage(userCredentials);
 
